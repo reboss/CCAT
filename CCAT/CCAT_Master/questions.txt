@@ -1,0 +1,65 @@
+[ PART A: MetaVision ]
+-Checklists     
+1 Admission Checklist
+2 Decision for Transfer entered 
+3 Quick View completed
+4 Daily Weight -- Fluid balance (CCU ONLY)
+-Vital Signs Plus
+1 Vital Signs validated using forms only
+2 Oral Care q2h
+3 Restraints checked as per policy
+4 Patient Positioning q2h
+5 Pressure Relief Strategies completed
+6 Workload Parameters completed
+-Fluids
+1 Message Ball is current
+2 Infusion Location documented (NOT venous/arterial)
+3 Infusions stopped at discharge time
+-Lines, Tubes, Drains
+1 Lines, Tubes, Drains are current and accurate
+2 Insertion Sites are correct
+3 Process Lines stopped at discharge time
+4 Line Assessments completed q4h
+-Assessments
+1 Assessments documented q4h
+2 Safety Plus form completed q shift
+3 Braden Scale completed            Score: 
+-Events and Procedures
+1 Resuscitation 24 Hours Prior to Admission entered
+2 Continuous Events current
+3 Transport Lines current
+4 Other events used appropriately
+5 Rounds documented (Day shift only) 
+-Miscellaneous
+1 Patient assigned to appropriate service
+2 ICDSC completed ( q0600h and q1800h)(ICU ONLY) 
+- 
+
+[PART B: Patient Chart]
+-Medication Administration Record (MAR)
+1 Medications charted in appropriate sections (PRN vs Scheduled)
+2 MAR has two sets of initials
+3 New/changed orders have two sets of initials
+4 Documentations of changed orders done as per policy
+5 Independent double check of initial programming done
+6 Independent double check of medicated infusions at shift change
+-Miscellaneous
+1 Allergy form completed
+2 Actual weight completed
+3 Goals of Care completed and appropriate
+-Assessments
+1 Falls Risk Assessment form completed
+2 BeLite Functional Assessment Record completed 
+3 TAPS used
+-Medicus
+1 Medicus reviewed q8h over past 24 hours 
+2 Initials present: 
+- 
+
+[PART C: Patient Room]
+-BeLite Assessment Form 
+1 Appropriate logo displayed in room
+2 Appropriate sticker on patient ID band
+-Other
+1 Appropriate Isolation sign on door
+- 

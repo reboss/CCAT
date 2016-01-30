@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ccat_view.MainMenu.AboutController">
+   <children>
+      <Button fx:id="close" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClose" text="Close" />
+      <TextArea fx:id="info" editable="false" layoutY="-1.0" prefHeight="358.0" prefWidth="600.0" wrapText="true" />
+   </children>
+</AnchorPane>
