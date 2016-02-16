@@ -29,20 +29,18 @@ import javafx.stage.Stage;
  * @author Elliott
  */
 public class VerifyAdminController implements Initializable {
-    
-    @FXML
-    private TextField username;
-    
-    @FXML
-    private PasswordField pass;
 
     @FXML
+    private TextField username;
+    @FXML
+    private PasswordField pass;
+    @FXML
     private Button back;
-    
     @FXML
     private Label errMsg;
-    
+
     private Account account;
+    private MainMenuController mMC;
 
     @FXML
     private void onBack(ActionEvent event) {
@@ -52,21 +50,24 @@ public class VerifyAdminController implements Initializable {
 
     @FXML
     private void onLogin(ActionEvent event) throws FileNotFoundException, IOException {
-        if (account.validate(username.getText(), pass.getText())){
+        if (account.validate(username.getText(), pass.getText())) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("ccat_view/MainMenu.fxml"));
-            MainMenuController mainMenuController = loader.getController();
-            mainMenuController.setAccess();
+            this.mMC.setAccess();
             Stage primaryStage = (Stage) back.getScene().getWindow();
             primaryStage.close();
-        }else{
+        } else {
             username.clear();
             pass.clear();
             errMsg.setText("Username or Password incorrect");
             errMsg.setTextFill(Color.RED);
         }
     }
-    
+
+    public final void setMMC(MainMenuController mMC) {
+        this.mMC = mMC;
+    }
+
     /**
      * Initializes the controller class.
      *
@@ -76,7 +77,7 @@ public class VerifyAdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.username.setText("sobeke");
-        this.pass.setText("GFAGr5398frDSAF^$#");
+        this.pass.setText("1234");
         try {
             account = new Account();
         } catch (FileNotFoundException ex) {
