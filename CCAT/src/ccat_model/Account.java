@@ -20,10 +20,10 @@ import java.security.MessageDigest;
  */
 public class Account {
 
-    protected File accounts;
-    protected String uname;
-    protected String pass;
-    protected String salt;
+    private final File accounts;
+    private String uname;
+    private String pass;
+    private final String salt;
 
     public Account() throws FileNotFoundException, IOException {
         this.salt = "M5@aG9:[2cY0";
