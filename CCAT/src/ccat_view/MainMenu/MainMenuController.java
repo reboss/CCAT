@@ -113,49 +113,45 @@ public class MainMenuController implements Initializable {
 
     //TODO: make partB tab also scrollable
     @FXML
-    private void populateTabs() {
-
+    private void populateTabs(){
+        
         Map<String, Map<String, List<String>>> content = template.getContent();
         answers = new HashMap<>();
         //template.traverseMap();
         template.getHeaders();
         int i = 0;
-        for (String header : content.keySet()) {
-
-            //tabPane.getSelectionModel().select(tabs.get(i));
-            scrollers.get(i).setAlignment(Pos.CENTER);
-            for (String subheader : content.get(header).keySet()) {
-                //content.get(header).keySet()
-                //template.getOrderedSubheaders()
-                //AnchorPane anchor = new AnchorPane();
-
-                FlowPane sectionBox = new FlowPane();
+        for (String header : content.keySet()){
+            
+            scrollers.get(i).setAlignment(Pos.CENTER); 
+            for (String subheader : template.getOrderedSubheaders().get(header)){
+                
+                
+                FlowPane sectionBox = new FlowPane(); 
                 sectionBox.setStyle("-fx-background-color: #336699");
                 Label subHeaderLabel = new Label(subheader);
                 subHeaderLabel.setTextFill(Color.web("#FFFFFF"));
                 subHeaderLabel.setFont(Font.font("Verdana", 15));
                 sectionBox.getChildren().add(subHeaderLabel);
-                //anchor.getChildren().add(sectionBox);
                 sectionBox.setPrefWidth(600.0);
-//                AnchorPane.setBottomAnchor(sectionBox, 0.0);
-//                AnchorPane.setTopAnchor(sectionBox, 0.0);
-//                AnchorPane.setLeftAnchor(sectionBox, 0.0);
-//                AnchorPane.setRightAnchor(sectionBox, 0.0);
+
                 scrollers.get(i).getChildren().add(sectionBox);
-
+                
                 List<String> list = content.get(header).get(subheader);
-                System.out.println(subheader);
-
+                int row = 0;
                 for (String question : list) {
-
+                    
+                    
                     AnchorPane anchor2 = new AnchorPane();
+                    
                     Label label = new Label(question);
-                    label.setPrefWidth(590.0);
+                    label.setPrefWidth(575.0);
                     label.setStyle("-fx-font-weight: bold");
+                    
                     AnchorPane.setBottomAnchor(label, 0.0);
                     AnchorPane.setTopAnchor(label, 0.0);
                     AnchorPane.setLeftAnchor(label, 0.0);
                     AnchorPane.setRightAnchor(label, 0.0);
+                    
                     ToggleGroup group = new ToggleGroup();
                     RadioButton yes = new RadioButton("yes");
                     RadioButton no = new RadioButton("no");
@@ -166,53 +162,58 @@ public class MainMenuController implements Initializable {
                     yes.setToggleGroup(group);
                     no.setToggleGroup(group);
                     na.setToggleGroup(group);
+                    
                     TextArea area = new TextArea();
                     area.setPrefSize(0.0, 0.0);
                     area.setWrapText(true);
                     area.setVisible(false);
+                    
+                    Label noteLabel = new Label("");
+                    noteLabel.setPrefSize(0.0, 0.0);
+                    noteLabel.setVisible(false);
+                    
                     FlowPane flow = new FlowPane();
-//                    Pane pane = new Pane();
-//                    pane.setPrefWidth(700);
 
+                    
+                    
                     no.setOnAction((ActionEvent event) -> {
-                        //area.setMaxSize(600.0, 10.0);
-                        //area.resize(600.0, 10.0);
-                        //AnchorPane.setRightAnchor(area, Double.NaN);
-                        area.setPrefSize(800.0, 65.0);
+                        area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
-                        area.positionCaret(0);
+                        noteLabel.setPrefSize(90.0, 10.0);
+                        noteLabel.setVisible(true);
+                        area.positionCaret(1);
                     });
                     na.setOnAction((ActionEvent event) -> {
-                        //area.setMaxSize(600.0, 10.0);
-                        //area.resize(600.0, 10.0);
-                        area.setPrefSize(800.0, 65.0);
+                        
+                        area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
+                        noteLabel.setPrefSize(90.0, 10.0);
+                        noteLabel.setVisible(true);
                     });
                     yes.setOnAction((ActionEvent event) -> {
-                        //area.setMaxSize(0.0, 0.0);
+                        
                         area.setPrefSize(0.0, 0.0);
                         area.setVisible(false);
+                        noteLabel.setPrefSize(0.0, 0.0);
+                        noteLabel.setVisible(false);
                         flow.resize(800.0, 10.0);
                     });
-
+                    
                     answers.put(group, question);
                     //TODO:  add ToggleGroup to a list so input can be accessed later
-
+                    
                     flow.setVgap(10.0);
                     flow.setHgap(10.0);
                     flow.setPrefWrapLength(800.0);
                     flow.getChildren().addAll(label, yes, no, na, area);
-                    flow.setStyle("-fx-border-style: solid;"
-                            + "-fx-border-width: 0.25;"
-                            + "-fx-border-color: black");
+                    if (row % 2 == 1){
+                        flow.setStyle("-fx-background-color: #dbe4f0;");
+                    }
+         
 
-//                    FlowPane flow2 = new FlowPane();
-//                    flow2.setVgap(10.0);
-//                    flow2.setHgap(10.0);
-//                    flow2.setMaxSize(0.0, 0.0);
-//                    flow2.getChildren().add(area);
                     anchor2.getChildren().add(flow);
                     scrollers.get(i).getChildren().addAll(anchor2);
+                    row ++;
                 }
             }
             i++;
@@ -256,13 +257,9 @@ public class MainMenuController implements Initializable {
             AnchorPane.setLeftAnchor(box, 0.0);
             AnchorPane.setRightAnchor(box, 0.0);
         }
-//            box.setStyle("-fx-border-style: solid;"
-//                + "-fx-border-width: 1;"
-//                + "-fx-border-color: black");
-//        }
 
         populateTabs();
-        //tabPane.getSelectionModel().select(partA);
+        
     }
 
 }
