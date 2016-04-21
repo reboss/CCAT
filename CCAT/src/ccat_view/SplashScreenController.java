@@ -29,7 +29,6 @@ public class SplashScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        Image img = new Image("/stethoscope.png");
         Image img = new Image("/stethoscopeAndComputerNew.jpg");
         imageView.setImage(img);
     }    
