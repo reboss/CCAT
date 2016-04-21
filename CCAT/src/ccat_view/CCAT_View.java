@@ -8,8 +8,11 @@ package ccat_view;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,13 +30,17 @@ public class CCAT_View extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), root);
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-        ft.play();
         Scene scene = new Scene(root);
+        primaryStage.getIcons().add(new Image("/medicalIcon.png"));
+        primaryStage.setTitle("Critical Care Audit Tool - CONFIDENTIAL");
         primaryStage.setScene(scene);
         primaryStage.show();
+        DoubleProperty opacity = root.opacityProperty();
+        Timeline ft = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+                new KeyFrame(new Duration(4000), new KeyValue(opacity, 1.0))
+        );
+        ft.play();
         ft.setOnFinished((ActionEvent event) -> {
             try {
                 displayLoginScene();
