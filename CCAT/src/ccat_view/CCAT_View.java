@@ -26,15 +26,19 @@ import javafx.util.Duration;
  * @author Elliott
  */
 public class CCAT_View extends Application {
-    
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, InterruptedException {
+        displaySplashScreen(primaryStage);
+    }
+
+    private void displaySplashScreen(Stage stage) throws IOException, InterruptedException {
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.getIcons().add(new Image("/medicalIcon.png"));
-        primaryStage.setTitle("Critical Care Audit Tool - CONFIDENTIAL");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.getIcons().add(new Image("/medicalIcon.png"));
+        stage.setTitle("CCAT");
+        stage.setScene(scene);
+        stage.show();
         DoubleProperty opacity = root.opacityProperty();
         Timeline ft = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
@@ -47,10 +51,10 @@ public class CCAT_View extends Application {
             } catch (IOException ex) {
                 Logger.getLogger(CCAT_View.class.getName()).log(Level.SEVERE, null, ex);
             }
-            primaryStage.close();
+            stage.close();
         });
     }
-    
+
     private void displayLoginScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu/MainMenu.fxml"));
         Scene scene = new Scene(root);
@@ -67,5 +71,5 @@ public class CCAT_View extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
