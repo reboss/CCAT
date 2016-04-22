@@ -27,7 +27,7 @@ The code is runnable inside Netbeans, eclipse, and IntelliJ. We are using the Ja
 You can run CCAT either from your IDE or if you have the .jar file you can run it from the command line.
 
 ```
-java -jar CCAT_Ultimate.jar
+java -jar CCAT.jar
 ```
 
 ------------------------------------------
