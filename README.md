@@ -1,20 +1,34 @@
-# CCAT
+# CCAT (Critical Care Audit Tool)
 
-CCAT is an auditing tool for nurses at a local hospital.
+## What is CCAT
 
-## Build
-The code is runnable from Eclipse or Netbeans. We are using the JavaFX framework. The latest JDK and JRE versions are recommended.
-
-Because we are using file i/o and file logging for this project we will need to include a build file later on to create an
-executable jar.  This will most likely be done using Maven or Gradle, however, we are open to suggestions.
+CCAT is an auditing tool for nurses or other certified staff.
 
 ## Purpose
 
-The purpose of this app is to help Nurses at a local hospital complete their daily audits more efficiently.  The old method of
-using pen and paper has become outdated and unresourceful, hence, this app aims to transition the saved documents into a digital
-format.
+CCAT will help Nurses or other certified staff complete their daily audits more efficiently. The use pen and paper to perform daily audits has become slow, inconsistent, and generally outdated. CCAT aims to solve the before listed problems by introducing consistent structure and persistent records of past audits.
 
-## How it Works
+## Build
+
+In order to build the jar needed to run CCAT a Java IDE that is capable of building is required.
+
+### Java IDE
+	
+The recommended Java IDE's you can use are NetBeans, Eclipse, and IntelliJ.
+	
+[NetBeans](https://netbeans.org/ "NetBeans")
+[Eclipse](https://eclipse.org/ "Eclipse")
+[IntelliJ](https://www.jetbrains.com/idea/ "IntelliJ")
+
+The code is runnable inside Netbeans, eclipse, and IntelliJ. We are using the JavaFX framework for most of the UI. The latest JDK and JRE versions are recommended.
+
+## Run
+
+You can run CCAT either from your IDE or if you have the .jar file you can run it from the command line.
+
+```
+java -jar CCAT_Ultimate.jar
+```
+
 ------------------------------------------
-
-See spec documents for more details and visual aid.
+* See spec documents for more details and visual aid.
