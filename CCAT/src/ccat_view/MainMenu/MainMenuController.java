@@ -37,6 +37,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+//import files.*;
 
 //TODO: add onClickListeners to radioButton groups to update score in real time
 //      as well as check for errors in case someone tries to submit an incomplete 
@@ -67,10 +68,10 @@ public class MainMenuController implements Initializable {
     private Tab admin;
 
     private FileLoader template;
-    private TabPane tabPane;
     private List<Tab> tabs;
     private List<VBox> scrollers;
     private Map<ToggleGroup, String> answers;
+    private Map<String, Boolean> questionsAnswerCheck;
 
     public MainMenuController() {
     }
@@ -115,10 +116,11 @@ public class MainMenuController implements Initializable {
     @FXML
     private void populateTabs(){
         
+        questionsAnswerCheck = new HashMap<>();
         Map<String, Map<String, List<String>>> content = template.getContent();
         answers = new HashMap<>();
-        //template.traverseMap();
-        template.getHeaders();
+        //template.traverseMap(); // for testing
+//        template.getHeaders();
         int i = 0;
         for (String header : content.keySet()){
             
@@ -146,6 +148,7 @@ public class MainMenuController implements Initializable {
                     Label label = new Label(question);
                     label.setPrefWidth(575.0);
                     label.setStyle("-fx-font-weight: bold");
+                    questionsAnswerCheck.put(question, false);
                     
                     AnchorPane.setBottomAnchor(label, 0.0);
                     AnchorPane.setTopAnchor(label, 0.0);
@@ -177,6 +180,7 @@ public class MainMenuController implements Initializable {
                     
                     
                     no.setOnAction((ActionEvent event) -> {
+                        questionsAnswerCheck.put(question, true);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
@@ -184,14 +188,14 @@ public class MainMenuController implements Initializable {
                         area.positionCaret(1);
                     });
                     na.setOnAction((ActionEvent event) -> {
-                        
+                        questionsAnswerCheck.put(question, true);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
                         noteLabel.setVisible(true);
                     });
                     yes.setOnAction((ActionEvent event) -> {
-                        
+                        questionsAnswerCheck.put(question, true);
                         area.setPrefSize(0.0, 0.0);
                         area.setVisible(false);
                         noteLabel.setPrefSize(0.0, 0.0);
@@ -221,8 +225,14 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    public void saveFile() {
-        
+    public Boolean saveFile() {
+        for (String key : questionsAnswerCheck.keySet()){
+            if (!questionsAnswerCheck.get(key)){
+                System.out.println(key);
+                return false;
+            }
+        }
+        return true;
     }
     
     public final void setAccess() {
