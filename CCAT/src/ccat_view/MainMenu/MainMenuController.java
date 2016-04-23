@@ -180,7 +180,8 @@ public class MainMenuController implements Initializable {
                     
                     
                     no.setOnAction((ActionEvent event) -> {
-                        questionsAnswerCheck.put(question, true);
+                        if (!area.getText().trim().isEmpty())
+                            questionsAnswerCheck.put(question, true);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
@@ -188,7 +189,8 @@ public class MainMenuController implements Initializable {
                         area.positionCaret(1);
                     });
                     na.setOnAction((ActionEvent event) -> {
-                        questionsAnswerCheck.put(question, true);
+                        if (!area.getText().trim().isEmpty())
+                            questionsAnswerCheck.put(question, true);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);

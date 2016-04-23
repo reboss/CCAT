@@ -25,7 +25,9 @@ import javafx.util.Duration;
  *
  * @author Elliott
  */
-public class CCAT_View extends Application {
+
+public class CCAT extends Application {
+    
 
     @Override
     public void start(Stage primaryStage) throws IOException, InterruptedException {
@@ -49,7 +51,7 @@ public class CCAT_View extends Application {
             try {
                 displayLoginScene();
             } catch (IOException ex) {
-                Logger.getLogger(CCAT_View.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CCAT.class.getName()).log(Level.SEVERE, null, ex);
             }
             stage.close();
         });
