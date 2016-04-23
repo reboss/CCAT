@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -67,11 +68,13 @@ public class MainMenuController implements Initializable {
     @FXML
     private Tab admin;
 
+    private final int BRADEN_SCALE_MAX = 24;
     private FileLoader template;
     private List<Tab> tabs;
     private List<VBox> scrollers;
     private Map<ToggleGroup, String> answers;
     private Map<String, Boolean> questionsAnswerCheck;
+   
 
     public MainMenuController() {
     }
@@ -143,7 +146,7 @@ public class MainMenuController implements Initializable {
                 for (String question : list) {
                     
                     
-                    AnchorPane anchor2 = new AnchorPane();
+                    AnchorPane anchor = new AnchorPane();
                     
                     Label label = new Label(question);
                     label.setPrefWidth(575.0);
@@ -208,17 +211,36 @@ public class MainMenuController implements Initializable {
                     answers.put(group, question);
                     //TODO:  add ToggleGroup to a list so input can be accessed later
                     
-                    flow.setVgap(10.0);
-                    flow.setHgap(10.0);
-                    flow.setPrefWrapLength(800.0);
-                    flow.getChildren().addAll(label, yes, no, na, area);
-                    if (row % 2 == 1){
-                        flow.setStyle("-fx-background-color: #dbe4f0;");
+                    if (question.contains("Braden Scale")){
+                        ComboBox<String> score = new ComboBox<>();
+                        Label spacer = new Label();
+                        spacer.setPrefWidth(280.0);
+                        score.getItems().add("1");
+                        for (int num = 6; num < BRADEN_SCALE_MAX; num++){
+                            Integer option = num;
+                            score.getItems().add(option.toString());
+                        }
+                        label.setPrefWidth(215.0);
+                        flow.setVgap(10.0);
+                        flow.setHgap(10.0);
+                        flow.setPrefWrapLength(800.0);
+                        flow.getChildren().addAll(label, score, spacer, yes, no, na, area);
+                        if (row % 2 == 1){
+                            flow.setStyle("-fx-background-color: #dbe4f0;");
+                        }
+                      
                     }
-         
-
-                    anchor2.getChildren().add(flow);
-                    scrollers.get(i).getChildren().addAll(anchor2);
+                    else{
+                        flow.setVgap(10.0);
+                        flow.setHgap(10.0);
+                        flow.setPrefWrapLength(800.0);
+                        flow.getChildren().addAll(label, yes, no, na, area);
+                        if (row % 2 == 1){
+                            flow.setStyle("-fx-background-color: #dbe4f0;");
+                        }
+                    }
+                    anchor.getChildren().add(flow);
+                    scrollers.get(i).getChildren().addAll(anchor);
                     row ++;
                 }
             }
