@@ -19,11 +19,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
  *
- * @author Elliott
+ * @author John, Elliott, Zac
  */
 
 public class CCAT extends Application {
@@ -38,6 +39,7 @@ public class CCAT extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("/medicalIcon.png"));
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("CCAT");
         stage.setScene(scene);
         stage.show();
