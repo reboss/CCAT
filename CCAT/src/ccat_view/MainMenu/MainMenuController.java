@@ -135,10 +135,10 @@ public class MainMenuController implements Initializable {
                 
                 FlowPane sectionBox = new FlowPane(); 
                 sectionBox.setStyle("-fx-background-color: #336699");
-                Label subHeaderLabel = new Label(subheader);
-                subHeaderLabel.setTextFill(Color.web("#FFFFFF"));
-                subHeaderLabel.setFont(Font.font("Verdana", 15));
-                sectionBox.getChildren().add(subHeaderLabel);
+                Label displayedSubHeader = new Label(subheader);
+                displayedSubHeader.setTextFill(Color.web("#FFFFFF"));
+                displayedSubHeader.setFont(Font.font("Verdana", 15));
+                sectionBox.getChildren().add(displayedSubHeader);
                 sectionBox.setPrefWidth(600.0);
 
                 scrollers.get(i).getChildren().add(sectionBox);
@@ -150,15 +150,15 @@ public class MainMenuController implements Initializable {
                     
                     AnchorPane anchor = new AnchorPane();
                     
-                    Label label = new Label(question);
-                    label.setPrefWidth(575.0);
-                    label.setStyle("-fx-font-weight: bold");
+                    Label displayedQuestion = new Label(question);
+                    displayedQuestion.setPrefWidth(575.0);
+                    displayedQuestion.setStyle("-fx-font-weight: bold");
                     questionsAnswerCheck.put(question, false);
                     
-                    AnchorPane.setBottomAnchor(label, 0.0);
-                    AnchorPane.setTopAnchor(label, 0.0);
-                    AnchorPane.setLeftAnchor(label, 0.0);
-                    AnchorPane.setRightAnchor(label, 0.0);
+                    AnchorPane.setBottomAnchor(displayedQuestion, 0.0);
+                    AnchorPane.setTopAnchor(displayedQuestion, 0.0);
+                    AnchorPane.setLeftAnchor(displayedQuestion, 0.0);
+                    AnchorPane.setRightAnchor(displayedQuestion, 0.0);
                     
                     ToggleGroup group = new ToggleGroup();
                     RadioButton yes = new RadioButton("yes");
@@ -183,7 +183,7 @@ public class MainMenuController implements Initializable {
                     FlowPane flow = new FlowPane();
 
                     
-                    
+                    //TODO: remove duplication of no and na ActionListener's
                     no.setOnAction((ActionEvent event) -> {
                         
                         questionsAnswerCheck.put(question, true);
@@ -227,25 +227,21 @@ public class MainMenuController implements Initializable {
                             Integer option = num;
                             score.getItems().add(option.toString());
                         }
-                        label.setPrefWidth(215.0);
-                        flow.setVgap(10.0);
-                        flow.setHgap(10.0);
-                        flow.setPrefWrapLength(800.0);
-                        flow.getChildren().addAll(label, score, spacer, yes, no, na, area);
-                        if (row % 2 == 1){
-                            flow.setStyle("-fx-background-color: #dbe4f0;");
-                        }
+                        displayedQuestion.setPrefWidth(215.0);
+                        flow.getChildren().addAll(displayedQuestion, score, spacer, yes, no, na, area);
                       
                     }
                     else{
-                        flow.setVgap(10.0);
-                        flow.setHgap(10.0);
-                        flow.setPrefWrapLength(800.0);
-                        flow.getChildren().addAll(label, yes, no, na, area);
-                        if (row % 2 == 1){
+                        
+                        flow.getChildren().addAll(displayedQuestion, yes, no, na, area);
+                        
+                    }
+                    flow.setVgap(10.0);
+                    flow.setHgap(10.0);
+                    flow.setPrefWrapLength(800.0);
+                    if (row % 2 == 1){
                             flow.setStyle("-fx-background-color: #dbe4f0;");
                         }
-                    }
                     anchor.getChildren().add(flow);
                     scrollers.get(i).getChildren().addAll(anchor);
                     row ++;
