@@ -74,6 +74,7 @@ public class MainMenuController implements Initializable {
     private List<VBox> scrollers;
     private Map<ToggleGroup, String> answers;
     private Map<String, Boolean> questionsAnswerCheck;
+    private Map<String, TextArea> notesOnNoOrNa;
    
 
     public MainMenuController() {
@@ -119,6 +120,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private void populateTabs(){
         
+        notesOnNoOrNa = new HashMap<>();
         questionsAnswerCheck = new HashMap<>();
         Map<String, Map<String, List<String>>> content = template.getContent();
         answers = new HashMap<>();
@@ -183,29 +185,35 @@ public class MainMenuController implements Initializable {
                     
                     
                     no.setOnAction((ActionEvent event) -> {
-                        if (!area.getText().trim().isEmpty())
-                            questionsAnswerCheck.put(question, true);
+                        
+                        questionsAnswerCheck.put(question, true);
+                        notesOnNoOrNa.put(question, area);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
                         noteLabel.setVisible(true);
                         area.positionCaret(1);
+                        
                     });
                     na.setOnAction((ActionEvent event) -> {
-                        if (!area.getText().trim().isEmpty())
-                            questionsAnswerCheck.put(question, true);
+                        
+                        questionsAnswerCheck.put(question, true);
+                        notesOnNoOrNa.put(question, area);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
                         noteLabel.setVisible(true);
+                        
                     });
                     yes.setOnAction((ActionEvent event) -> {
+                        
                         questionsAnswerCheck.put(question, true);
                         area.setPrefSize(0.0, 0.0);
                         area.setVisible(false);
                         noteLabel.setPrefSize(0.0, 0.0);
                         noteLabel.setVisible(false);
                         flow.resize(800.0, 10.0);
+                        
                     });
                     
                     answers.put(group, question);
@@ -215,7 +223,6 @@ public class MainMenuController implements Initializable {
                         ComboBox<String> score = new ComboBox<>();
                         Label spacer = new Label();
                         spacer.setPrefWidth(280.0);
-                        score.getItems().add("1");
                         for (int num = 6; num < BRADEN_SCALE_MAX; num++){
                             Integer option = num;
                             score.getItems().add(option.toString());
@@ -250,6 +257,16 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public Boolean saveFile() {
+       
+        for (String key : notesOnNoOrNa.keySet()){
+            if (notesOnNoOrNa.get(key).getText().isEmpty()){
+                System.out.println(key);
+                return false;
+            }
+            else{
+                System.out.println(notesOnNoOrNa.get(key).getText());
+            }
+        }
         for (String key : questionsAnswerCheck.keySet()){
             if (!questionsAnswerCheck.get(key)){
                 System.out.println(key);
