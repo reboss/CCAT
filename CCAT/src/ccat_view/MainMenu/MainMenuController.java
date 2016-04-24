@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -67,11 +68,14 @@ public class MainMenuController implements Initializable {
     @FXML
     private Tab admin;
 
+    private final int BRADEN_SCALE_MAX = 24;
     private FileLoader template;
     private List<Tab> tabs;
     private List<VBox> scrollers;
     private Map<ToggleGroup, String> answers;
     private Map<String, Boolean> questionsAnswerCheck;
+    private Map<String, TextArea> notesOnNoOrNa;
+   
 
     public MainMenuController() {
     }
@@ -116,6 +120,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private void populateTabs(){
         
+        notesOnNoOrNa = new HashMap<>();
         questionsAnswerCheck = new HashMap<>();
         Map<String, Map<String, List<String>>> content = template.getContent();
         answers = new HashMap<>();
@@ -130,10 +135,10 @@ public class MainMenuController implements Initializable {
                 
                 FlowPane sectionBox = new FlowPane(); 
                 sectionBox.setStyle("-fx-background-color: #336699");
-                Label subHeaderLabel = new Label(subheader);
-                subHeaderLabel.setTextFill(Color.web("#FFFFFF"));
-                subHeaderLabel.setFont(Font.font("Verdana", 15));
-                sectionBox.getChildren().add(subHeaderLabel);
+                Label displayedSubHeader = new Label(subheader);
+                displayedSubHeader.setTextFill(Color.web("#FFFFFF"));
+                displayedSubHeader.setFont(Font.font("Verdana", 15));
+                sectionBox.getChildren().add(displayedSubHeader);
                 sectionBox.setPrefWidth(600.0);
 
                 scrollers.get(i).getChildren().add(sectionBox);
@@ -143,17 +148,17 @@ public class MainMenuController implements Initializable {
                 for (String question : list) {
                     
                     
-                    AnchorPane anchor2 = new AnchorPane();
+                    AnchorPane anchor = new AnchorPane();
                     
-                    Label label = new Label(question);
-                    label.setPrefWidth(575.0);
-                    label.setStyle("-fx-font-weight: bold");
+                    Label displayedQuestion = new Label(question);
+                    displayedQuestion.setPrefWidth(575.0);
+                    displayedQuestion.setStyle("-fx-font-weight: bold");
                     questionsAnswerCheck.put(question, false);
                     
-                    AnchorPane.setBottomAnchor(label, 0.0);
-                    AnchorPane.setTopAnchor(label, 0.0);
-                    AnchorPane.setLeftAnchor(label, 0.0);
-                    AnchorPane.setRightAnchor(label, 0.0);
+                    AnchorPane.setBottomAnchor(displayedQuestion, 0.0);
+                    AnchorPane.setTopAnchor(displayedQuestion, 0.0);
+                    AnchorPane.setLeftAnchor(displayedQuestion, 0.0);
+                    AnchorPane.setRightAnchor(displayedQuestion, 0.0);
                     
                     ToggleGroup group = new ToggleGroup();
                     RadioButton yes = new RadioButton("yes");
@@ -178,47 +183,67 @@ public class MainMenuController implements Initializable {
                     FlowPane flow = new FlowPane();
 
                     
-                    
+                    //TODO: remove duplication of no and na ActionListener's
                     no.setOnAction((ActionEvent event) -> {
-                        if (!area.getText().trim().isEmpty())
-                            questionsAnswerCheck.put(question, true);
+                        
+                        questionsAnswerCheck.put(question, true);
+                        notesOnNoOrNa.put(question, area);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
                         noteLabel.setVisible(true);
                         area.positionCaret(1);
+                        
                     });
                     na.setOnAction((ActionEvent event) -> {
-                        if (!area.getText().trim().isEmpty())
-                            questionsAnswerCheck.put(question, true);
+                        
+                        questionsAnswerCheck.put(question, true);
+                        notesOnNoOrNa.put(question, area);
                         area.setPrefSize(700.0, 65.0);
                         area.setVisible(true);
                         noteLabel.setPrefSize(90.0, 10.0);
                         noteLabel.setVisible(true);
+                        
                     });
                     yes.setOnAction((ActionEvent event) -> {
+                        
                         questionsAnswerCheck.put(question, true);
                         area.setPrefSize(0.0, 0.0);
                         area.setVisible(false);
                         noteLabel.setPrefSize(0.0, 0.0);
                         noteLabel.setVisible(false);
                         flow.resize(800.0, 10.0);
+                        
                     });
                     
                     answers.put(group, question);
                     //TODO:  add ToggleGroup to a list so input can be accessed later
                     
+                    if (question.contains("Braden Scale")){
+                        ComboBox<String> score = new ComboBox<>();
+                        Label spacer = new Label();
+                        spacer.setPrefWidth(280.0);
+                        for (int num = 6; num < BRADEN_SCALE_MAX; num++){
+                            Integer option = num;
+                            score.getItems().add(option.toString());
+                        }
+                        displayedQuestion.setPrefWidth(215.0);
+                        flow.getChildren().addAll(displayedQuestion, score, spacer, yes, no, na, area);
+                      
+                    }
+                    else{
+                        
+                        flow.getChildren().addAll(displayedQuestion, yes, no, na, area);
+                        
+                    }
                     flow.setVgap(10.0);
                     flow.setHgap(10.0);
                     flow.setPrefWrapLength(800.0);
-                    flow.getChildren().addAll(label, yes, no, na, area);
                     if (row % 2 == 1){
-                        flow.setStyle("-fx-background-color: #dbe4f0;");
-                    }
-         
-
-                    anchor2.getChildren().add(flow);
-                    scrollers.get(i).getChildren().addAll(anchor2);
+                            flow.setStyle("-fx-background-color: #dbe4f0;");
+                        }
+                    anchor.getChildren().add(flow);
+                    scrollers.get(i).getChildren().addAll(anchor);
                     row ++;
                 }
             }
@@ -228,6 +253,16 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public Boolean saveFile() {
+       
+        for (String key : notesOnNoOrNa.keySet()){
+            if (notesOnNoOrNa.get(key).getText().isEmpty()){
+                System.out.println(key);
+                return false;
+            }
+            else{
+                System.out.println(notesOnNoOrNa.get(key).getText());
+            }
+        }
         for (String key : questionsAnswerCheck.keySet()){
             if (!questionsAnswerCheck.get(key)){
                 System.out.println(key);
