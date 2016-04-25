@@ -49,7 +49,7 @@ import javafx.scene.text.Font;
 /**
  * FXML Controller class
  *
- * @author Elliott
+ * @author John, Elliott, Zac
  */
 public class MainMenuController implements Initializable {
 
@@ -116,7 +116,7 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
-    //TODO: make partB tab also scrollable
+   
     @FXML
     private void populateTabs(){
         
@@ -124,8 +124,7 @@ public class MainMenuController implements Initializable {
         questionsAnswerCheck = new HashMap<>();
         Map<String, Map<String, List<String>>> content = template.getContent();
         answers = new HashMap<>();
-        //template.traverseMap(); // for testing
-//        template.getHeaders();
+
         int i = 0;
         for (String header : content.keySet()){
             
@@ -302,12 +301,7 @@ public class MainMenuController implements Initializable {
         tabs.add(partB);
         tabs.add(partC);
         template.loadTemplate();
-        for (VBox box : scrollers) {
-            AnchorPane.setBottomAnchor(box, 0.0);
-            AnchorPane.setTopAnchor(box, 0.0);
-            AnchorPane.setLeftAnchor(box, 0.0);
-            AnchorPane.setRightAnchor(box, 0.0);
-        }
+
 
         populateTabs();
         
