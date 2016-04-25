@@ -29,7 +29,6 @@ import javafx.util.Duration;
 
 public class CCAT extends Application {
     
-
     @Override
     public void start(Stage primaryStage) throws IOException, InterruptedException {
         displaySplashScreen(primaryStage);
@@ -40,7 +39,6 @@ public class CCAT extends Application {
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("/medicalIcon.png"));
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("CCAT");
         stage.setScene(scene);
         stage.show();
         DoubleProperty opacity = root.opacityProperty();
