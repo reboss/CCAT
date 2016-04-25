@@ -45,7 +45,7 @@ Management has one following button (i.e. “For Management” > “Analyze the Result
 
 ## Provided Mocks
 
-![Alt text](/mock1.png "Mock 1")
+![Alt text](https://github.com/ElliottSobek/CCAT/blob/master/specs/mock1.png "Mock 1")
 
 
-![Alt text](/mock2.png "Mock 2")
+![Alt text](https://github.com/ElliottSobek/CCAT/blob/master/specs/mock2.png "Mock 2")
