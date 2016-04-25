@@ -130,21 +130,30 @@ public class MainMenuController implements Initializable {
         for (String header : content.keySet()){
             
             scrollers.get(i).setAlignment(Pos.CENTER); 
+            int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)){
                 
                 
-                FlowPane sectionBox = new FlowPane(); 
-                sectionBox.setStyle("-fx-background-color: #336699");
+               
+                FlowPane sectionBox = new FlowPane();
+                if (subheader.compareTo(" ") == 0 || subheader.isEmpty())
+                    sectionBox.setStyle("-fx-background-color: #eeeeee");
+                
+                else
+                    sectionBox.setStyle("-fx-background-color: #336699");
+                
                 Label displayedSubHeader = new Label(subheader);
                 displayedSubHeader.setTextFill(Color.web("#FFFFFF"));
                 displayedSubHeader.setFont(Font.font("Verdana", 15));
+                
                 sectionBox.getChildren().add(displayedSubHeader);
                 sectionBox.setPrefWidth(600.0);
 
-                scrollers.get(i).getChildren().add(sectionBox);
+                scrollers.get(i).getChildren().add(row, sectionBox);
+                row++;
                 
                 List<String> list = content.get(header).get(subheader);
-                int row = 0;
+                
                 for (String question : list) {
                     
                     
@@ -154,11 +163,6 @@ public class MainMenuController implements Initializable {
                     displayedQuestion.setPrefWidth(575.0);
                     displayedQuestion.setStyle("-fx-font-weight: bold");
                     questionsAnswerCheck.put(question, false);
-                    
-                    AnchorPane.setBottomAnchor(displayedQuestion, 0.0);
-                    AnchorPane.setTopAnchor(displayedQuestion, 0.0);
-                    AnchorPane.setLeftAnchor(displayedQuestion, 0.0);
-                    AnchorPane.setRightAnchor(displayedQuestion, 0.0);
                     
                     ToggleGroup group = new ToggleGroup();
                     RadioButton yes = new RadioButton("yes");
@@ -243,7 +247,7 @@ public class MainMenuController implements Initializable {
                             flow.setStyle("-fx-background-color: #dbe4f0;");
                         }
                     anchor.getChildren().add(flow);
-                    scrollers.get(i).getChildren().addAll(anchor);
+                    scrollers.get(i).getChildren().add(row, anchor);
                     row ++;
                 }
             }

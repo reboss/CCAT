@@ -44,7 +44,7 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partCScroller" prefHeight="427.0" prefWidth="640.0" />
+                                    <VBox fx:id="partCScroller" prefHeight="47.0" prefWidth="640.0" />
                                  </children>
                               </AnchorPane>
                           </content>
