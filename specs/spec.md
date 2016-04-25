@@ -11,7 +11,7 @@
 
 * The following logo should be incorporated on the title page:
 
-![Alt text](/greyNunsLogo.png "Grey Nuns")
+![Alt text](https://github.com/ElliottSobek/CCAT/blob/master/specs/greyNunsLogo.png "Grey Nuns")
 
 Two actions directions on the main menu:
 1. Registered Nurses
