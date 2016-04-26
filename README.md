@@ -10,7 +10,7 @@ CCAT will help Nurses or other certified staff complete their daily audits more 
 
 ## Build
 
-This porgram is meant to be built on a windows machine using the Netbeans IDE.
+This program is meant to be built on a windows machine using the Netbeans IDE.
 <ul>
 <li>Before the build, be sure to create a folder called "CCAT-files" inside your "Program Files (x86)" folder with the latest version of <a href="https://bitbucket.org/xerial/sqlite-jdbc/downloads">sqlite-jdbc</a> inside</li>
 <li>On Netbeans, at the top menu select, "Run" > "Clean and Build Project"</li>
