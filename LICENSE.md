@@ -1,0 +1,1 @@
+Copyright (c) [Jhon](https://github.com/reboss), [Elliott](https://github.com/ElliottSobek), [Zac](https://github.com/batogz)
