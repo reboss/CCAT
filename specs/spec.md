@@ -57,5 +57,4 @@ As a nurse practitioner I want to view the average final percentage score from a
 
 ![Alt text](https://github.com/ElliottSobek/CCAT/blob/master/specs/mock1.png "Mock 1")
 
-
 ![Alt text](https://github.com/ElliottSobek/CCAT/blob/master/specs/mock2.png "Mock 2")
