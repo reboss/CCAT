@@ -1,7 +1,6 @@
 # CCAT Requirements
 
 ## General
----
 
 * Title: Critical Care Audit Tool
 
@@ -20,7 +19,6 @@ Two actions directions on the main menu:
 2. Management
 
 ## Nurse
----
 Nurses will have two buttons:
 
 * An “About” section that includes the following:
@@ -32,7 +30,6 @@ Nurses will have two buttons:
 * Has “Complete the Audit” button that leads to the audit form that can be submitted at the end.
 
 ## Management
----
 Management has one following button (i.e. “For Management” > “Analyze the Results”)
 
 1. Analyze the results
@@ -48,8 +45,6 @@ Management has one following button (i.e. “For Management” > “Analyze the Result
     * View the final percentage scores of the audits with a cumulative overall percentage score (e.g. one audit had an overall score of 85%; what is the cumulative score for all audits submitted?)
 
 ## User Stories
----
-
 As a registered nurse I want to perform a critical care audit so that I can inspect the level critical care that was administered.
 
 As a nurse practitioner I want to view a collection of audits so that I can have an easy display of all audits.
@@ -59,7 +54,6 @@ As a nurse practitioner I want to review individual audits so that I can view it
 As a nurse practitioner I want to view the average final percentage score from a collection of audits so that I can assess the overal level of critical care given.
 
 ## Provided Mocks
----
 
 ![Alt text](https://github.com/ElliottSobek/CCAT/blob/master/specs/mock1.png "Mock 1")
 
