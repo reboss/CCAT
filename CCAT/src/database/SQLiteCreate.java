@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package database;
 
 /**
@@ -26,21 +27,21 @@ public class SQLiteCreate
 
       stmt = c.createStatement();
       String sql =  "CREATE TABLE headers ("+
-                    "id INT PRIMARY KEY NOT NULL,"+
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
                     "header TEXT,"+
                     "part SMALLINT);";
-      
+     
      stmt.executeUpdate(sql);
      sql =          "CREATE TABLE questions (" +
-                    "id INT PRIMARY KEY NOT NULL," +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
                     "question TEXT NOT NULL, " +
-                    "hid INT NOT NULL,"+
+                    "hid INTEGER NOT NULL,"+
                     "FOREIGN KEY (hid) REFERENCES headers(id) "+
                     "ON DELETE CASCADE ON UPDATE CASCADE);";
      
      stmt.executeUpdate(sql);
      sql =          "CREATE TABLE users ( " +
-                    "id INT PRIMARY KEY NOT NULL," +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
                     "fName TEXT," +
                     "lName TEXT," +
                     "username TEXT," +
@@ -49,15 +50,24 @@ public class SQLiteCreate
      
      stmt.executeUpdate(sql);
      sql =          "CREATE TABLE answers (" +
-                    "id INT PRIMARY KEY NOT NULL," +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
                     "answer TEXT NOT NULL," +
                     "created DATE,"+
-                    "uid INT NOT NULL," +
-                    "qid INT NOT NULL," +
+                    "uid INTEGER NOT NULL," +
+                    "qid INTEGER NOT NULL," +
                     "FOREIGN KEY (qid) REFERENCES questions(id) " +
                     "ON DELETE CASCADE ON UPDATE CASCADE," +
                     "FOREIGN KEY (uid) REFERENCES users(id) " +
                     "ON DELETE CASCADE ON UPDATE CASCADE);";
+     
+//     stmt.executeUpdate(sql);
+//     sql =          "CREATE TABLE audits(" +
+//                    "uid INT NOT NULL,"+
+//                    "aid INT NOT NULL,"+
+//                    "FOREIGN KEY (aid) REFERENCES answers(id)"+
+//                    "ON DELETE CASCADE ON UPDATE CASCADE,"+
+//                    "FOREIGN KEY (uid) REFERENCES users (id)"+
+//                    "ON DELETE CASCADE ON UPDATE CASCADE);";
      
      stmt.executeUpdate(sql);
      sql =          "CREATE TABLE scores (" +
@@ -74,7 +84,7 @@ public class SQLiteCreate
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
       System.exit(0);
     }
-    System.out.println("Table created successfully");
+    System.out.println("All tables created successfully");
     }
   }
 }
