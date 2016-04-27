@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ccat_model;
 
 import java.io.FileNotFoundException;
@@ -14,85 +9,108 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-
+/**
+ *
+ * @author John
+ */
 public class FileLoader {
-    
+
     private final Scanner fileLoader;
     private final Map<String, Map<String, List<String>>> content;
     private Map<String, List<String>> orderedSubheaders;
-    
-    public FileLoader(FileReader file) throws FileNotFoundException{
+
+    /**
+     *
+     * @param file
+     * @throws FileNotFoundException
+     */
+    public FileLoader(FileReader file) throws FileNotFoundException {
         fileLoader = new Scanner(file);
         content = new HashMap<>();
     }
-    
-    public Map<String, Map<String, List<String>>> getContent(){return Collections.unmodifiableMap(content);}
-    
-    public void traverseMap(){
-        for (String header : orderedSubheaders.keySet()){
+
+    /**
+     * 
+     * @return 
+     */
+    public Map<String, Map<String, List<String>>> getContent() {
+        return Collections.unmodifiableMap(content);
+    }
+
+    /**
+     * 
+     */
+    public void traverseMap() {
+        for (String header : orderedSubheaders.keySet()) {
             System.out.println(header);
-            for (String subheader : orderedSubheaders.get(header)){
+            for (String subheader : orderedSubheaders.get(header)) {
                 System.out.println(subheader);
-                for (String field : content.get(header).get(subheader))
+                for (String field : content.get(header).get(subheader)) {
                     System.out.println(field);
+                }
             }
         }
     }
-    
-    public void loadTemplate(){
+
+    /**
+     * 
+     */
+    public void loadTemplate() {
         String header = "", subHeader = "", temp;
         Map<String, List<String>> sections = new HashMap<>();
         List<String> fields = new ArrayList<>();
         orderedSubheaders = new HashMap<>();
-        
-        while (fileLoader.hasNextLine()){
+
+        while (fileLoader.hasNextLine()) {
             temp = fileLoader.nextLine();
-            
-            
+
             if (temp.isEmpty()) {
                 //System.out.println(subHeader);
                 //sections.put(subHeader, fields); 
                 //fields = new ArrayList<>();
-            }
-            
-            else if  (temp.charAt(0) == '['){
-                if (!header.isEmpty()){
-                    sections.put(subHeader, fields); 
+            } else if (temp.charAt(0) == '[') {
+                if (!header.isEmpty()) {
+                    sections.put(subHeader, fields);
                     content.put(header, sections);
                 }
                 sections = new HashMap<>();
                 fields = new ArrayList<>();
                 header = temp.split("\\[")[1].split("\\]")[0];
                 orderedSubheaders.put(header, new ArrayList<>());
-                
-            }
-            else if (temp.charAt(0) == '-'){
-                
+
+            } else if (temp.charAt(0) == '-') {
+
                 //TODO: make sure the last read in subheader is put to the map properly
                 sections.put(subHeader, fields);
                 fields = new ArrayList<>();
                 orderedSubheaders.get(header).add(subHeader);
                 subHeader = temp.split("-")[1];
-                
-            }
-            
-            else {
+
+            } else {
                 fields.add(temp.substring(2));
             }
-            
+
         }
         content.put(header, sections);
-        
     }
-    
-    public Map<String, List<String>> getOrderedSubheaders(){
-        return orderedSubheaders;
-    } 
-    
+
+    /**
+     * 
+     * @return 
+     */
+    public Map<String, List<String>> getOrderedSubheaders() {
+        return Collections.unmodifiableMap(orderedSubheaders);
+    }
+
     //TODO: make headers return in the same order as they are in questions.txt
-    public List<String> getHeaders(){
+    
+    /**
+     * 
+     * @return 
+     */
+    public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
-        for (String key : content.keySet()){
+        for (String key : content.keySet()) {
             headers.add(key);
             //System.out.println(key);
         }

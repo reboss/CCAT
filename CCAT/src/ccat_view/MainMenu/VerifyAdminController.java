@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ccat_view.MainMenu;
 
 import ccat_model.Account;
@@ -42,12 +37,22 @@ public class VerifyAdminController implements Initializable {
     private Account account;
     private MainMenuController mMC;
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void onBack(ActionEvent event) {
         Stage stage = (Stage) back.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     *
+     * @param event
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     @FXML
     private void onLogin(ActionEvent event) throws FileNotFoundException, IOException {
         if (account.validate(username.getText(), pass.getText())) {
@@ -64,6 +69,10 @@ public class VerifyAdminController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param mMC
+     */
     public final void setMMC(MainMenuController mMC) {
         this.mMC = mMC;
     }
