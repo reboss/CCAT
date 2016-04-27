@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ccat_model;
 
 import java.io.File;
@@ -16,7 +11,7 @@ import java.security.MessageDigest;
 
 /**
  *
- * @author JRebo_000
+ * @author John, Elliott
  */
 public class Account {
 
@@ -25,11 +20,23 @@ public class Account {
     private String pass;
     private final String salt;
 
+    /**
+     * 
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public Account() throws FileNotFoundException, IOException {
         this.salt = "M5@aG9:[2cY0";
         this.accounts = new File("accounts.txt");
     }
 
+    /**
+     * 
+     * @param uname
+     * @param pass
+     * @return
+     * @throws FileNotFoundException 
+     */
     public boolean validate(String uname, String pass) throws FileNotFoundException {
         FileReader reader = new FileReader(accounts);
         Scanner scanner = new Scanner(reader);
@@ -45,6 +52,11 @@ public class Account {
         return false;
     }
 
+    /**
+     * 
+     * @param uname
+     * @param passwd 
+     */
     public void create(String uname, String passwd) {
         this.uname = uname;
         this.pass = passwd;
@@ -61,6 +73,11 @@ public class Account {
         }
     }
 
+    /**
+     * 
+     * @param s
+     * @return 
+     */
     private String MD5(String s) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

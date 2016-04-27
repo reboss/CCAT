@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ccat_view;
 
 import java.io.IOException;
@@ -26,14 +21,25 @@ import javafx.util.Duration;
  *
  * @author John, Elliott, Zac
  */
-
 public class CCAT extends Application {
-    
+
+    /**
+     *
+     * @param primaryStage
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @Override
     public void start(Stage primaryStage) throws IOException, InterruptedException {
         displaySplashScreen(primaryStage);
     }
 
+    /**
+     *
+     * @param stage
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private void displaySplashScreen(Stage stage) throws IOException, InterruptedException {
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Scene scene = new Scene(root);
@@ -57,6 +63,10 @@ public class CCAT extends Application {
         });
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     private void displayLoginScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu/MainMenu.fxml"));
         Scene scene = new Scene(root);
@@ -68,7 +78,8 @@ public class CCAT extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     *
+     * @param args
      */
     public static void main(String[] args) {
         launch(args);

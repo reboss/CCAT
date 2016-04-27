@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ccat_view;
 
 import java.net.URL;
@@ -18,12 +13,13 @@ import javafx.scene.image.ImageView;
  * @author Elliott
  */
 public class SplashScreenController implements Initializable {
-    
+
     @FXML
     private ImageView imageView;
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -31,6 +27,6 @@ public class SplashScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Image img = new Image("/stethoscopeAndComputerNew.jpg");
         imageView.setImage(img);
-    }    
-    
+    }
+
 }

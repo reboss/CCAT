@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ccat_view.MainMenu;
 
 import java.io.IOException;
@@ -73,19 +68,35 @@ public class MainMenuController implements Initializable {
     private Map<String, Boolean> questionsAnswerCheck;
     private Map<String, TextArea> notesOnNoOrNa;
 
+    /**
+     *
+     */
     public MainMenuController() {
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void onLogout(ActionEvent event) {
         admin.setDisable(true);
     }
 
+    /**
+     * 
+     * @param event 
+     */
     @FXML
     private void onExit(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void onAdminTasks(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -101,6 +112,11 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /**
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void onAbout(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("About.fxml"));
@@ -112,6 +128,9 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /**
+     * 
+     */
     @FXML
     private void populateTabs() {
 
@@ -242,6 +261,10 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     @FXML
     public Boolean saveFile() {
 
@@ -262,6 +285,9 @@ public class MainMenuController implements Initializable {
         return true;
     }
 
+    /**
+     * 
+     */
     public final void setAccess() {
         admin.setDisable(false);
     }
@@ -290,7 +316,6 @@ public class MainMenuController implements Initializable {
         template.loadTemplate();
 
         populateTabs();
-
     }
 
 }
