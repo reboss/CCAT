@@ -22,6 +22,8 @@ This program is built and tested on windows.
 
 * Before building CCAT, be sure to create a folder called "CCAT-files" in "Program Files (x86)". In CCAT-files place the latest version of [Sqlite-JDBC] (https://bitbucket.org/xerial/sqlite-jdbc/downloads).
 
+* To create the database, run SQLiteCreate.java as a script within your IDE.  Then run the file SQLiteSeeder (also from your IDE).  Both files are located in package, "database".  These files are not included in the build and should be only run once. 
+
 * To build in Netbeans, select: "Run" > "Clean and Build Project" located in the top navigation bar.
 
 * To build in Eclipse, you can either turn on "Build Automatically" (recommended) or select: "Project" > "Build Project" located in the top navigation bar. Clean before building is recommended.
