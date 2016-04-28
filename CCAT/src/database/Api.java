@@ -60,8 +60,22 @@ public class Api {
      * @param user
      * @return
      */
-    public String isAdmin(String user) {
-        return null;
+    public boolean isAdmin(String user) {
+        if (isUserInDb(user)) {
+            try {
+                PreparedStatement statement =
+                    con.prepareStatement("SELECT users.admin FROM users WHERE users.username = '" + user + "'");
+                ResultSet result = statement.executeQuery();
+                result.next();  // <- Needs testing, may not need.
+                int adminStatus = Integer.parseInt(result.getString("users.admin"));
+                return adminStatus == 1;
+            } catch (SQLException | NumberFormatException e) {
+                System.err.println(e);
+            }
+        } else {
+            // User not in database
+        }
+        return false;
     }
 
     /**
