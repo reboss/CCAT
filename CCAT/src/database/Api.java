@@ -1,5 +1,7 @@
 package database;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,19 +20,18 @@ public class Api {
     private final Connection con;
 
     /**
-     * 
+     *
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public Api() throws ClassNotFoundException, SQLException {
         this.con = getConnection();
     }
 
     /**
-     * 
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException 
+     *
+     * @return @throws ClassNotFoundException
+     * @throws SQLException
      */
     private Connection getConnection() throws ClassNotFoundException, SQLException {
         try {
@@ -42,67 +43,66 @@ public class Api {
         }
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param user
      * @param pass
-     * @return 
+     * @return
      */
     public boolean isValidCredentials(String user, String pass) {
         return false;
     }
-    
+
     /**
-     * 
+     *
      * @param user
-     * @return 
+     * @return
      */
     public String isAdmin(String user) {
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param user
-     * @return 
+     * @return
      */
     public boolean isUserInDb(String user) {
         return false;
     }
-    
+
     /**
-     * 
+     *
      * @param user
      * @param pass
-     * @param access 
+     * @param access
      */
     public void addUser(String user, String pass, String access) {
-        
-    }
-    
-    /**
-     * 
-     * @param user
-     * @param pass
-     * @param access 
-     */
-    public void updateUser(String user, String pass, String access) {
-        
-    }
-    
-    /**
-     * 
-     * @param user 
-     */
-    public void deleteUser(String user) {
-        
+
     }
 
     /**
-     * 
-     * @return
-     * @throws SQLException 
+     *
+     * @param user
+     * @param pass
+     * @param access
+     */
+    public void updateUser(String user, String pass, String access) {
+
+    }
+
+    /**
+     *
+     * @param user
+     */
+    public void deleteUser(String user) {
+
+    }
+
+    /**
+     *
+     * @return @throws SQLException
      */
     public List<String> readDB() throws SQLException {
         List<String> list = null;
@@ -118,22 +118,33 @@ public class Api {
         return list;
 
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     private Map<String, List<String>> getUsersCredentials() {
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param pass
-     * @return 
+     * @return
      */
     private String MD5(String pass) {
-        return null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(pass.getBytes());
+            BigInteger number = new BigInteger(1, messageDigest);
+            String hashtext = number.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
