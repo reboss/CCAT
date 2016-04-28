@@ -63,8 +63,8 @@ public class Api {
     public boolean isAdmin(String user) {
         if (isUserInDb(user)) {
             try {
-                PreparedStatement statement =
-                    con.prepareStatement("SELECT users.admin FROM users WHERE users.username = '" + user + "'");
+                PreparedStatement statement
+                        = con.prepareStatement("SELECT users.admin FROM users WHERE users.username = '" + user + "'");
                 ResultSet result = statement.executeQuery();
                 result.next();  // <- Needs testing, may not need.
                 int adminStatus = Integer.parseInt(result.getString("users.admin"));
@@ -100,11 +100,19 @@ public class Api {
     /**
      *
      * @param user
-     * @param pass
+     * @param password
      * @param access
      */
-    public void addUser(String user, String pass, String access) {
-
+    public void addUser(String user, String password, String access) {
+        String pass = MD5(password);
+        try {
+            PreparedStatement posted = con.prepareStatement("INSERT INTO "
+                    + "users (username, password, admin) VALUES "
+                    + "('" + user + "', '" + pass + "', '" + access + "')");
+            posted.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     /**
@@ -156,9 +164,28 @@ public class Api {
 
     /**
      *
+     * @param user
      * @return
      */
-    private Map<String, List<String>> getUsersCredentials() {
+    private Map<String, String> getUsersCredentials(String user) {
+        if (isUserInDb(user)) {
+            try {
+                PreparedStatement statement
+                        = con.prepareStatement("SELECT users.username, users.password");
+                ResultSet result = statement.executeQuery();
+                Map<String, String> map = new HashMap<>();
+                String username, password;
+                result.next(); // <- Needs testing, may not need.
+                username = result.getString("users.username");
+                password = result.getString("users.password");
+                map.put(username, password);
+                return map;
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        } else {
+            // User not in database
+        }
         return null;
     }
 
