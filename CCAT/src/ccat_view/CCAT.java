@@ -1,6 +1,9 @@
 package ccat_view;
 
+import database.Api;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -80,9 +83,19 @@ public class CCAT extends Application {
     /**
      *
      * @param args
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        Api api = new Api();
+        
+        List<String> list;
+        list = api.readDB();
+        for (String s : list) {
+            System.out.println(s);
+        }
+        System.exit(0);
+//        launch(args);
     }
 
 }
