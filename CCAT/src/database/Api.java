@@ -52,6 +52,20 @@ public class Api {
      * @return
      */
     public boolean isValidCredentials(String user, String pass) {
+        if (isUserInDb(user)) {
+            try {
+                PreparedStatement statement
+                        = con.prepareStatement("SELECT users.password FROM users WHERE users.username = '" + user + "'");
+                ResultSet result = statement.executeQuery();
+                result.next(); // <- Needs testing, may not need.
+                return result.getString("users.password").equals(pass);
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+            return false;
+        } else {
+            // User not in database
+        }
         return false;
     }
 
@@ -104,14 +118,18 @@ public class Api {
      * @param access
      */
     public void addUser(String user, String password, String access) {
-        String pass = MD5(password);
-        try {
-            PreparedStatement posted = con.prepareStatement("INSERT INTO "
-                    + "users (username, password, admin) VALUES "
-                    + "('" + user + "', '" + pass + "', '" + access + "')");
-            posted.executeUpdate();
-        } catch (Exception e) {
-            System.err.println(e);
+        if (isUserInDb(user)) {
+            // No duplicate usernames allowed.
+        } else {
+            String pass = MD5(password);
+            try {
+                PreparedStatement posted = con.prepareStatement("INSERT INTO "
+                        + "users (username, password, admin) VALUES "
+                        + "('" + user + "', '" + pass + "', '" + access + "')");
+                posted.executeUpdate();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
         }
     }
 
