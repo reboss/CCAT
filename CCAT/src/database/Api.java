@@ -118,11 +118,31 @@ public class Api {
     /**
      *
      * @param user
-     * @param pass
-     * @param access
+     * @param password
+     * @param admin
      */
-    public void updateUser(String user, String pass, String access) {
+    public void updateUser(String user, String password, String admin) {
+        if (isUserInDb(user)) {
+            Map<String, List<String>> creds = getUsersCredentials(user);
+            String pass = "", access = "";
+            if (password.equals("")) {
+                pass = creds.get(user).get(0);
+            }
+            if (admin.equals("")) {
+                access = creds.get(user).get(1);
+            }
 
+            try {
+                PreparedStatement posted = con.prepareStatement(
+                        "UPDATE users SET users.password = '" + pass + "', users.admin = '"
+                        + access + "' WHERE users.username = '" + user + "'");
+                posted.executeUpdate();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        } else {
+            // User not in database
+        }
     }
 
     /**
@@ -167,18 +187,21 @@ public class Api {
      * @param user
      * @return
      */
-    private Map<String, String> getUsersCredentials(String user) {
+    private Map<String, List<String>> getUsersCredentials(String user) {
         if (isUserInDb(user)) {
             try {
                 PreparedStatement statement
                         = con.prepareStatement("SELECT users.username, users.password");
                 ResultSet result = statement.executeQuery();
-                Map<String, String> map = new HashMap<>();
-                String username, password;
-                result.next(); // <- Needs testing, may not need.
-                username = result.getString("users.username");
-                password = result.getString("users.password");
-                map.put(username, password);
+                Map<String, List<String>> map = new HashMap<>();
+                String username;
+                while (result.next()) {
+                    List<String> passAndType = new ArrayList<>();
+                    username = result.getString("users.UName");
+                    passAndType.add(result.getString("users.UPW"));
+                    passAndType.add(result.getString("users.UType"));
+                    map.put(username, passAndType);
+                }
                 return map;
             } catch (Exception e) {
                 System.err.println(e);
