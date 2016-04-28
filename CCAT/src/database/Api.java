@@ -97,7 +97,13 @@ public class Api {
      * @param user
      */
     public void deleteUser(String user) {
-
+        try {
+            PreparedStatement posted = 
+                con.prepareStatement("DELETE FROM users WHERE users.username = '" + user + "'");
+            posted.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     /**
