@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -41,6 +42,62 @@ public class Api {
         }
         return null;
     }
+    
+    /**
+     * 
+     * @param user
+     * @param pass
+     * @return 
+     */
+    public boolean isValidCredentials(String user, String pass) {
+        return false;
+    }
+    
+    /**
+     * 
+     * @param user
+     * @return 
+     */
+    public String isAdmin(String user) {
+        return null;
+    }
+    
+    /**
+     * 
+     * @param user
+     * @return 
+     */
+    public boolean isUserInDb(String user) {
+        return false;
+    }
+    
+    /**
+     * 
+     * @param user
+     * @param pass
+     * @param access 
+     */
+    public void addUser(String user, String pass, String access) {
+        
+    }
+    
+    /**
+     * 
+     * @param user
+     * @param pass
+     * @param access 
+     */
+    public void updateUser(String user, String pass, String access) {
+        
+    }
+    
+    /**
+     * 
+     * @param user 
+     */
+    public void deleteUser(String user) {
+        
+    }
 
     /**
      * 
@@ -60,6 +117,23 @@ public class Api {
         }
         return list;
 
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    private Map<String, List<String>> getUsersCredentials() {
+        return null;
+    }
+    
+    /**
+     * 
+     * @param pass
+     * @return 
+     */
+    private String MD5(String pass) {
+        return null;
     }
 
 }
