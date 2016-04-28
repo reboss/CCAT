@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,16 @@ public class Api {
      * @return
      */
     public boolean isUserInDb(String user) {
+        try {
+            PreparedStatement statement
+                    = con.prepareStatement("SELECT users.username FROM users WHERE users.username = '" + user + "'");
+            ResultSet result = statement.executeQuery();
+            result.next(); // <- Needs testing, may not need.
+            String s = result.getString("users.username");
+            return s == null;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
         return false;
     }
 
@@ -97,12 +108,16 @@ public class Api {
      * @param user
      */
     public void deleteUser(String user) {
-        try {
-            PreparedStatement posted = 
-                con.prepareStatement("DELETE FROM users WHERE users.username = '" + user + "'");
-            posted.executeUpdate();
-        } catch (Exception e) {
-            System.err.println(e);
+        if (isUserInDb(user)) {
+            try {
+                PreparedStatement statement
+                        = con.prepareStatement("DELETE FROM users WHERE users.username = '" + user + "'");
+                statement.executeUpdate();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        } else {
+            // No user in database
         }
     }
 
