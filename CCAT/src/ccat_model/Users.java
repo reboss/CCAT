@@ -113,19 +113,23 @@ public class Users {
 
     /**
      *
-     * @param user
+     * @param fName
+     * @param lName
      * @param password
      * @param access
      */
-    public void addUser(String user, String password, String access) {
-        if (isUserInDb(user)) {
+    public void addUser(String fName, String lName, String password, String access) {
+        // Make auto username
+        String username = createUserName(fName, lName);
+        if (isUserInDb(username)) {
             // No duplicate usernames allowed.
         } else {
             String pass = MD5(password);
             try {
                 PreparedStatement posted = con.prepareStatement("INSERT INTO "
-                        + "users (username, password, admin) VALUES "
-                        + "('" + user + "', '" + pass + "', '" + access + "')");
+                        + "users (fName, lName,username, password, admin) VALUES "
+                        + "('" + fName + "', '" + lName + "', '" + username + "', '"
+                        + pass + "', '" + access + "')");
                 posted.executeUpdate();
             } catch (Exception e) {
                 System.err.println(e);
@@ -213,6 +217,28 @@ public class Users {
         } catch (Exception e) {
             System.err.println(e);
         }
+    }
+
+    /**
+     *
+     * @param fName
+     * @param lName
+     * @return
+     */
+    private String createUserName(String fName, String lName) {
+        String username = lName + fName.charAt(0);
+        int i = 0;
+        while (isUserInDb(username)) {
+            // If username does not have number on end add number
+            if (!Character.isDigit(username.charAt(username.length()- 1))) {
+                i++;
+                username += Integer.toString(i);
+            } else { // Replace number on end
+                i++;
+                username = username.replace(Integer.toString(i-1), Integer.toString(i));
+            }
+        }
+        return username;
     }
 
     /**
