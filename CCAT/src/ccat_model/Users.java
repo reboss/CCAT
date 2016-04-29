@@ -119,21 +119,17 @@ public class Users {
      * @param access
      */
     public void addUser(String fName, String lName, String password, String access) {
-        // Make auto username
+        // Make auto username, createusername handles for isUserInDb thus no checking needed
         String username = createUserName(fName, lName);
-        if (isUserInDb(username)) {
-            // No duplicate usernames allowed.
-        } else {
-            String pass = MD5(password);
-            try {
-                PreparedStatement posted = con.prepareStatement("INSERT INTO "
-                        + "users (fName, lName,username, password, admin) VALUES "
-                        + "('" + fName + "', '" + lName + "', '" + username + "', '"
-                        + pass + "', '" + access + "')");
-                posted.executeUpdate();
-            } catch (Exception e) {
-                System.err.println(e);
-            }
+        String pass = MD5(password);
+        try {
+            PreparedStatement posted = con.prepareStatement("INSERT INTO "
+                    + "users (fName, lName,username, password, admin) VALUES "
+                    + "('" + fName + "', '" + lName + "', '" + username + "', '"
+                    + pass + "', '" + access + "')");
+            posted.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e);
         }
     }
 
@@ -230,12 +226,12 @@ public class Users {
         int i = 0;
         while (isUserInDb(username)) {
             // If username does not have number on end add number
-            if (!Character.isDigit(username.charAt(username.length()- 1))) {
+            if (!Character.isDigit(username.charAt(username.length() - 1))) {
                 i++;
                 username += Integer.toString(i);
             } else { // Replace number on end
                 i++;
-                username = username.replace(Integer.toString(i-1), Integer.toString(i));
+                username = username.replace(Integer.toString(i - 1), Integer.toString(i));
             }
         }
         return username;
