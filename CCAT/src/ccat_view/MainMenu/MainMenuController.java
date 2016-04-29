@@ -1,5 +1,6 @@
 package ccat_view.MainMenu;
 
+import ccat_model.QuestionLoader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,9 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ccat_model.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,7 @@ public class MainMenuController implements Initializable {
     private Tab admin;
 
     private final int BRADEN_SCALE_MAX = 24;
-    private FileLoader template;
+    private QuestionLoader template;
     private List<Tab> tabs;
     private List<VBox> scrollers;
     private Map<ToggleGroup, String> answers;
@@ -301,8 +302,8 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            this.template = new FileLoader(new FileReader("questions.txt"));
-        } catch (FileNotFoundException ex) {
+            this.template = new QuestionLoader();
+        } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         scrollers = new ArrayList<>();
@@ -313,7 +314,12 @@ public class MainMenuController implements Initializable {
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);
-        template.loadTemplate();
+        
+        try {
+            template.loadQuestions();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         populateTabs();
     }

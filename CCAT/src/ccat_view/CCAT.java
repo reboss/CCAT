@@ -1,6 +1,10 @@
 package ccat_view;
 
+import ccat_model.QuestionLoader;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -30,7 +34,7 @@ public class CCAT extends Application {
      * @throws InterruptedException
      */
     @Override
-    public void start(Stage primaryStage) throws IOException, InterruptedException {
+    public void start(Stage primaryStage) throws IOException, InterruptedException, SQLException {
         displaySplashScreen(primaryStage);
     }
 
@@ -40,7 +44,9 @@ public class CCAT extends Application {
      * @throws IOException
      * @throws InterruptedException
      */
-    private void displaySplashScreen(Stage stage) throws IOException, InterruptedException {
+    private void displaySplashScreen(Stage stage) throws IOException, InterruptedException, SQLException {
+        HashMap<String, HashMap<String, ArrayList>> template = new HashMap<>();
+//        (new Thread(new QuestionLoader())).start();
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("/medicalIcon.png"));
@@ -55,7 +61,7 @@ public class CCAT extends Application {
         ft.play();
         ft.setOnFinished((ActionEvent event) -> {
             try {
-                displayLoginScene();
+                displayMainScene();
             } catch (IOException ex) {
                 Logger.getLogger(CCAT.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -67,7 +73,7 @@ public class CCAT extends Application {
      *
      * @throws IOException
      */
-    private void displayLoginScene() throws IOException {
+    private void displayMainScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu/MainMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();

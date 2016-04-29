@@ -1,4 +1,4 @@
-package database;
+package ccat_model;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author Elliott
  */
-public class Api {
+public class Users {
 
     private final Connection con;
 
@@ -25,7 +25,7 @@ public class Api {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public Api() throws ClassNotFoundException, SQLException {
+    public Users() throws ClassNotFoundException, SQLException {
         this.con = getConnection();
     }
 

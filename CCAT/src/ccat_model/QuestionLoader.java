@@ -1,5 +1,10 @@
 package ccat_model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,18 +19,66 @@ public class QuestionLoader {
 
     private final Map<String, Map<String, List<String>>> content;
     private Map<String, List<String>> orderedSubheaders;
+    private Connection dbConnection;
 
     /**
      * 
      */
-    public QuestionLoader() {
+    public QuestionLoader() throws SQLException {
         content = new HashMap<>();
+        orderedSubheaders = new HashMap<>();
+        dbConnection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
+        dbConnection.setAutoCommit(false);
+        
+        
     }
 
     /**
      * 
      */
-    public void loadQuestions() {
+    public void loadQuestions() throws SQLException {
+        
+        Statement stmt1 = dbConnection.createStatement();
+        Statement stmt2 = dbConnection.createStatement();
+        String sql = "SELECT id, part, header FROM headers";
+        ResultSet headerQueryResults = stmt1.executeQuery(sql);
+        
+        
+        while (headerQueryResults.next()){
+            
+            int part = headerQueryResults.getInt("part");
+            String header = headerQueryResults.getString("header");
+            
+            Map<String, List<String>> questions = new HashMap<>();
+            List<String> headers = new ArrayList<>();
+            
+            if (content.get("Part "+part) == null){
+                
+                content.put("Part "+ part, questions);
+                orderedSubheaders.put("Part "+part, headers);
+                
+            }
+            
+            if (content.get("Part "+part).get(header) == null){
+                
+                content.get("Part "+part).put(header, new ArrayList<>());
+                orderedSubheaders.get("Part "+part).add(header);
+                
+            }
+            
+            sql = "SELECT question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
+            ResultSet questionsQueryResults = stmt2.executeQuery(sql);
+            
+            while (questionsQueryResults.next()){              
+                
+                String question = questionsQueryResults.getString("question");                
+                content.get("Part "+part).get(header).add(question);
+                
+                
+            }
+
+        }
+        //this.traverseMap();
     }
 
     /**
