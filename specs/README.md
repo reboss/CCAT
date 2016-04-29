@@ -31,17 +31,17 @@ Nurses will have two buttons:
 
 ## Admin
 
-    * This would be a collection of all the audit results as well as an easy display of data analysis; it would be preferred if the user would have to enter a passcode to ensure confidentiality and sole management usage
+* This would be a collection of all the audit results as well as an easy display of data analysis; it would be preferred if the user would have to enter a passcode to ensure confidentiality and sole management usage
 
-    * This can be in the form of charts, etc. with percentages of yes/no/not applicable  answers from each question
+* This can be in the form of charts, etc. with percentages of yes/no/not applicable  answers from each question
 
-    * Display how many audits have been submitted 
+* Display how many audits have been submitted 
 
-    * Have the ability to review each audit individually (on audits with a percentage of 100% display the Braden Scale score only)
+* Have the ability to review each audit individually (on audits with a percentage of 100% display the Braden Scale score only)
     
-    * Have the ability to delete old, completed audit forms
+* Have the ability to delete old, completed audit forms
 
-    * View the final percentage scores of the cumulative overall percentage score (e.g. one audit had an overall score of 85%; what is the cumulative score for all audits submitted? (daily, monthly, quarterly)) (percentages are calculated for answers of "yes", an audit form with a ratio of 3:4 "yes" answers will receive a score of 75%)
+* View the final percentage scores of the cumulative overall percentage score (e.g. one audit had an overall score of 85%; what is the cumulative score for all audits submitted? (daily, monthly, quarterly)) (percentages are calculated for answers of "yes", an audit form with a ratio of 3:4 "yes" answers will receive a score of 75%)
 
 ## User Stories
 As a registered nurse I want to perform a critical care audit so that I can inspect the level critical care that was administered.
