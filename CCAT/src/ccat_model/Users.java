@@ -202,6 +202,21 @@ public class Users {
 
     /**
      *
+     * @throws java.sql.SQLException
+     */
+    public void deleteOutOfDateRecords() throws SQLException {
+        try {
+            PreparedStatement statement
+                    = con.prepareStatement("DELETE FROM answers WHERE "
+                            + "answers.created < NOW() - INTERVAL 14 DAY");
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    /**
+     *
      * @param user
      * @return
      */
