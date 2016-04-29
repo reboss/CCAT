@@ -1,10 +1,9 @@
 package ccat_view;
 
-import ccat_model.QuestionLoader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -32,6 +31,7 @@ public class CCAT extends Application {
      * @param primaryStage
      * @throws IOException
      * @throws InterruptedException
+     * @throws java.sql.SQLException
      */
     @Override
     public void start(Stage primaryStage) throws IOException, InterruptedException, SQLException {
@@ -45,7 +45,7 @@ public class CCAT extends Application {
      * @throws InterruptedException
      */
     private void displaySplashScreen(Stage stage) throws IOException, InterruptedException, SQLException {
-        HashMap<String, HashMap<String, ArrayList>> template = new HashMap<>();
+        HashMap<String, HashMap<String, List<String>>> template = new HashMap<>();
 //        (new Thread(new QuestionLoader())).start();
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Scene scene = new Scene(root);
