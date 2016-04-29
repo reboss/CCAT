@@ -21,13 +21,13 @@ Two actions directions on the main menu:
 ## Nurse
 Nurses will have two buttons:
 
-* An "About" section that includes the following:
+* An "About" section that includes the following:
 
     * About: The Critical Care Audit Tool (CCAT) is an evidenced-based, self-educating audit tool for Registered Nurses of the ICU and CCU units at the Grey Nuns Hospital to increase their knowledge in documentation while increasing their patient care competencies, care planning, and professional practice. 
 
     * Aim: To meet the needs of high acuity patients, accreditation standards, best practice standards, and continuing competency requirements, all while meeting the greater goal of improving quality of care and subsequently, patient safety.
 
-* Has "Complete the Audit" button that leads to the audit form that can be submitted at the end.
+* Has "Complete the Audit" button that leads to the audit form that can be submitted at the end.
 
 ## Admin
 
