@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -18,6 +20,7 @@ public class AnswerModel {
     
     public AnswerModel() throws SQLException{
         connection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
+
         connection.setAutoCommit(false);
     }
     
@@ -29,6 +32,11 @@ public class AnswerModel {
         String qid = "(SELECT id FROM questions WHERE question = ";
         String sql =    "INSERT INTO answers ()"+
                         "VALUES ()";
+
+    }
+    
+    public void saveAnswers(ArrayList<String> answers){
+
         
     }
     
