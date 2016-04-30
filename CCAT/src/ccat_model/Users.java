@@ -19,6 +19,7 @@ import java.util.Map;
 public class Users {
 
     private final Connection con;
+    private final String salt;
 
     /**
      *
@@ -27,6 +28,7 @@ public class Users {
      */
     public Users() throws ClassNotFoundException, SQLException {
         this.con = getConnection();
+        this.salt = "M5@aG9:[2cY0";
     }
 
     /**
@@ -55,10 +57,11 @@ public class Users {
         if (isUserInDb(user)) {
             try {
                 PreparedStatement statement
-                        = con.prepareStatement("SELECT users.password FROM users WHERE users.username = '" + user + "'");
+                        = con.prepareStatement("SELECT password FROM users "
+                                + "WHERE username = '" + user + "'");
                 ResultSet result = statement.executeQuery();
-                result.next(); // <- Needs testing, may not need.
-                return result.getString("users.password").equals(pass);
+                result.next();
+                return result.getString("password").equals(MD5(pass + this.salt));
             } catch (Exception e) {
                 System.err.println(e);
             }
@@ -78,10 +81,11 @@ public class Users {
         if (isUserInDb(user)) {
             try {
                 PreparedStatement statement
-                        = con.prepareStatement("SELECT users.admin FROM users WHERE users.username = '" + user + "'");
+                        = con.prepareStatement("SELECT users.admin FROM users "
+                                + "WHERE users.username = '" + user + "'");
                 ResultSet result = statement.executeQuery();
-                result.next();  // <- Needs testing, may not need.
-                int adminStatus = Integer.parseInt(result.getString("users.admin"));
+                result.next();
+                int adminStatus = result.getInt("users.admin");
                 return adminStatus == 1;
             } catch (SQLException | NumberFormatException e) {
                 System.err.println(e);
@@ -94,39 +98,20 @@ public class Users {
 
     /**
      *
-     * @param user
-     * @return
-     */
-    public boolean isUserInDb(String user) {
-        try {
-            PreparedStatement statement
-                    = con.prepareStatement("SELECT users.username FROM users WHERE users.username = '" + user + "'");
-            ResultSet result = statement.executeQuery();
-            result.next(); // <- Needs testing, may not need.
-            String s = result.getString("users.username");
-            return s == null;
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        return false;
-    }
-
-    /**
-     *
      * @param fName
      * @param lName
      * @param password
      * @param access
      */
-    public void addUser(String fName, String lName, String password, String access) {
+    public void addUser(String fName, String lName, String password, int access) {
         // Make auto username, createusername handles for isUserInDb thus no checking needed
         String username = createUserName(fName, lName);
-        String pass = MD5(password);
+        String pass = MD5(password + this.salt);
         try {
             PreparedStatement posted = con.prepareStatement("INSERT INTO "
-                    + "users (fName, lName,username, password, admin) VALUES "
+                    + "users (fName, lName, username, password, admin) VALUES "
                     + "('" + fName + "', '" + lName + "', '" + username + "', '"
-                    + pass + "', '" + access + "')");
+                    + pass + "', " + access + ")");
             posted.executeUpdate();
         } catch (Exception e) {
             System.err.println(e);
@@ -139,21 +124,20 @@ public class Users {
      * @param password
      * @param admin
      */
-    public void updateUser(String user, String password, String admin) {
+    public void updateUser(String user, String password, int admin) {
         if (isUserInDb(user)) {
             Map<String, List<String>> creds = getUsersCredentials(user);
-            String pass = "", access = "";
+            String pass, access = "";
             if (password.equals("")) {
-                pass = creds.get(user).get(0);
-            }
-            if (admin.equals("")) {
-                access = creds.get(user).get(1);
+                pass = MD5(creds.get(user).get(0) + this.salt);
+            } else {
+                pass = MD5(password + this.salt);
             }
 
             try {
                 PreparedStatement posted = con.prepareStatement(
-                        "UPDATE users SET users.password = '" + pass + "', users.admin = '"
-                        + access + "' WHERE users.username = '" + user + "'");
+                        "UPDATE users SET users.password = '" + pass + "', users.admin = "
+                        + access + " WHERE users.username = '" + user + "'");
                 posted.executeUpdate();
             } catch (Exception e) {
                 System.err.println(e);
@@ -214,6 +198,26 @@ public class Users {
             System.err.println(e);
         }
     }
+    
+    /**
+     *
+     * @param user
+     * @return
+     */
+    private boolean isUserInDb(String user) {
+        try {
+            PreparedStatement statement
+                    = con.prepareStatement("SELECT username FROM users "
+                            + "WHERE username = '" + user + "'");
+            ResultSet result = statement.executeQuery();
+            result.next();
+            String s = result.getString("username");
+            return !(s == null);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+    }
 
     /**
      *
@@ -252,9 +256,9 @@ public class Users {
                 String username;
                 while (result.next()) {
                     List<String> passAndType = new ArrayList<>();
-                    username = result.getString("users.UName");
-                    passAndType.add(result.getString("users.UPW"));
-                    passAndType.add(result.getString("users.UType"));
+                    username = result.getString("users.username");
+                    passAndType.add(result.getString("users.password"));
+                    passAndType.add(result.getString("users.admin"));
                     map.put(username, passAndType);
                 }
                 return map;
