@@ -1,7 +1,9 @@
 package ccat_model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,10 +14,10 @@ public class AnswerModel {
     private Connection connection;
     
     public AnswerModel() throws SQLException{
-        connection = DBConnection.getInstance();
+        connection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
     }
     
-    public void saveAnswers(){
+    public void saveAnswers(ArrayList<String> answers){
         
     }
     
