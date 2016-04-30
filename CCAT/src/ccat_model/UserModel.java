@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author Elliott
  */
-public class Users {
+public class UserModel {
 
     private final Connection con;
     private final String salt;
@@ -34,7 +34,7 @@ public class Users {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public Users() throws ClassNotFoundException, SQLException {
+    public UserModel() throws ClassNotFoundException, SQLException {
         this.con = getConnection();
         this.salt = "M5@aG9:[2cY0";
     }
