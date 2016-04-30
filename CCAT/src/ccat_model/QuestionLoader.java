@@ -26,8 +26,7 @@ public class QuestionLoader {
      */
     public QuestionLoader() throws SQLException {
         content = new HashMap<>();
-        dbConnection = null;
-        
+        orderedSubheaders = new HashMap<>();
         dbConnection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
         dbConnection.setAutoCommit(false);
         
@@ -39,39 +38,47 @@ public class QuestionLoader {
      */
     public void loadQuestions() throws SQLException {
         
-        Statement stmt = null;
-        stmt = dbConnection.createStatement();
+        Statement stmt1 = dbConnection.createStatement();
+        Statement stmt2 = dbConnection.createStatement();
         String sql = "SELECT id, part, header FROM headers";
-        ResultSet headerQueryResults = stmt.executeQuery(sql);
+        ResultSet headerQueryResults = stmt1.executeQuery(sql);
+        System.out.println(headerQueryResults.toString());
+        
         
         while (headerQueryResults.next()){
             
             int part = headerQueryResults.getInt("part");
             String header = headerQueryResults.getString("header");
+            Map<String, List<String>> questions = new HashMap<>();
+            List<String> headers = new ArrayList<>();
             
-            if (content.get(part) == null){
-                content.put("Part "+ part, new HashMap<>());
-                orderedSubheaders.put("Part "+part, new ArrayList<>());
+            if (content.get("Part "+part) == null){
+                
+                content.put("Part "+ part, questions);
+                orderedSubheaders.put("Part "+part, headers);
+                
             }
             
-            sql = "SELECT question, hid, FROM questions WHERE hid = " + headerQueryResults.getInt("id");
-            ResultSet questionsQueryResults = stmt.executeQuery(sql);
-            
-            while (questionsQueryResults.next()){
+            if (content.get("Part "+part).get(header) == null){
                 
-                if (content.get(part).get(header) == null){
-                    content.get(part).put(header, new ArrayList<>());
-                    orderedSubheaders.get(part).add(header);
-                }
+                content.get("Part "+part).put(header, new ArrayList<>());
+                orderedSubheaders.get("Part "+part).add(header);
+                
+            }
+            
+            sql = "SELECT question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
+            ResultSet questionsQueryResults = stmt2.executeQuery(sql);
+            
+            while (questionsQueryResults.next()){              
                 
                 String question = questionsQueryResults.getString("question");                
-                content.get(part).get(header).add(question);
+                content.get("Part "+part).get(header).add(question);
+                
                 
             }
-            
-            
 
         }
+        //this.traverseMap();
     }
 
     /**

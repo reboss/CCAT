@@ -55,7 +55,7 @@ public class CCAT extends Application {
         ft.play();
         ft.setOnFinished((ActionEvent event) -> {
             try {
-                displayLoginScene();
+                displayMainScene();
             } catch (IOException ex) {
                 Logger.getLogger(CCAT.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -67,7 +67,7 @@ public class CCAT extends Application {
      *
      * @throws IOException
      */
-    private void displayLoginScene() throws IOException {
+    private void displayMainScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu/MainMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();

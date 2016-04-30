@@ -51,7 +51,7 @@ public class SQLiteSeeder
           
           else{
               sql =   "INSERT INTO questions (question, hid) " +
-                    "VALUES ('" + line + "', " + headerId + ");"; 
+                    "VALUES ('" + line.split(" ", 2)[1] + "', " + headerId + ");"; 
               stmt.executeUpdate(sql);
           }
       }
