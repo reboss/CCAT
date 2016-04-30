@@ -1,3 +1,11 @@
+/**
+ * Copyright (C) John Robbins, Elliott Sobek, Zac Batog.
+ * Github profiles:
+ * John Robbins (https://github.com/reboss),
+ * Elliott Sobek (https://github.com/ElliottSobek),
+ * Zac Batog (https://github.com/batogz) 
+ */
+
 package ccat_model;
 
 import java.sql.Connection;
@@ -18,11 +26,12 @@ import java.util.Map;
 public class QuestionLoader {
 
     private final Map<String, Map<String, List<String>>> content;
-    private Map<String, List<String>> orderedSubheaders;
-    private Connection dbConnection;
+    private final Map<String, List<String>> orderedSubheaders;
+    private final Connection dbConnection;
 
     /**
      * 
+     * @throws java.sql.SQLException
      */
     public QuestionLoader() throws SQLException {
         content = new HashMap<>();
@@ -35,6 +44,7 @@ public class QuestionLoader {
 
     /**
      * 
+     * @throws java.sql.SQLException
      */
     public void loadQuestions() throws SQLException {
         

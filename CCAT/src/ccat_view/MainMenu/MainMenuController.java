@@ -1,3 +1,11 @@
+/**
+ * Copyright (C) John Robbins, Elliott Sobek, Zac Batog.
+ * Github profiles:
+ * John Robbins (https://github.com/reboss),
+ * Elliott Sobek (https://github.com/ElliottSobek),
+ * Zac Batog (https://github.com/batogz) 
+ */
+
 package ccat_view.MainMenu;
 
 import ccat_model.QuestionLoader;
@@ -11,9 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
