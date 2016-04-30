@@ -27,7 +27,7 @@ public class QuestionLoader {
     public QuestionLoader() throws SQLException {
         content = new HashMap<>();
         orderedSubheaders = new HashMap<>();
-        dbConnection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
+        dbConnection = DBConnection.getInstance();
         dbConnection.setAutoCommit(false);
         
         

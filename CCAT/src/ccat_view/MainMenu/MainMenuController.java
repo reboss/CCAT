@@ -271,7 +271,8 @@ public class MainMenuController implements Initializable {
 
         for (String key : notesOnNoOrNa.keySet()) {
             if (notesOnNoOrNa.get(key).getText().isEmpty()) {
-                System.out.println(key);
+                notesOnNoOrNa.get(key).setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+                notesOnNoOrNa.get(key).parentProperty();
                 return false;
             } else {
                 System.out.println(notesOnNoOrNa.get(key).getText());

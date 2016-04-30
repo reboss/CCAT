@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author Elliott
  */
-public class Users {
+public class UserModel {
 
     private final Connection con;
 
@@ -25,7 +25,7 @@ public class Users {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public Users() throws ClassNotFoundException, SQLException {
+    public UserModel() throws ClassNotFoundException, SQLException {
         this.con = getConnection();
     }
 
