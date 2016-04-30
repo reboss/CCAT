@@ -42,13 +42,13 @@ public class QuestionLoader {
         Statement stmt2 = dbConnection.createStatement();
         String sql = "SELECT id, part, header FROM headers";
         ResultSet headerQueryResults = stmt1.executeQuery(sql);
-        System.out.println(headerQueryResults.toString());
         
         
         while (headerQueryResults.next()){
             
             int part = headerQueryResults.getInt("part");
             String header = headerQueryResults.getString("header");
+            
             Map<String, List<String>> questions = new HashMap<>();
             List<String> headers = new ArrayList<>();
             

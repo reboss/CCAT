@@ -314,7 +314,7 @@ public class MainMenuController implements Initializable {
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);
-       
+        
         try {
             template.loadQuestions();
         } catch (SQLException ex) {
