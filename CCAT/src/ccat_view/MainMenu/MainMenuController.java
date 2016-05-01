@@ -204,8 +204,9 @@ public class MainMenuController implements Initializable {
         answerModel = new AnswerModel();
         
         for (String key : notesOnNoOrNa.keySet()) {
-            
-            if (notesOnNoOrNa.get(key).getText().isEmpty()) {                
+
+            if (notesOnNoOrNa.get(key).getText().isEmpty()) {
+                
                 notesOnNoOrNa.get(key).setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
                 notesOnNoOrNa.get(key).parentProperty();
 
