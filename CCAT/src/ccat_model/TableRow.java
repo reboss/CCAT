@@ -16,7 +16,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 /**
  *
@@ -35,7 +34,7 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-    private final Label question;
+    private Label question;
     private final Tab parentTab;
 
     /**
@@ -45,25 +44,25 @@ public class TableRow extends FlowPane {
      * @param width
      * @param isHeader
      */
-    public TableRow(String question, Tab parentTab, double width, Boolean isHeader) {
+    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader) {
 
-        this.question = new Label(question);
+        this.question = question;
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
         this.yes = new RadioButton("");
         this.no = new RadioButton("");
         this.na = new RadioButton("");
-        this.notes = new TextArea();
-
+        this.notes = new TextArea();        
+        this.isChecked = false;
+        this.isNotHeader = false;
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
         this.yesLabel = new Label("yes");
         yesLabel.setPrefWidth(width * 0.06);
         this.noLabel = new Label("no");
         noLabel.setPrefWidth(width * 0.06);
-        this.naLabel = new Label("na");
+        this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width * 0.06);
-
         notes.setPrefWidth(width * 0.95);
         notes.setPrefHeight(65.0);
 
@@ -79,24 +78,23 @@ public class TableRow extends FlowPane {
 
         yes.setToggleGroup(answer);
         no.setToggleGroup(answer);
-        na.setToggleGroup(answer);
-
+        na.setToggleGroup(answer);        
+        
         if (isHeader) {
-            this.question.setFont(Font.font("Verdana", 15));
-            this.question.setTextFill(Color.web("#FFFFFF"));
-            this.question.setStyle("-fx-font-weight: bold");
-            yesLabel.setTextFill(Color.web("#FFFFFF"));
-            noLabel.setTextFill(Color.web("#FFFFFF"));
-            naLabel.setTextFill(Color.web("#FFFFFF"));
-            this.getChildren().addAll(yesLabel, noLabel, naLabel);
+//            this.question.setFont(Font.font("Verdana", 15));
+                this.question.setTextFill(Color.web("#FFFFFF"));
+                this.question.setStyle("-fx-font-weight: bold");
+                yesLabel.setTextFill(Color.web("#FFFFFF"));
+                noLabel.setTextFill(Color.web("#FFFFFF"));
+                naLabel.setTextFill(Color.web("#FFFFFF"));
+                this.getChildren().addAll(yesLabel, noLabel, naLabel);
+            }
+
         }
-
-    }
-
-    /**
-     *
-     * @return answer to question as well as notes if applicable
-     */
+        /**
+         *
+         * @return answer to question as well as notes if applicable
+         */
     public String getAnswer() {
 
         if (answer.getSelectedToggle() == yes) {
@@ -165,10 +163,27 @@ public class TableRow extends FlowPane {
 
     }
 
+    public void setTabError() {
+
+        parentTab.setStyle("-fx-border-color:red; -fx-border-width: 1px;");
+        this.notes.setStyle("-fx-border-color:red; -fx-border-width: 1px; ");
+    }
+
+    public void setTabErrorOff() {
+
+        parentTab.setStyle("-fx-border-color:#eeeeee; -fx-border-width: 1px;");
+        this.notes.setStyle("-fx-border-color:#DDDDDD; -fx-border-width: 1px;");
+
+    }
+
+    public String getQuestion() {
+        return question.getText();
+    }
+
     /**
      *
      * @return tab that question is located in
-     */
+     */ 
     public Tab getParentTab() {
         return parentTab;
     }
@@ -188,7 +203,7 @@ public class TableRow extends FlowPane {
 
             return (isChecked && !notes.getText().isEmpty()) || !isNotHeader;
         }
-        return isChecked || isNotHeader;
+        return isChecked || !isNotHeader;
     }
 
     /**

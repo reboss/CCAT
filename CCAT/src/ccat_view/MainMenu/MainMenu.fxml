@@ -158,12 +158,7 @@
             </MenuBar>
          </top>
          <bottom>
-            <Pane prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button layoutX="602.0" layoutY="14.0" mnemonicParsing="false" onAction="#saveFile" prefHeight="25.0" prefWidth="61.0" text="Submit" />
-                  <Button layoutX="685.0" layoutY="14.0" mnemonicParsing="false" onAction="#onExit" text="Cancel" />
-               </children>
-            </Pane>
+            <Pane prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </children>

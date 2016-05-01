@@ -28,13 +28,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 //import files.*;
 
 //TODO: add onClickListeners to radioButton groups to update score in real time
@@ -48,6 +51,8 @@ import javafx.scene.layout.VBox;
  */
 public class MainMenuController implements Initializable {
 
+    @FXML
+    private TabPane tabPane;
     @FXML
     private VBox partAContent;
     @FXML
@@ -68,7 +73,6 @@ public class MainMenuController implements Initializable {
     private AnswerModel answerModel;
     private List<Tab> tabs;
     private List<VBox> tabContentList;
-    private Map<ToggleGroup, String> answers;
     private Map<String, Boolean> questionsAnswerCheck;
     private Map<String, TextArea> notesOnNoOrNa;
     private List<TableRow> rows;
@@ -139,52 +143,76 @@ public class MainMenuController implements Initializable {
     @FXML
     private void populateTabs() {
 
+        rows = new ArrayList<>();
         notesOnNoOrNa = new HashMap<>();
         questionsAnswerCheck = new HashMap<>();
         Map<String, Map<String, List<String>>> content = template.getContent();
-        answers = new HashMap<>();
 
         int i = 0;
         for (String header : content.keySet()) {
 
-            this.tabContentList.get(i).setAlignment(Pos.CENTER);
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
-
-                TableRow sectionBox = new TableRow(subheader, tabs.get(i), 800.0, true);
-
+                
+             
+                Label subheaderLabel = new Label(subheader);
+                subheaderLabel.setFont(Font.font("Verdana", 15));
+                TableRow subheaderRow = new TableRow(subheaderLabel, tabs.get(i), 800.0, true);
+                
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
-                    sectionBox.setColor("#eeeeee");
+                    continue;
                 } else {
-                    sectionBox.setColor("#336699");
+                    subheaderRow.setColor("#336699");
                 }
 
                 AnchorPane headerAnchor = new AnchorPane();
-                headerAnchor.getChildren().add(sectionBox);
+                headerAnchor.getChildren().add(subheaderRow);
                 this.tabContentList.get(i).getChildren().add(row, headerAnchor);
 
                 row++;
 
                 List<String> list = content.get(header).get(subheader);
+                rows.add(subheaderRow);
 
                 for (String question : list) {
-
-                    TableRow flow = new TableRow(question, tabs.get(i), 800.0, false);
-                    flow.setToggles();
-
+           
+                    Label questionLabel = new Label(question);
+                    TableRow questionRow = new TableRow(questionLabel, tabs.get(i), 800.0, false);
+                    questionRow.setToggles();
+                    
                     if (row % 2 == 1) {
-                        flow.setColor("#dbe4f0");
+                        questionRow.setColor("#dbe4f0");
                     }
 
                     AnchorPane questionAnchor = new AnchorPane();
-                    questionAnchor.getChildren().add(flow);
+                    questionAnchor.getChildren().add(questionRow);
                     this.tabContentList.get(i).getChildren().add(row, questionAnchor);
-
+                    
+                    rows.add(questionRow);
                     row++;
                 }
             }
+            HBox submitRow = new HBox();
+            Button submit = new Button("Submit");
+          
+            submit.setOnAction((ActionEvent event) ->{
+            try {
+                if (this.saveFile()){
+                    
+                }
+                else{
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        });
+            submitRow.getChildren().add(submit);
+            this.tabContentList.get(i).getChildren().add(submitRow);
             i++;
         }
+        
     }
 
     /**
@@ -197,20 +225,14 @@ public class MainMenuController implements Initializable {
 
         List<String> answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
+        
+        for (TableRow row : rows) {
 
-        for (String key : notesOnNoOrNa.keySet()) {
-
-            if (notesOnNoOrNa.get(key).getText().isEmpty()) {
-
-                notesOnNoOrNa.get(key).setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-                notesOnNoOrNa.get(key).parentProperty();
-
+            if (!row.isValid()){ 
+                row.setTabError();
                 return false;
-
             } else {
-
-                answersToBeSaved.add(notesOnNoOrNa.get(key).getText());
-
+                row.setTabErrorOff();  
             }
 
             answerModel.saveAnswers(answersToBeSaved, 1);
@@ -264,6 +286,18 @@ public class MainMenuController implements Initializable {
         }
 
         populateTabs();
+        
+        
+//        tabPane.getScene().widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override 
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                tabPane.setPrefWidth((double) newSceneWidth);
+//                for (TableRow row : rows){
+//                    row.setRowWidth((double) newSceneWidth);
+//                }
+//            }
+//
+//        });
     }
 
 }
