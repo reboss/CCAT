@@ -10,6 +10,7 @@ package ccat_view.MainMenu;
 
 import ccat_model.AnswerModel;
 import ccat_model.QuestionLoader;
+import ccat_model.TableRow;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -54,11 +55,11 @@ import javafx.scene.text.Font;
 public class MainMenuController implements Initializable {
 
     @FXML
-    private VBox partAScroller;
+    private VBox partAContent;
     @FXML
-    private VBox partBScroller;
+    private VBox partBContent;
     @FXML
-    private VBox partCScroller;
+    private VBox partCContent;
     @FXML
     private Tab partA;
     @FXML
@@ -72,10 +73,11 @@ public class MainMenuController implements Initializable {
     private QuestionLoader template;
     private AnswerModel answerModel;
     private List<Tab> tabs;
-    private List<VBox> scrollers;
+    private List<VBox> tabContentList;
     private Map<ToggleGroup, String> answers;
     private Map<String, Boolean> questionsAnswerCheck;
     private Map<String, TextArea> notesOnNoOrNa;
+    private List<TableRow> rows;
 
     /**
      *
@@ -151,118 +153,120 @@ public class MainMenuController implements Initializable {
         int i = 0;
         for (String header : content.keySet()) {
 
-            scrollers.get(i).setAlignment(Pos.CENTER);
+            this.tabContentList.get(i).setAlignment(Pos.CENTER);
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
 
-                FlowPane sectionBox = new FlowPane();
+                TableRow sectionBox = new TableRow(subheader, tabs.get(i), (float) 800.0, true);
+                sectionBox.setStyle("Verdana", 15, "#FFFFFF");
+                
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
-                    sectionBox.setStyle("-fx-background-color: #eeeeee");
+                    sectionBox.setColor("#eeeeee");
                 } else {
-                    sectionBox.setStyle("-fx-background-color: #336699");
+                    sectionBox.setColor("#336699");
                 }
 
-                Label displayedSubHeader = new Label(subheader);
-                displayedSubHeader.setTextFill(Color.web("#FFFFFF"));
-                displayedSubHeader.setFont(Font.font("Verdana", 15));
 
-                sectionBox.getChildren().add(displayedSubHeader);
-                sectionBox.setPrefWidth(600.0);
-
-                scrollers.get(i).getChildren().add(row, sectionBox);
+                this.tabContentList.get(i).getChildren().add(row, sectionBox);
                 row++;
 
                 List<String> list = content.get(header).get(subheader);
 
                 for (String question : list) {
 
+                    
+
+//                    Label displayedQuestion = new Label(question);
+//                    displayedQuestion.setPrefWidth(575.0);
+//                    questionsAnswerCheck.put(question, false);
+
+//                    ToggleGroup group = new ToggleGroup();
+//                    RadioButton yes = new RadioButton("yes");
+//                    RadioButton no = new RadioButton("no");
+//                    RadioButton na = new RadioButton("n/a");
+//                    yes.setPrefWidth(40.0);
+//                    no.setPrefWidth(40.0);
+//                    na.setPrefWidth(40.0);
+//                    yes.setToggleGroup(group);
+//                    no.setToggleGroup(group);
+//                    na.setToggleGroup(group);
+//
+//                    TextArea area = new TextArea();
+//                    area.setPrefSize(0.0, 0.0);
+//                    area.setWrapText(true);
+//                    area.setVisible(false);
+//
+//                    Label noteLabel = new Label("");
+//                    noteLabel.setPrefSize(0.0, 0.0);
+//                    noteLabel.setVisible(false);
+//
+//                    FlowPane flow = new FlowPane();
+//
+//                    //TODO: remove duplication of no and na ActionListener's
+//                    no.setOnAction((ActionEvent event) -> {
+//
+//                        questionsAnswerCheck.put(question, true);
+//                        notesOnNoOrNa.put(question, area);
+//                        area.setPrefSize(700.0, 65.0);
+//                        area.setVisible(true);
+//                        noteLabel.setPrefSize(90.0, 10.0);
+//                        noteLabel.setVisible(true);
+//                        area.positionCaret(1);
+//
+//                    });
+//                    na.setOnAction((ActionEvent event) -> {
+//
+//                        questionsAnswerCheck.put(question, true);
+//                        notesOnNoOrNa.put(question, area);
+//                        area.setPrefSize(700.0, 65.0);
+//                        area.setVisible(true);
+//                        noteLabel.setPrefSize(90.0, 10.0);
+//                        noteLabel.setVisible(true);
+//
+//                    });
+//                    yes.setOnAction((ActionEvent event) -> {
+//
+//                        questionsAnswerCheck.put(question, true);
+//                        area.setPrefSize(0.0, 0.0);
+//                        area.setVisible(false);
+//                        noteLabel.setPrefSize(0.0, 0.0);
+//                        noteLabel.setVisible(false);
+//                        flow.resize(800.0, 10.0);
+//
+//                    });
+//
+//                    answers.put(group, question);
+//                    //TODO:  add ToggleGroup to a list so input can be accessed later
+//
+//                    if (question.contains("Braden Scale")) {
+//                        ComboBox<String> score = new ComboBox<>();
+//                        Label spacer = new Label();
+//                        spacer.setPrefWidth(280.0);
+//                        for (int num = 6; num < BRADEN_SCALE_MAX; num++) {
+//                            Integer option = num;
+//                            score.getItems().add(option.toString());
+//                        }
+//                        displayedQuestion.setPrefWidth(215.0);
+//                        flow.getChildren().addAll(displayedQuestion, score, spacer, yes, no, na, area);
+//
+//                    } else {
+//                        flow.getChildren().addAll(displayedQuestion, yes, no, na, area);
+//                    }
+//                    flow.setVgap(10.0);
+//                    flow.setHgap(10.0);
+//                    flow.setPrefWrapLength(800.0);
+                    
                     AnchorPane anchor = new AnchorPane();
-
-                    Label displayedQuestion = new Label(question);
-                    displayedQuestion.setPrefWidth(575.0);
-                    displayedQuestion.setStyle("-fx-font-weight: bold");
-                    questionsAnswerCheck.put(question, false);
-
-                    ToggleGroup group = new ToggleGroup();
-                    RadioButton yes = new RadioButton("yes");
-                    RadioButton no = new RadioButton("no");
-                    RadioButton na = new RadioButton("n/a");
-                    yes.setPrefWidth(40.0);
-                    no.setPrefWidth(40.0);
-                    na.setPrefWidth(40.0);
-                    yes.setToggleGroup(group);
-                    no.setToggleGroup(group);
-                    na.setToggleGroup(group);
-
-                    TextArea area = new TextArea();
-                    area.setPrefSize(0.0, 0.0);
-                    area.setWrapText(true);
-                    area.setVisible(false);
-
-                    Label noteLabel = new Label("");
-                    noteLabel.setPrefSize(0.0, 0.0);
-                    noteLabel.setVisible(false);
-
-                    FlowPane flow = new FlowPane();
-
-                    //TODO: remove duplication of no and na ActionListener's
-                    no.setOnAction((ActionEvent event) -> {
-
-                        questionsAnswerCheck.put(question, true);
-                        notesOnNoOrNa.put(question, area);
-                        area.setPrefSize(700.0, 65.0);
-                        area.setVisible(true);
-                        noteLabel.setPrefSize(90.0, 10.0);
-                        noteLabel.setVisible(true);
-                        area.positionCaret(1);
-
-                    });
-                    na.setOnAction((ActionEvent event) -> {
-
-                        questionsAnswerCheck.put(question, true);
-                        notesOnNoOrNa.put(question, area);
-                        area.setPrefSize(700.0, 65.0);
-                        area.setVisible(true);
-                        noteLabel.setPrefSize(90.0, 10.0);
-                        noteLabel.setVisible(true);
-
-                    });
-                    yes.setOnAction((ActionEvent event) -> {
-
-                        questionsAnswerCheck.put(question, true);
-                        area.setPrefSize(0.0, 0.0);
-                        area.setVisible(false);
-                        noteLabel.setPrefSize(0.0, 0.0);
-                        noteLabel.setVisible(false);
-                        flow.resize(800.0, 10.0);
-
-                    });
-
-                    answers.put(group, question);
-                    //TODO:  add ToggleGroup to a list so input can be accessed later
-
-                    if (question.contains("Braden Scale")) {
-                        ComboBox<String> score = new ComboBox<>();
-                        Label spacer = new Label();
-                        spacer.setPrefWidth(280.0);
-                        for (int num = 6; num < BRADEN_SCALE_MAX; num++) {
-                            Integer option = num;
-                            score.getItems().add(option.toString());
-                        }
-                        displayedQuestion.setPrefWidth(215.0);
-                        flow.getChildren().addAll(displayedQuestion, score, spacer, yes, no, na, area);
-
-                    } else {
-                        flow.getChildren().addAll(displayedQuestion, yes, no, na, area);
-                    }
-                    flow.setVgap(10.0);
-                    flow.setHgap(10.0);
-                    flow.setPrefWrapLength(800.0);
+                    anchor.setPrefHeight(20.0);
+                    TableRow flow = new TableRow(question, tabs.get(i), 800.0, false);
+                    flow.setToggles();
+                    
                     if (row % 2 == 1) {
-                        flow.setStyle("-fx-background-color: #dbe4f0;");
+                        flow.setColor("#dbe4f0");
                     }
+                    
                     anchor.getChildren().add(flow);
-                    scrollers.get(i).getChildren().add(row, anchor);
+                    this.tabContentList.get(i).getChildren().add(row, anchor);
                     row++;
                 }
             }
@@ -333,11 +337,11 @@ public class MainMenuController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        scrollers = new ArrayList<>();
+        tabContentList = new ArrayList<>();
         tabs = new ArrayList<>();
-        scrollers.add(partAScroller);
-        scrollers.add(partBScroller);
-        scrollers.add(partCScroller);
+        tabContentList.add(partAContent);
+        tabContentList.add(partBContent);
+        tabContentList.add(partCContent);
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);

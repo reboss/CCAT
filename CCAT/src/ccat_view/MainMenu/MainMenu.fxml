@@ -20,7 +20,7 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partAScroller" prefHeight="425.0" prefWidth="640.0" />
+                                    <VBox fx:id="partAContent" prefHeight="425.0" prefWidth="640.0" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -33,7 +33,7 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partBScroller" prefHeight="428.0" prefWidth="640.0" />
+                                    <VBox fx:id="partBContent" prefHeight="428.0" prefWidth="640.0" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -46,7 +46,7 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partCScroller" prefHeight="47.0" prefWidth="640.0" />
+                                    <VBox fx:id="partCContent" prefHeight="47.0" prefWidth="640.0" />
                                  </children>
                               </AnchorPane>
                           </content>

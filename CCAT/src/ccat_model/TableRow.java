@@ -8,6 +8,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -15,14 +17,18 @@ import javafx.scene.layout.FlowPane;
  */
 public class TableRow extends FlowPane{
     
-    private ToggleGroup answer;
+    private final ToggleGroup answer;
     private Boolean isChecked;
     private Boolean isNotHeader;
-    private RadioButton yes;
-    private RadioButton no;
-    private RadioButton na;
-    private TextArea notes;
-    private final Label question;
+    private final RadioButton yes;
+    private final RadioButton no;
+    private final RadioButton na;
+    private final TextArea notes;
+    private final Label notesLabel;
+    private final Label yesLabel;
+    private final Label noLabel;
+    private final Label naLabel;
+    private final Label question; 
     private final Tab parentTab;
     
     /**
@@ -30,21 +36,54 @@ public class TableRow extends FlowPane{
      * @param question
      * @param parentTab
      * @param width
+     * @param isHeader
      */
-    public TableRow(String question, Tab parentTab, float width){
+    public TableRow(String question, Tab parentTab, double width, Boolean isHeader){
         
         this.question = new Label(question);
         this.parentTab = parentTab;
+        this.answer = new ToggleGroup();
+        this.yes = new RadioButton("");
+        this.no = new RadioButton("");
+        this.na = new RadioButton("");
+        this.notes = new TextArea();
         
+        this.notesLabel = new Label("Notes:");
+        notesLabel.setPrefWidth(width);
+        this.yesLabel = new Label("yes");
+        yesLabel.setPrefWidth(width*0.06);
+        this.noLabel = new Label("no");
+        noLabel.setPrefWidth(width*0.06);
+        this.naLabel = new Label("na");
+        naLabel.setPrefWidth(width*0.06);
         
+        notes.setPrefWidth(width * 0.95);
+        notes.setPrefHeight(65.0);
+     
         this.setPrefWidth(width);
+        this.setPrefHeight(20.0);
         
-        this.question.setPrefWidth(width * 0.75);
+        this.question.setPrefWidth(width * 0.82);
+        this.question.setStyle("-fx-font-weight: bold");
         this.getChildren().add(this.question);
         
-        yes.setPrefWidth(width*0.05);
-        no.setPrefWidth(width*0.05);
-        na.setPrefWidth(width*0.05);
+        yes.setPrefWidth(width*0.06);
+        no.setPrefWidth(width*0.06);
+        na.setPrefWidth(width*0.06);
+        
+        yes.setToggleGroup(answer);
+        no.setToggleGroup(answer);
+        na.setToggleGroup(answer);
+        
+        if (isHeader){
+            this.question.setFont(Font.font("Verdana", 15));
+            this.question.setTextFill(Color.web("#FFFFFF"));
+            
+            yesLabel.setTextFill(Color.web("#FFFFFF"));
+            noLabel.setTextFill(Color.web("#FFFFFF"));
+            naLabel.setTextFill(Color.web("#FFFFFF"));
+            this.getChildren().addAll(yesLabel, noLabel, naLabel);
+        }
         
     }
     
@@ -74,19 +113,13 @@ public class TableRow extends FlowPane{
     public void setToggles(){
         
         this.isNotHeader = true;
-        this.yes = new RadioButton();
-        this.no = new RadioButton();
-        this.na = new RadioButton();
-        
-        yes.setToggleGroup(answer);
-        no.setToggleGroup(answer);
-        na.setToggleGroup(answer);
-        
+             
         
         yes.setOnAction((ActionEvent event) -> {
             
             isChecked = true;
             if(this.getChildren().contains(notes)){
+                this.getChildren().remove(notesLabel);
                 this.getChildren().remove(notes);
             }
             
@@ -96,6 +129,7 @@ public class TableRow extends FlowPane{
             
             isChecked = true;
             if(!this.getChildren().contains(notes)){
+                this.getChildren().add(notesLabel);
                 this.getChildren().add(notes);
             }
             
@@ -105,6 +139,7 @@ public class TableRow extends FlowPane{
             
             isChecked = true;
             if(!this.getChildren().contains(notes)){
+                this.getChildren().add(notesLabel);
                 this.getChildren().add(notes);
             }
             
@@ -117,7 +152,7 @@ public class TableRow extends FlowPane{
      * sets row width as well as scales objects within row
      * @param width
      */
-    public void setRowWidth(float width){ 
+    public void setRowWidth(double width){ 
         
         this.setPrefWidth(width); 
         question.setPrefWidth(width*0.75);
@@ -157,6 +192,10 @@ public class TableRow extends FlowPane{
      */
     public void setColor(String color){
         this.setStyle("-fx-background-color: " + color + ";");
+    }
+    
+    public void setStyle(String font, int size, String color){
+        
     }
     
     
