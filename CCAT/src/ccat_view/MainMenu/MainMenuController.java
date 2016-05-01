@@ -29,18 +29,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 //import files.*;
 
 //TODO: add onClickListeners to radioButton groups to update score in real time
@@ -95,8 +89,8 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void onExit(ActionEvent event) {
@@ -104,9 +98,9 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void onAdminTasks(ActionEvent event) throws IOException {
@@ -124,9 +118,9 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void onAbout(ActionEvent event) throws IOException {
@@ -140,7 +134,7 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     @FXML
     private void populateTabs() {
@@ -152,40 +146,40 @@ public class MainMenuController implements Initializable {
 
         int i = 0;
         for (String header : content.keySet()) {
-            
+
             this.tabContentList.get(i).setAlignment(Pos.CENTER);
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
 
                 TableRow sectionBox = new TableRow(subheader, tabs.get(i), 800.0, true);
-                
+
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
                     sectionBox.setColor("#eeeeee");
                 } else {
                     sectionBox.setColor("#336699");
                 }
-                
+
                 AnchorPane headerAnchor = new AnchorPane();
                 headerAnchor.getChildren().add(sectionBox);
                 this.tabContentList.get(i).getChildren().add(row, headerAnchor);
-                
+
                 row++;
 
                 List<String> list = content.get(header).get(subheader);
 
                 for (String question : list) {
-           
+
                     TableRow flow = new TableRow(question, tabs.get(i), 800.0, false);
                     flow.setToggles();
-                    
+
                     if (row % 2 == 1) {
                         flow.setColor("#dbe4f0");
                     }
-                    
+
                     AnchorPane questionAnchor = new AnchorPane();
                     questionAnchor.getChildren().add(flow);
                     this.tabContentList.get(i).getChildren().add(row, questionAnchor);
-                    
+
                     row++;
                 }
             }
@@ -194,47 +188,48 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
+     * @throws java.sql.SQLException
      */
     @FXML
     public Boolean saveFile() throws SQLException {
 
         List<String> answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
-        
+
         for (String key : notesOnNoOrNa.keySet()) {
 
             if (notesOnNoOrNa.get(key).getText().isEmpty()) {
-                
+
                 notesOnNoOrNa.get(key).setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
                 notesOnNoOrNa.get(key).parentProperty();
 
                 return false;
-                
+
             } else {
-                
+
                 answersToBeSaved.add(notesOnNoOrNa.get(key).getText());
-                
+
             }
-            
+
             answerModel.saveAnswers(answersToBeSaved, 1);
         }
-        
+
         for (String key : questionsAnswerCheck.keySet()) {
-        
+
             if (!questionsAnswerCheck.get(key)) {
-            
+
                 System.out.println(key);
                 return false;
-                
+
             }
         }
         return true;
     }
 
     /**
-     * 
+     *
      */
     public final void setAccess() {
         admin.setDisable(false);
@@ -261,7 +256,7 @@ public class MainMenuController implements Initializable {
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);
-        
+
         try {
             template.loadQuestions();
         } catch (SQLException ex) {
