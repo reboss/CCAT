@@ -28,20 +28,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
 //import files.*;
 
 //TODO: add onClickListeners to radioButton groups to update score in real time
@@ -97,8 +93,8 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void onExit(ActionEvent event) {
@@ -106,9 +102,9 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void onAdminTasks(ActionEvent event) throws IOException {
@@ -126,9 +122,9 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void onAbout(ActionEvent event) throws IOException {
@@ -142,7 +138,7 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
+     *
      */
     @FXML
     private void populateTabs() {
@@ -154,7 +150,6 @@ public class MainMenuController implements Initializable {
 
         int i = 0;
         for (String header : content.keySet()) {
-            
 
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
@@ -169,11 +164,11 @@ public class MainMenuController implements Initializable {
                 } else {
                     subheaderRow.setColor("#336699");
                 }
-                
+
                 AnchorPane headerAnchor = new AnchorPane();
                 headerAnchor.getChildren().add(subheaderRow);
                 this.tabContentList.get(i).getChildren().add(row, headerAnchor);
-                
+
                 row++;
 
                 List<String> list = content.get(header).get(subheader);
@@ -185,11 +180,10 @@ public class MainMenuController implements Initializable {
                     TableRow questionRow = new TableRow(questionLabel, tabs.get(i), 800.0, false);
                     questionRow.setToggles();
                     
-                    
                     if (row % 2 == 1) {
                         questionRow.setColor("#dbe4f0");
                     }
-                    
+
                     AnchorPane questionAnchor = new AnchorPane();
                     questionAnchor.getChildren().add(questionRow);
                     this.tabContentList.get(i).getChildren().add(row, questionAnchor);
@@ -222,8 +216,9 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
+     * @throws java.sql.SQLException
      */
     @FXML
     public Boolean saveFile() throws SQLException {
@@ -239,24 +234,24 @@ public class MainMenuController implements Initializable {
             } else {
                 row.setTabErrorOff();  
             }
-            
+
             answerModel.saveAnswers(answersToBeSaved, 1);
         }
-        
+
         for (String key : questionsAnswerCheck.keySet()) {
-        
+
             if (!questionsAnswerCheck.get(key)) {
-            
+
                 System.out.println(key);
                 return false;
-                
+
             }
         }
         return true;
     }
 
     /**
-     * 
+     *
      */
     public final void setAccess() {
         admin.setDisable(false);
@@ -283,7 +278,7 @@ public class MainMenuController implements Initializable {
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);
-        
+
         try {
             template.loadQuestions();
         } catch (SQLException ex) {

@@ -29,8 +29,8 @@ public class SQLiteSeeder {
      * @throws SQLException 
      */
     public static void main(String args[]) throws FileNotFoundException, SQLException {
-        Connection conn = null;
-        Statement stmt = null;
+        Connection conn;
+        Statement stmt;
         FileReader questionsTxtFile = new FileReader("questions.txt");
         Scanner questionsReader = new Scanner(questionsTxtFile);
 
@@ -41,7 +41,7 @@ public class SQLiteSeeder {
             System.out.println("Opened database successfully");
             int partId = 0;
             int headerId = 0;
-            String sql = "";
+            String sql;
             stmt = conn.createStatement();
 
             while (questionsReader.hasNextLine()) {
@@ -69,7 +69,7 @@ public class SQLiteSeeder {
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            System.exit(1);
         }
         System.out.println("Records created successfully");
     }
