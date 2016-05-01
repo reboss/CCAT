@@ -8,6 +8,7 @@
 
 package ccat_view.MainMenu;
 
+import ccat_model.AnswerModel;
 import ccat_model.QuestionLoader;
 import java.io.IOException;
 import java.net.URL;
@@ -69,6 +70,7 @@ public class MainMenuController implements Initializable {
 
     private final int BRADEN_SCALE_MAX = 24;
     private QuestionLoader template;
+    private AnswerModel answerModel;
     private List<Tab> tabs;
     private List<VBox> scrollers;
     private Map<ToggleGroup, String> answers;
@@ -273,21 +275,35 @@ public class MainMenuController implements Initializable {
      * @return 
      */
     @FXML
-    public Boolean saveFile() {
+    public Boolean saveFile() throws SQLException {
 
+        List<String> answersToBeSaved = new ArrayList<>();
+        answerModel = new AnswerModel();
+        
         for (String key : notesOnNoOrNa.keySet()) {
+            
             if (notesOnNoOrNa.get(key).getText().isEmpty()) {
+                
                 notesOnNoOrNa.get(key).setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
                 notesOnNoOrNa.get(key).parentProperty();
                 return false;
+                
             } else {
-                System.out.println(notesOnNoOrNa.get(key).getText());
+                
+                answersToBeSaved.add(notesOnNoOrNa.get(key).getText());
+                
             }
+            
+            answerModel.saveAnswers(answersToBeSaved, 1);
         }
+        
         for (String key : questionsAnswerCheck.keySet()) {
+        
             if (!questionsAnswerCheck.get(key)) {
+            
                 System.out.println(key);
                 return false;
+                
             }
         }
         return true;
