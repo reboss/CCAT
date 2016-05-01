@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -20,7 +21,10 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partAScroller" prefHeight="425.0" prefWidth="640.0" />
+                                    <VBox fx:id="partAContent" prefHeight="425.0" prefWidth="640.0">
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding></VBox>
                                  </children>
                               </AnchorPane>
                           </content>
@@ -33,7 +37,10 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partBScroller" prefHeight="428.0" prefWidth="640.0" />
+                                    <VBox fx:id="partBContent" prefHeight="428.0" prefWidth="640.0">
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding></VBox>
                                  </children>
                               </AnchorPane>
                           </content>
@@ -46,7 +53,10 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <VBox fx:id="partCScroller" prefHeight="47.0" prefWidth="640.0" />
+                                    <VBox fx:id="partCContent" prefHeight="47.0" prefWidth="640.0">
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding></VBox>
                                  </children>
                               </AnchorPane>
                           </content>

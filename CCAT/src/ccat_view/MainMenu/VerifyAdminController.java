@@ -8,7 +8,7 @@
 
 package ccat_view.MainMenu;
 
-import ccat_model.Users;
+import ccat_model.UserModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +43,7 @@ public class VerifyAdminController implements Initializable {
     @FXML
     private Label errMsg;
     
-    private Users users;
+    private UserModel users;
     private MainMenuController mMC;
 
     /**
@@ -97,7 +97,7 @@ public class VerifyAdminController implements Initializable {
         this.username.setText("sobeke");
         this.pass.setText("1234");
         try {
-            this.users = new Users();
+            this.users = new UserModel();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(VerifyAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
