@@ -64,7 +64,6 @@ public class TableRow extends FlowPane{
         this.setPrefHeight(20.0);
         
         this.question.setPrefWidth(width * 0.82);
-        this.question.setStyle("-fx-font-weight: bold");
         this.getChildren().add(this.question);
         
         yes.setPrefWidth(width*0.06);
@@ -78,7 +77,7 @@ public class TableRow extends FlowPane{
         if (isHeader){
             this.question.setFont(Font.font("Verdana", 15));
             this.question.setTextFill(Color.web("#FFFFFF"));
-            
+            this.question.setStyle("-fx-font-weight: bold");
             yesLabel.setTextFill(Color.web("#FFFFFF"));
             noLabel.setTextFill(Color.web("#FFFFFF"));
             naLabel.setTextFill(Color.web("#FFFFFF"));
@@ -192,11 +191,6 @@ public class TableRow extends FlowPane{
      */
     public void setColor(String color){
         this.setStyle("-fx-background-color: " + color + ";");
-    }
-    
-    public void setStyle(String font, int size, String color){
-        
-    }
-    
+    }  
     
 }
