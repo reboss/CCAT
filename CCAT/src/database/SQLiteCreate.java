@@ -29,7 +29,7 @@ public class SQLiteCreate {
     public static void main(String args[]) {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:C:\\Program Files (x86)\\CCAT-files\\CCAT.db");
+            c = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();

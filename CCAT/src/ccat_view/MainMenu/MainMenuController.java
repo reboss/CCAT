@@ -205,14 +205,10 @@ public class MainMenuController implements Initializable {
         
         for (String key : notesOnNoOrNa.keySet()) {
             
-            if (notesOnNoOrNa.get(key).getText().isEmpty()) {
-<<<<<<< 4ce51f051b6f54bff7c516c87786c7709334b2d4
-                System.out.println(key);
-=======
-                
+            if (notesOnNoOrNa.get(key).getText().isEmpty()) {                
                 notesOnNoOrNa.get(key).setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
                 notesOnNoOrNa.get(key).parentProperty();
->>>>>>> Add AnswerModel to MainMenuController
+
                 return false;
                 
             } else {
