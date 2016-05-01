@@ -7,7 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import java.util.ArrayList;
+
 
 
 /**
@@ -33,9 +35,11 @@ public class AnswerModel {
         String sql =    "INSERT INTO answers ()"+
                         "VALUES ()";
 
+
     }
     
     public void saveAnswers(ArrayList<String> answers){
+
 
         
     }
