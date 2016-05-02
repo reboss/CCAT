@@ -19,6 +19,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -64,7 +66,7 @@ public class CCAT extends Application {
         DoubleProperty opacity = root.opacityProperty();
         Timeline ft = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                new KeyFrame(new Duration(4000), new KeyValue(opacity, 1.0))
+                new KeyFrame(new Duration(400), new KeyValue(opacity, 1.0))
         );
         ft.play();
         ft.setOnFinished((ActionEvent event) -> {
@@ -89,6 +91,14 @@ public class CCAT extends Application {
         stage.setTitle("Critical Care Audit Tool - CONFIDENTIAL");
         stage.setScene(scene);
         stage.show();
+        
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override 
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                System.out.println("Width: " + newSceneWidth);
+            }
+
+        });
     }
 
     /**

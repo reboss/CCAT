@@ -28,7 +28,7 @@ public class TableRow extends FlowPane{
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-    private final Label question; 
+    private Label question; 
     private final Tab parentTab;
     
     /**
@@ -38,9 +38,9 @@ public class TableRow extends FlowPane{
      * @param width
      * @param isHeader
      */
-    public TableRow(String question, Tab parentTab, double width, Boolean isHeader){
+    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader){
         
-        this.question = new Label(question);
+        this.question = question;
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
         this.yes = new RadioButton("");
@@ -48,13 +48,16 @@ public class TableRow extends FlowPane{
         this.na = new RadioButton("");
         this.notes = new TextArea();
         
+        this.isChecked = false;
+        this.isNotHeader = false;
+        
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
         this.yesLabel = new Label("yes");
         yesLabel.setPrefWidth(width*0.06);
         this.noLabel = new Label("no");
         noLabel.setPrefWidth(width*0.06);
-        this.naLabel = new Label("na");
+        this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width*0.06);
         
         notes.setPrefWidth(width * 0.95);
@@ -75,7 +78,7 @@ public class TableRow extends FlowPane{
         na.setToggleGroup(answer);
         
         if (isHeader){
-            this.question.setFont(Font.font("Verdana", 15));
+//            this.question.setFont(Font.font("Verdana", 15));
             this.question.setTextFill(Color.web("#FFFFFF"));
             this.question.setStyle("-fx-font-weight: bold");
             yesLabel.setTextFill(Color.web("#FFFFFF"));
@@ -167,6 +170,24 @@ public class TableRow extends FlowPane{
      */
     public Tab getParentTab(){ return parentTab; }
     
+    
+    public void setTabError(){
+        
+        parentTab.setStyle("-fx-border-color:#e91616;");
+        this.notes.setStyle("-fx-border-color:#e91616;");
+    }
+    
+    
+    public void setTabErrorOff() {
+        
+        parentTab.setStyle("-fx-border-color:#eeeeee;");
+        this.notes.setStyle("-fx-border-color:#DDDDDD;");
+        
+    }
+    
+    public String getQuestion(){
+        return question.getText();
+    }
     /**
      * 
      * Checks if the ToggleGroup has been checked off with yes, no or n/a
@@ -182,7 +203,7 @@ public class TableRow extends FlowPane{
             
             return (isChecked && !notes.getText().isEmpty()) || !isNotHeader ;
         }
-        return isChecked || isNotHeader;
+        return isChecked || !isNotHeader;
     }
     
     /**
