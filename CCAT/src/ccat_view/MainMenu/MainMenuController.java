@@ -28,8 +28,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.geometry.Pos;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -38,6 +44,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
 //import files.*;
 
 //TODO: add onClickListeners to radioButton groups to update score in real time
@@ -152,6 +159,7 @@ public class MainMenuController implements Initializable {
 
         int i = 0;
         for (String header : content.keySet()) {
+            
 
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
@@ -161,6 +169,7 @@ public class MainMenuController implements Initializable {
                 subheaderLabel.setFont(Font.font("Verdana", 15));
                 TableRow subheaderRow = new TableRow(subheaderLabel, tabs.get(i), 800.0, true);
                 
+
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
                     continue;
                 } else {
@@ -177,12 +186,15 @@ public class MainMenuController implements Initializable {
                 rows.add(subheaderRow);
 
                 for (String question : list) {
+
            
                     Label questionLabel = new Label(question);
                     TableRow questionRow = new TableRow(questionLabel, tabs.get(i), 800.0, false);
                     questionRow.setToggles();
                     
+
                     if (row % 2 == 1) {
+
                         questionRow.setColor("#dbe4f0");
                     }
 
@@ -229,12 +241,15 @@ public class MainMenuController implements Initializable {
         answerModel = new AnswerModel();
         
         for (TableRow row : rows) {
+        
 
             if (!row.isValid()){ 
                 row.setTabError();
-                return false;
+                System.out.println("BAD == "+row.getQuestion());
             } else {
+                System.out.println("GOOD == "+row.getQuestion());
                 row.setTabErrorOff();  
+
             }
 
             answerModel.saveAnswers(answersToBeSaved, 1);
