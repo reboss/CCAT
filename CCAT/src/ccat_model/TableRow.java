@@ -34,7 +34,9 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-    private Label question;
+    private final Label question;
+
+
     private final Tab parentTab;
 
     /**
@@ -46,15 +48,18 @@ public class TableRow extends FlowPane {
      */
     public TableRow(Label question, Tab parentTab, double width, Boolean isHeader) {
 
+
         this.question = question;
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
         this.yes = new RadioButton("");
         this.no = new RadioButton("");
         this.na = new RadioButton("");
+
         this.notes = new TextArea();        
         this.isChecked = false;
         this.isNotHeader = false;
+
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
         this.yesLabel = new Label("yes");
@@ -63,6 +68,7 @@ public class TableRow extends FlowPane {
         noLabel.setPrefWidth(width * 0.06);
         this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width * 0.06);
+
         notes.setPrefWidth(width * 0.95);
         notes.setPrefHeight(65.0);
 
@@ -78,17 +84,20 @@ public class TableRow extends FlowPane {
 
         yes.setToggleGroup(answer);
         no.setToggleGroup(answer);
-        na.setToggleGroup(answer);        
+        na.setToggleGroup(answer);
         
-        if (isHeader) {
+        if (isHeader){
 //            this.question.setFont(Font.font("Verdana", 15));
-                this.question.setTextFill(Color.web("#FFFFFF"));
-                this.question.setStyle("-fx-font-weight: bold");
-                yesLabel.setTextFill(Color.web("#FFFFFF"));
-                noLabel.setTextFill(Color.web("#FFFFFF"));
-                naLabel.setTextFill(Color.web("#FFFFFF"));
-                this.getChildren().addAll(yesLabel, noLabel, naLabel);
-            }
+            this.question.setTextFill(Color.web("#FFFFFF"));
+            this.question.setStyle("-fx-font-weight: bold");
+            yesLabel.setTextFill(Color.web("#FFFFFF"));
+            noLabel.setTextFill(Color.web("#FFFFFF"));
+            naLabel.setTextFill(Color.web("#FFFFFF"));
+            this.getChildren().addAll(yesLabel, noLabel, naLabel);
+        }
+
+    }
+
 
         }
         /**
@@ -183,11 +192,29 @@ public class TableRow extends FlowPane {
     /**
      *
      * @return tab that question is located in
-     */ 
-    public Tab getParentTab() {
-        return parentTab;
-    }
+     */
 
+    public Tab getParentTab(){ return parentTab; }
+    
+    
+    public void setTabError(){
+        
+        parentTab.setStyle("-fx-border-color:#e91616;");
+        this.notes.setStyle("-fx-border-color:#e91616;");
+    }
+    
+    
+    public void setTabErrorOff() {
+        
+        parentTab.setStyle("-fx-border-color:#eeeeee;");
+        this.notes.setStyle("-fx-border-color:#DDDDDD;");
+        
+    }
+    
+    public String getQuestion(){
+        return question.getText();
+    }
+    
     /**
      *
      * Checks if the ToggleGroup has been checked off with yes, no or n/a Checks
