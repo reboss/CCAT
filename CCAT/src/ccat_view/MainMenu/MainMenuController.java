@@ -163,12 +163,10 @@ public class MainMenuController implements Initializable {
 
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
-                
-             
+
                 Label subheaderLabel = new Label(subheader);
                 subheaderLabel.setFont(Font.font("Verdana", 15));
                 TableRow subheaderRow = new TableRow(subheaderLabel, tabs.get(i), 800.0, true);
-                
 
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
                     continue;
@@ -192,9 +190,7 @@ public class MainMenuController implements Initializable {
                     TableRow questionRow = new TableRow(questionLabel, tabs.get(i), 800.0, false);
                     questionRow.setToggles();
                     
-
-                    if (row % 2 == 1) {
-
+                   if (row % 2 == 1) {
                         questionRow.setColor("#dbe4f0");
                     }
 
@@ -241,16 +237,13 @@ public class MainMenuController implements Initializable {
         answerModel = new AnswerModel();
         
         for (TableRow row : rows) {
-        
-        for (TableRow row : rows) {
 
             if (!row.isValid()){ 
                 row.setTabError();
                 return false;
             } else {
                 row.setTabErrorOff();  
-
-            }
+	    }
 
             answerModel.saveAnswers(answersToBeSaved, 1);
         }
