@@ -61,6 +61,8 @@ public class MainMenuController implements Initializable {
     @FXML
     private TabPane tabPane;
     @FXML
+    private VBox auditBrowserContent;
+    @FXML
     private VBox partAContent;
     @FXML
     private VBox partBContent;
