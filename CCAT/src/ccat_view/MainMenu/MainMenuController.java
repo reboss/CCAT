@@ -245,9 +245,8 @@ public class MainMenuController implements Initializable {
 
             if (!row.isValid()){ 
                 row.setTabError();
-                System.out.println("BAD == "+row.getQuestion());
+                return false;
             } else {
-                System.out.println("GOOD == "+row.getQuestion());
                 row.setTabErrorOff();  
 
             }

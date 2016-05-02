@@ -194,7 +194,8 @@ public class TableRow extends FlowPane {
      */
 
     public Tab getParentTab(){ return parentTab; }
-   
+    
+    
     
     /**
      *
