@@ -34,6 +34,7 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
+
     private final Label question;
 
     private final Tab parentTab;
@@ -45,8 +46,8 @@ public class TableRow extends FlowPane {
      * @param width
      * @param isHeader
      */
-    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader) {
 
+    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader) {
 
         this.question = question;
         this.parentTab = parentTab;
@@ -59,6 +60,7 @@ public class TableRow extends FlowPane {
         this.isChecked = false;
         this.isNotHeader = false;
 
+
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
         this.yesLabel = new Label("yes");
@@ -67,7 +69,7 @@ public class TableRow extends FlowPane {
         noLabel.setPrefWidth(width * 0.06);
         this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width * 0.06);
-
+        
         notes.setPrefWidth(width * 0.95);
         notes.setPrefHeight(65.0);
 
@@ -195,7 +197,7 @@ public class TableRow extends FlowPane {
 
     public Tab getParentTab(){ return parentTab; }
     
-    
+
     
     /**
      *
