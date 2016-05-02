@@ -37,7 +37,6 @@ public class TableRow extends FlowPane {
     private final Label naLabel;
 
     private final Label question;
-
     private final Tab parentTab;
 
     /**
@@ -47,7 +46,7 @@ public class TableRow extends FlowPane {
      * @param width
      * @param isHeader
      */
-    
+
     public TableRow(Label question, Tab parentTab, double width, Boolean isHeader){
         
         this.question = question;
@@ -60,16 +59,17 @@ public class TableRow extends FlowPane {
         
         this.isChecked = false;
         this.isNotHeader = false;
-
-
+        
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
         this.yesLabel = new Label("yes");
         yesLabel.setPrefWidth(width * 0.06);
         this.noLabel = new Label("no");
+
         noLabel.setPrefWidth(width * 0.06);
-        this.naLabel = new Label("na");
+        this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width * 0.06);
+
         
         notes.setPrefWidth(width * 0.95);
         notes.setPrefHeight(65.0);
@@ -197,7 +197,7 @@ public class TableRow extends FlowPane {
     public String getQuestion(){
         return question.getText();
     }
-    
+
     /**
      *
      * Checks if the ToggleGroup has been checked off with yes, no or n/a Checks
