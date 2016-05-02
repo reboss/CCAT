@@ -199,15 +199,15 @@ public class TableRow extends FlowPane {
     
     public void setTabError(){
         
-        parentTab.setStyle("-fx-border-color:#e91616;");
-        this.notes.setStyle("-fx-border-color:#e91616;");
+        parentTab.setStyle("-fx-border-color:red; -fx-border-width: 1px;");
+        this.notes.setStyle("-fx-border-color:red; -fx-border-width: 1px; ");
     }
     
     
     public void setTabErrorOff() {
         
-        parentTab.setStyle("-fx-border-color:#eeeeee;");
-        this.notes.setStyle("-fx-border-color:#DDDDDD;");
+        parentTab.setStyle("-fx-border-color:#eeeeee; -fx-border-width: 1px;");
+        this.notes.setStyle("-fx-border-color:#DDDDDD; -fx-border-width: 1px;");
         
     }
     
