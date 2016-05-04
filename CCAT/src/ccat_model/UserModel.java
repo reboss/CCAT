@@ -8,6 +8,7 @@
 
 package ccat_model;
 
+import ccat_view.MainMenu.UserInfo;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.Connection;
@@ -28,15 +29,18 @@ public class UserModel {
 
     private final Connection con;
     private final String salt;
+    private final UserInfo currentUser;
 
     /**
      *
+     * @param currentUser
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public UserModel() throws ClassNotFoundException, SQLException {
+    public UserModel(UserInfo currentUser) throws ClassNotFoundException, SQLException {
         this.con = getConnection();
         this.salt = "M5@aG9:[2cY0";
+        this.currentUser = currentUser;
     }
 
     /**
@@ -160,7 +164,7 @@ public class UserModel {
      * @param user
      */
     public void deleteUser(String user) {
-        if (isUserInDb(user)) {
+        if (isUserInDb(user) && !user.equals(this.currentUser.getUserName())) {
             try {
                 PreparedStatement statement
                         = con.prepareStatement("DELETE FROM users WHERE users.username = '" + user + "'");
@@ -325,6 +329,15 @@ public class UserModel {
             // User not in database
         }
         return null;
+    }
+    
+    /**
+     * 
+     * @param user
+     * @return 
+     */
+    private boolean isCurrentUser(String user) {
+        return false;
     }
 
     /**
