@@ -44,6 +44,7 @@ public class VerifyAdminController implements Initializable {
     private Label errMsg;
     
     private UserModel users;
+    private UserInfo userInfo;
     private MainMenuController mMC;
 
     /**
@@ -96,8 +97,9 @@ public class VerifyAdminController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.username.setText("sobeke");
         this.pass.setText("1234");
+        this.userInfo = new UserInfo(this.username.getText());
         try {
-            this.users = new UserModel();
+            this.users = new UserModel(this.userInfo);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(VerifyAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }

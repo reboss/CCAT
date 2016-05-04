@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -65,8 +66,16 @@ public class SQLiteSeeder {
             }
 
             stmt.close();
+            
+            try (PreparedStatement pStmt = conn.prepareStatement("INSERT INTO users "
+                    + "(fName, lName, username, password, admin) VALUES "
+                    + "('Elliott', 'Sobek', 'sobeke', '61fb92da52b651c553e8234d198f1775', 1)")) {
+                pStmt.executeUpdate();
+            }
+            
             conn.commit();
             conn.close();
+            
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(1);

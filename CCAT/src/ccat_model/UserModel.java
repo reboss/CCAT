@@ -8,6 +8,7 @@
 
 package ccat_model;
 
+import ccat_view.MainMenu.UserInfo;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.Connection;
@@ -28,15 +29,18 @@ public class UserModel {
 
     private final Connection con;
     private final String salt;
+    private final UserInfo currentUser;
 
     /**
      *
+     * @param currentUser
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public UserModel() throws ClassNotFoundException, SQLException {
+    public UserModel(UserInfo currentUser) throws ClassNotFoundException, SQLException {
         this.con = getConnection();
         this.salt = "M5@aG9:[2cY0";
+        this.currentUser = currentUser;
     }
 
     /**
@@ -160,7 +164,7 @@ public class UserModel {
      * @param user
      */
     public void deleteUser(String user) {
-        if (isUserInDb(user)) {
+        if (isUserInDb(user) && !user.equals(this.currentUser.getUserName())) {
             try {
                 PreparedStatement statement
                         = con.prepareStatement("DELETE FROM users WHERE users.username = '" + user + "'");
@@ -175,21 +179,69 @@ public class UserModel {
 
     /**
      *
+     * @param option
      * @return @throws SQLException
      */
-    public List<String> readDB() throws SQLException {
-        List<String> list = null;
+    public Map<String, List<String>> getAnswers(String option) throws SQLException {
+        String time;
+        switch (option) {
+            case "day":
+                time = "< CONVERT(date, GETDATE())";
+                break;
+            case "week":
+                time = "< NOW() - INTERVAL 1 WEEK";
+                break;
+            case "month":
+                time = "< NOW() - INTERVAL 1 MONTH";
+                break;
+            case "quarter":
+                time = "< NOW() - INTERVAL 3 MONTH";
+                break;
+            default:
+                System.err.println("Invalid input");
+                return null;
+        }
+        try (PreparedStatement statement = con.prepareStatement("SELECT answer, created, username, question FROM "
+                + "answers WHERE answers.uid = users.id AND answers.qid = "
+                + "questions.id AND answers.created" + time);
+                ResultSet result = statement.executeQuery();) {
+            Map<String, List<String>> answers = new HashMap<>();
+            while (result.next()) {
+                List<String> answerAttributes = new ArrayList<>();
+                answerAttributes.add(result.getString("answer"));
+                answerAttributes.add(result.getDate("created").toString());
+                answerAttributes.add(result.getString("username"));
+                answerAttributes.add(result.getString("question"));
+                answers.put(result.getString("username"), answerAttributes);
+            }
+            return answers;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Map<String, List<String>> getUsers() {
         try (PreparedStatement statement = con.prepareStatement("SELECT * FROM users");
                 ResultSet result = statement.executeQuery()) {
-            list = new ArrayList<>();
+            Map<String, List<String>> allUsers = new HashMap<>();
             while (result.next()) {
-                list.add(result.getString("fName"));
+                List<String> userAttributes = new ArrayList<>();
+                userAttributes.add(Integer.toString(result.getInt("id")));
+                userAttributes.add(result.getString("fName"));
+                userAttributes.add(result.getString("lName"));
+                userAttributes.add(Integer.toString(result.getInt("admin")));
+                allUsers.put(result.getString("username"), userAttributes);
             }
+            return allUsers;
         } catch (SQLException e) {
             System.err.println(e);
         }
-        return list;
-
+        return null;
     }
 
     /**
@@ -206,7 +258,23 @@ public class UserModel {
             System.err.println(e);
         }
     }
-    
+
+    /**
+     *
+     * @param auditId
+     * @throws SQLException
+     */
+    public void deleteSpecificAudit(int auditId) throws SQLException {
+        try {
+            PreparedStatement statement
+                    = con.prepareStatement("DELETE FROM answers WHERE id = "
+                            + "'" + auditId + "'");
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("No such record exsists");
+        }
+    }
+
     /**
      *
      * @param user
@@ -277,6 +345,15 @@ public class UserModel {
             // User not in database
         }
         return null;
+    }
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    private boolean isCurrentUser(String user) {
+        return false;
     }
 
     /**

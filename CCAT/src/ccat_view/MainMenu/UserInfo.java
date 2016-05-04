@@ -14,39 +14,22 @@ package ccat_view.MainMenu;
  */
 public class UserInfo {
 
-    private String UName;
-    private String UType;
+    private final String userName;
 
     /**
-     *
+     * 
+     * @param userName 
      */
-    public UserInfo() {
+    public UserInfo(String userName) {
+        this.userName = userName;
     }
 
     /**
-     *
-     * @param UName
-     * @param UType
+     * 
+     * @return 
      */
-    public UserInfo(String UName, String UType) {
-        this.UName = UName;
-        this.UType = UType;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getUName() {
-        return UName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getUType() {
-        return UType;
+    public String getUserName() {
+        return userName;
     }
 
 }
