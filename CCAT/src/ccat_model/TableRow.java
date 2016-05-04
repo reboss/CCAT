@@ -34,7 +34,7 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-    private Label question;
+    private final Label question;
     private final Tab parentTab;
 
     /**

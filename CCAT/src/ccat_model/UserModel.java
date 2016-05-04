@@ -175,21 +175,69 @@ public class UserModel {
 
     /**
      *
+     * @param option
      * @return @throws SQLException
      */
-    public List<String> readDB() throws SQLException {
-        List<String> list = null;
+    public Map<String, List<String>> getAnswers(String option) throws SQLException {
+        String time;
+        switch (option) {
+            case "day":
+                time = "< CONVERT(date, GETDATE())";
+                break;
+            case "week":
+                time = "< NOW() - INTERVAL 1 WEEK";
+                break;
+            case "month":
+                time = "< NOW() - INTERVAL 1 MONTH";
+                break;
+            case "quarter":
+                time = "< NOW() - INTERVAL 3 MONTH";
+                break;
+            default:
+                System.err.println("Invalid input");
+                return null;
+        }
+        try (PreparedStatement statement = con.prepareStatement("SELECT answer, created, username, question FROM "
+                + "answers WHERE answers.uid = users.id AND answers.qid = "
+                + "questions.id AND answers.created" + time);
+        ResultSet result = statement.executeQuery();) {
+        Map<String, List<String>> answers = new HashMap<>();
+        while (result.next()) {
+            List<String> answerAttributes = new ArrayList<>();
+            answerAttributes.add(result.getString("answer"));
+            answerAttributes.add(result.getDate("created").toString());
+            answerAttributes.add(result.getString("username"));
+            answerAttributes.add(result.getString("question"));
+            answers.put(result.getString("username"), answerAttributes);
+        }
+        return answers;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Map<String, List<String>> getUsers() {
         try (PreparedStatement statement = con.prepareStatement("SELECT * FROM users");
                 ResultSet result = statement.executeQuery()) {
-            list = new ArrayList<>();
+            Map<String, List<String>> allUsers = new HashMap<>();
             while (result.next()) {
-                list.add(result.getString("fName"));
+                List<String> userAttributes = new ArrayList<>();
+                userAttributes.add(Integer.toString(result.getInt("id")));
+                userAttributes.add(result.getString("fName"));
+                userAttributes.add(result.getString("lName"));
+                userAttributes.add(Integer.toString(result.getInt("admin")));
+                allUsers.put(result.getString("username"), userAttributes);
             }
+            return allUsers;
         } catch (SQLException e) {
             System.err.println(e);
         }
-        return list;
-
+        return null;
     }
 
     /**
@@ -206,7 +254,7 @@ public class UserModel {
             System.err.println(e);
         }
     }
-    
+
     /**
      *
      * @param user
