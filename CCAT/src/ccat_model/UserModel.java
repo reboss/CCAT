@@ -204,17 +204,17 @@ public class UserModel {
         try (PreparedStatement statement = con.prepareStatement("SELECT answer, created, username, question FROM "
                 + "answers WHERE answers.uid = users.id AND answers.qid = "
                 + "questions.id AND answers.created" + time);
-        ResultSet result = statement.executeQuery();) {
-        Map<String, List<String>> answers = new HashMap<>();
-        while (result.next()) {
-            List<String> answerAttributes = new ArrayList<>();
-            answerAttributes.add(result.getString("answer"));
-            answerAttributes.add(result.getDate("created").toString());
-            answerAttributes.add(result.getString("username"));
-            answerAttributes.add(result.getString("question"));
-            answers.put(result.getString("username"), answerAttributes);
-        }
-        return answers;
+                ResultSet result = statement.executeQuery();) {
+            Map<String, List<String>> answers = new HashMap<>();
+            while (result.next()) {
+                List<String> answerAttributes = new ArrayList<>();
+                answerAttributes.add(result.getString("answer"));
+                answerAttributes.add(result.getDate("created").toString());
+                answerAttributes.add(result.getString("username"));
+                answerAttributes.add(result.getString("question"));
+                answers.put(result.getString("username"), answerAttributes);
+            }
+            return answers;
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -256,6 +256,22 @@ public class UserModel {
             statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e);
+        }
+    }
+
+    /**
+     *
+     * @param auditId
+     * @throws SQLException
+     */
+    public void deleteSpecificAudit(int auditId) throws SQLException {
+        try {
+            PreparedStatement statement
+                    = con.prepareStatement("DELETE FROM answers WHERE id = "
+                            + "'" + auditId + "'");
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("No such record exsists");
         }
     }
 
@@ -330,11 +346,11 @@ public class UserModel {
         }
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param user
-     * @return 
+     * @return
      */
     private boolean isCurrentUser(String user) {
         return false;
