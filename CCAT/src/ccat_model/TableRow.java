@@ -36,6 +36,7 @@ public class TableRow extends FlowPane {
     private final Label naLabel;
     private final Label question;
     private final Tab parentTab;
+    private final Integer id;
 
     /**
      *
@@ -50,6 +51,7 @@ public class TableRow extends FlowPane {
     public TableRow(Integer id, Label question, Tab parentTab, double width, Boolean isHeader){
         
         this.question = question;
+        this.id = id;
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
         this.yes = new RadioButton("");
@@ -189,6 +191,10 @@ public class TableRow extends FlowPane {
 
     public String getQuestion() {
         return question.getText();
+    }
+    
+    public Integer getQuestionId(){
+        return this.id;
     }
 
     /**

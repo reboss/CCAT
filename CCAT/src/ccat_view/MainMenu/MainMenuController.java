@@ -163,17 +163,15 @@ public class MainMenuController implements Initializable {
 
             int row = 0;
             for (String subheader : template.getOrderedSubheaders().get(header)) {
-
-                Label subheaderLabel = new Label(subheader);
-
-//                subheaderLabel.setFont(Font.font("Verdana", 15));
-                TableRow subheaderRow = new TableRow(null, subheaderLabel, tabs.get(i), 800.0, true);
-              
+                
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
                     continue;
-                } else {
-                    subheaderRow.setColor("#336699");
                 }
+                
+                Label subheaderLabel = new Label(subheader);
+                TableRow subheaderRow = new TableRow(null, subheaderLabel, tabs.get(i), 800.0, true);
+               
+                subheaderRow.setColor("#336699");
 
                 AnchorPane headerAnchor = new AnchorPane();
                 headerAnchor.getChildren().add(subheaderRow);
@@ -188,7 +186,7 @@ public class MainMenuController implements Initializable {
 
            
                     Label questionLabel = new Label(question);
-                    TableRow questionRow = new TableRow(null, questionLabel, tabs.get(i), 800.0, false);
+                    TableRow questionRow = new TableRow(row-i, questionLabel, tabs.get(i), 800.0, false);
                     questionRow.setToggles();
                     
                    if (row % 2 == 1) {
@@ -200,6 +198,7 @@ public class MainMenuController implements Initializable {
                     this.tabContentList.get(i).getChildren().add(row, questionAnchor);
                     
                     rows.add(questionRow);
+                    
                     row++;
                 }
             }
@@ -246,7 +245,7 @@ public class MainMenuController implements Initializable {
                 row.setTabErrorOff();  
 	    }
 
-            answerModel.saveAnswers(null, 1);
+            answerModel.saveAnswers(null, null);
         }
 
         for (String key : questionsAnswerCheck.keySet()) {
