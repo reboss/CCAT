@@ -28,10 +28,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.geometry.Pos;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -163,7 +167,7 @@ public class MainMenuController implements Initializable {
                 Label subheaderLabel = new Label(subheader);
                 subheaderLabel.setFont(Font.font("Verdana", 15));
                 TableRow subheaderRow = new TableRow(subheaderLabel, tabs.get(i), 800.0, true);
-              
+
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
                     continue;
                 } else {
@@ -238,8 +242,8 @@ public class MainMenuController implements Initializable {
                 row.setTabError();
                 return false;
             } else {
-                row.setTabErrorOff();
-            }
+                row.setTabErrorOff();  
+	    }
 
             answerModel.saveAnswers(answersToBeSaved, 1);
         }

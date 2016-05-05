@@ -16,7 +16,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 /**
  *
@@ -35,7 +34,6 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-
     private final Label question;
     private final Tab parentTab;
 
@@ -47,19 +45,19 @@ public class TableRow extends FlowPane {
      * @param isHeader
      */
 
-    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader){
-        
+    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader) {
+
         this.question = question;
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
         this.yes = new RadioButton("");
         this.no = new RadioButton("");
         this.na = new RadioButton("");
-        this.notes = new TextArea();
-        
+
+        this.notes = new TextArea();        
         this.isChecked = false;
         this.isNotHeader = false;
-        
+
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
         this.yesLabel = new Label("yes");
@@ -70,7 +68,7 @@ public class TableRow extends FlowPane {
         this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width * 0.06);
 
-        
+
         notes.setPrefWidth(width * 0.95);
         notes.setPrefHeight(65.0);
 
@@ -100,10 +98,12 @@ public class TableRow extends FlowPane {
 
     }
 
-    /**
-     *
-     * @return answer to question as well as notes if applicable
-     */
+
+        }
+        /**
+         *
+         * @return answer to question as well as notes if applicable
+         */
     public String getAnswer() {
 
         if (answer.getSelectedToggle() == yes) {
@@ -170,6 +170,23 @@ public class TableRow extends FlowPane {
         no.setPrefWidth(width * 0.05);
         na.setPrefWidth(width * 0.05);
 
+    }
+
+    public void setTabError() {
+
+        parentTab.setStyle("-fx-border-color:red; -fx-border-width: 1px;");
+        this.notes.setStyle("-fx-border-color:red; -fx-border-width: 1px; ");
+    }
+
+    public void setTabErrorOff() {
+
+        parentTab.setStyle("-fx-border-color:#eeeeee; -fx-border-width: 1px;");
+        this.notes.setStyle("-fx-border-color:#DDDDDD; -fx-border-width: 1px;");
+
+    }
+
+    public String getQuestion() {
+        return question.getText();
     }
 
     /**
