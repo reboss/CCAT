@@ -8,6 +8,7 @@
 
 package ccat_view;
 
+import ccat_model.QuestionLoader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import javafx.util.Duration;
  */
 public class CCAT extends Application {
 
+    private QuestionLoader loader;
     /**
      *
      * @param primaryStage

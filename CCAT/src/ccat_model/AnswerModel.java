@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -35,11 +36,11 @@ public class AnswerModel {
 
     /**
      *
-     * @param answers
+     * @param answers HashMap of { question_id : answer }
      * @param userID
      * @throws SQLException
      */
-    public void saveAnswers(List<String> answers, int userID) throws SQLException {
+    public void saveAnswers(HashMap<Integer, String> answers, int userID) throws SQLException {
 
         Statement stmt = connection.createStatement();
         int user = userID;

@@ -165,9 +165,10 @@ public class MainMenuController implements Initializable {
             for (String subheader : template.getOrderedSubheaders().get(header)) {
 
                 Label subheaderLabel = new Label(subheader);
-                subheaderLabel.setFont(Font.font("Verdana", 15));
-                TableRow subheaderRow = new TableRow(subheaderLabel, tabs.get(i), 800.0, true);
 
+//                subheaderLabel.setFont(Font.font("Verdana", 15));
+                TableRow subheaderRow = new TableRow(null, subheaderLabel, tabs.get(i), 800.0, true);
+              
                 if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
                     continue;
                 } else {
@@ -187,7 +188,7 @@ public class MainMenuController implements Initializable {
 
            
                     Label questionLabel = new Label(question);
-                    TableRow questionRow = new TableRow(questionLabel, tabs.get(i), 800.0, false);
+                    TableRow questionRow = new TableRow(null, questionLabel, tabs.get(i), 800.0, false);
                     questionRow.setToggles();
                     
                    if (row % 2 == 1) {
@@ -245,7 +246,7 @@ public class MainMenuController implements Initializable {
                 row.setTabErrorOff();  
 	    }
 
-            answerModel.saveAnswers(answersToBeSaved, 1);
+            answerModel.saveAnswers(null, 1);
         }
 
         for (String key : questionsAnswerCheck.keySet()) {

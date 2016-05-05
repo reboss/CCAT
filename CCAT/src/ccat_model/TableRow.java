@@ -39,14 +39,16 @@ public class TableRow extends FlowPane {
 
     /**
      *
+     * @param id
      * @param question
      * @param parentTab
      * @param width
      * @param isHeader
      */
 
-    public TableRow(Label question, Tab parentTab, double width, Boolean isHeader) {
 
+    public TableRow(Integer id, Label question, Tab parentTab, double width, Boolean isHeader){
+        
         this.question = question;
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
@@ -89,7 +91,7 @@ public class TableRow extends FlowPane {
         if (isHeader){
 //            this.question.setFont(Font.font("Verdana", 15));
             this.question.setTextFill(Color.web("#FFFFFF"));
-            this.question.setStyle("-fx-font-weight: bold");
+            this.question.setStyle("-fx-font-weight: bold; -fx-font : 16px \"Verdana\";");
             yesLabel.setTextFill(Color.web("#FFFFFF"));
             noLabel.setTextFill(Color.web("#FFFFFF"));
             naLabel.setTextFill(Color.web("#FFFFFF"));
@@ -99,7 +101,7 @@ public class TableRow extends FlowPane {
     }
 
 
-        }
+        
         /**
          *
          * @return answer to question as well as notes if applicable
@@ -197,23 +199,6 @@ public class TableRow extends FlowPane {
     public Tab getParentTab(){ return parentTab; }
     
     
-    public void setTabError(){
-        
-        parentTab.setStyle("-fx-border-color:red; -fx-border-width: 1px;");
-        this.notes.setStyle("-fx-border-color:red; -fx-border-width: 1px; ");
-    }
-    
-    
-    public void setTabErrorOff() {
-        
-        parentTab.setStyle("-fx-border-color:#eeeeee; -fx-border-width: 1px;");
-        this.notes.setStyle("-fx-border-color:#DDDDDD; -fx-border-width: 1px;");
-        
-    }
-    
-    public String getQuestion(){
-        return question.getText();
-    }
 
     /**
      *
