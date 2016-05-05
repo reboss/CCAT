@@ -28,16 +28,20 @@ public class QuestionLoader {
     private final Map<String, Map<String, List<String>>> content;
     private final Map<String, List<String>> orderedSubheaders;
     private final Connection dbConnection;
-
+    private final List<Integer> questionIds;
+    private final List<Header> headers;
+    
     /**
      *
      * @throws java.sql.SQLException
      */
     public QuestionLoader() throws SQLException {
         content = new HashMap<>();
+        questionIds = new ArrayList<>();
         orderedSubheaders = new HashMap<>();
         dbConnection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
         dbConnection.setAutoCommit(false);
+        headers = new ArrayList<>();
 
     }
 
@@ -54,34 +58,38 @@ public class QuestionLoader {
 
         while (headerQueryResults.next()) {
 
-            int part = headerQueryResults.getInt("part");
+            Integer part = headerQueryResults.getInt("part");
             String header = headerQueryResults.getString("header");
+            Integer id = headerQueryResults.getInt("id");
+            Header header = new Header(header, id, part);
+            headers.add(header);
+            
+//            Map<String, List<String>> questions = new HashMap<>();
+//            List<String> headers = new ArrayList<>();
+//
+//            if (content.get("Part " + part) == null) {
+//
+//                content.put("Part " + part, questions);
+//                orderedSubheaders.put("Part " + part, headers);
+//
+//            }
+//
+//            if (content.get("Part " + part).get(header) == null) {
+//
+//                content.get("Part " + part).put(header, new ArrayList<>());
+//                orderedSubheaders.get("Part " + part).add(header);
+//
+//            }
 
-            Map<String, List<String>> questions = new HashMap<>();
-            List<String> headers = new ArrayList<>();
-
-            if (content.get("Part " + part) == null) {
-
-                content.put("Part " + part, questions);
-                orderedSubheaders.put("Part " + part, headers);
-
-            }
-
-            if (content.get("Part " + part).get(header) == null) {
-
-                content.get("Part " + part).put(header, new ArrayList<>());
-                orderedSubheaders.get("Part " + part).add(header);
-
-            }
-
-            sql = "SELECT question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
+            sql = "SELECT id, question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
             ResultSet questionsQueryResults = stmt2.executeQuery(sql);
 
             while (questionsQueryResults.next()) {
 
                 String question = questionsQueryResults.getString("question");
                 content.get("Part " + part).get(header).add(question);
-
+                questionIds.add(questionsQueryResults.getInt("id"));
+                
             }
 
         }
@@ -95,6 +103,8 @@ public class QuestionLoader {
     public Map<String, Map<String, List<String>>> getContent() {
         return Collections.unmodifiableMap(content);
     }
+    
+    public List<Integer> getIds(){return questionIds;}
 
     /**
      *
