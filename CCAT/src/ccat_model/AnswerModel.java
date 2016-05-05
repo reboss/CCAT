@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -35,33 +36,32 @@ public class AnswerModel {
 
     /**
      *
-     * @param answers
-     * @param userID
+
+     * @param answers HashMap of { question_id : answer }
+     * @param username
      * @throws SQLException
      */
-    public void saveAnswers(List<String> answers, int userID) throws SQLException {
+    public void saveAnswers(HashMap<Integer, String> answers, String username) throws SQLException {
+
 
         Statement stmt = connection.createStatement();
-        int user = userID;
+        
         Date date = new Date();
         String qid = "(SELECT id FROM questions WHERE question = ";
-        String sql = "INSERT INTO answers ()"
-                + "VALUES ()";
+        String sql = "INSERT INTO audits (created, name) "
+                + "VALUES (DATETIME('NOW'), '" + username +"'); ";
+        
+        for (Integer key : answers.keySet()){
+            
+        }
 
     }
 
-    /**
-     *
-     * @param answers
-     */
-    public void saveAnswers(ArrayList<String> answers) {
-
-    }
 
     /**
      *
      */
-    public void retrieveAnswers() {
+    public void loadAnswers() {
 
     }
 }
