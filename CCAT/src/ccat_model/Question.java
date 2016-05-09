@@ -9,7 +9,7 @@ package ccat_model;
  *
  * @author JRebo_000
  */
-class Question extends CCATQA{
+public class Question extends CCATQA{
 
     public Question(String objectText, Integer objectId, Integer parentId) {
         super(objectText, objectId, parentId);

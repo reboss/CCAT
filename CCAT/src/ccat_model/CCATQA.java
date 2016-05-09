@@ -5,7 +5,7 @@ package ccat_model;
  *
  * @author John
  */
-abstract class CCATQA {
+public abstract class CCATQA {
     
     private final String objectText;
     private final Integer objectId;
