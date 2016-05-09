@@ -1,13 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright (C) John Robbins, Elliott Sobek, Zac Batog.
+ * Github profiles:
+ * John Robbins (https://github.com/reboss),
+ * Elliott Sobek (https://github.com/ElliottSobek),
+ * Zac Batog (https://github.com/batogz) 
  */
+
 package ccat_model;
 
 /**
  *
- * @author JRebo_000
+ * @author John
  */
 public class Answer extends CCATQA{
     
@@ -25,5 +28,5 @@ public class Answer extends CCATQA{
     public String getSelectedToggle(){
         return answer;
     }
-    
+
 }

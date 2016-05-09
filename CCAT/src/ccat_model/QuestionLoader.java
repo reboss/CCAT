@@ -30,7 +30,7 @@ public class QuestionLoader {
     private final Connection dbConnection;
     private final List<Integer> questionIds;
     private final List<Header> headers;
-    
+
     /**
      *
      * @throws java.sql.SQLException
@@ -47,8 +47,7 @@ public class QuestionLoader {
 
     /**
      *
-     * @return 
-     * @throws java.sql.SQLException
+     * @return @throws java.sql.SQLException
      */
     public List<Header> loadQuestions() throws SQLException {
 
@@ -62,20 +61,20 @@ public class QuestionLoader {
             Integer part = headerQueryResults.getInt("part");
             String headerText = headerQueryResults.getString("header");
             Integer id = headerQueryResults.getInt("id");
-            
+
             Header header = new Header(headerText, id, part);
 
             sql = "SELECT id, question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
             ResultSet questionsQueryResults = stmt2.executeQuery(sql);
 
             while (questionsQueryResults.next()) {
-                
+
                 id = questionsQueryResults.getInt("id");
                 String questionText = questionsQueryResults.getString("question");
-                
+
                 Question question = new Question(questionText, id, null);
                 header.addChild(question);
-                
+
             }
             headers.add(header);
         }
@@ -92,16 +91,18 @@ public class QuestionLoader {
     public Map<String, Map<String, List<String>>> getContent() {
         return Collections.unmodifiableMap(content);
     }
-    
-    public List<Integer> getIds(){return questionIds;}
+
+    public List<Integer> getIds() {
+        return Collections.unmodifiableList(questionIds);
+    }
 
     /**
      *
      */
     public void traverse() {
-        for (Header header : headers){
+        for (Header header : headers) {
             System.out.println(header);
-            for(Question question : header.getChildren()){
+            for (Question question : header.getChildren()) {
                 System.out.println(question);
             }
         }
@@ -120,10 +121,10 @@ public class QuestionLoader {
      * @return
      */
     public List<String> getHeaders() {
-        List<String> headers = new ArrayList<>();
+        List<String> allHeaders = new ArrayList<>();
         for (String key : content.keySet()) {
-            headers.add(key);
+            allHeaders.add(key);
         }
-        return headers;
+        return allHeaders;
     }
 }
