@@ -10,7 +10,6 @@ package ccat_view.MainMenu;
 
 import ccat_model.Answer;
 import ccat_model.AnswerModel;
-import ccat_model.CCATQA;
 import ccat_model.Header;
 import ccat_model.QuestionLoader;
 import ccat_model.Question;
@@ -27,25 +26,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.geometry.Pos;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -193,6 +181,7 @@ public class MainMenuController implements Initializable {
 
             }
 
+
         }
     }
 
@@ -215,9 +204,10 @@ public class MainMenuController implements Initializable {
             } else {
                 row.setTabErrorOff();  
 
-            }
+	    }
 
-//            answerModel.saveAnswers(answersToBeSaved, 1);
+            answerModel.saveAnswers(null, null);
+
         }
         return null;
     }

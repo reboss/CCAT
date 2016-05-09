@@ -76,10 +76,11 @@ public class TableRow extends FlowPane {
         this.yesLabel = new Label("yes");
         yesLabel.setPrefWidth(width * 0.06);
         this.noLabel = new Label("no");
+
         noLabel.setPrefWidth(width * 0.06);
         this.naLabel = new Label("n/a");
         naLabel.setPrefWidth(width * 0.06);
-        
+
         notes.setPrefWidth(width * 0.95);
         notes.setPrefHeight(65.0);
 
@@ -208,6 +209,7 @@ public class TableRow extends FlowPane {
     public CCATQA getObject() {
         return object;
     }
+    
 
 
     /**
@@ -217,6 +219,7 @@ public class TableRow extends FlowPane {
 
     public Tab getParentTab(){ return parentTab; }
     
+
 
     
     /**

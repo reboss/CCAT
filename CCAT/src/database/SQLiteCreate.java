@@ -33,7 +33,8 @@ public class SQLiteCreate {
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
-            String sql = "CREATE TABLE headers ("
+            String sql = 
+                    "CREATE TABLE headers ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                     + "header TEXT,"
                     + "part SMALLINT);";
@@ -53,26 +54,34 @@ public class SQLiteCreate {
                     + "lName TEXT,"
                     + "username TEXT,"
                     + "password TEXT,"
-                    + "admin BIT);";
+                    + "admin BINARY);";
+            
+            stmt.executeUpdate(sql);
+            sql = "CREATE TABLE audits("
+                    + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                    + "created TIMESTAMP,"
+                    + "name TEXT,"
+                    + "score REAL(5, 2),"
+                    + "hidden BINARY);";
 
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE answers ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                     + "answer TEXT NOT NULL,"
                     + "created DATE,"
-                    + "uid INTEGER NOT NULL,"
+                    + "aid INTEGER NOT NULL,"
                     + "qid INTEGER NOT NULL,"
                     + "FOREIGN KEY (qid) REFERENCES questions(id) "
                     + "ON DELETE CASCADE ON UPDATE CASCADE,"
-                    + "FOREIGN KEY (uid) REFERENCES users(id) "
+                    + "FOREIGN KEY (aid) REFERENCES audits(id) "
                     + "ON DELETE CASCADE ON UPDATE CASCADE);";
 
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE scores ("
-                    + "dailyScore FLOAT(5, 2),"
-                    + "weeklyScore FLOAT(5, 2),"
-                    + "monthlyScore FLOAT(5,2),"
-                    + "quarterlyScore FLOAT(5, 2));";
+                    + "dailyScore REAL(5, 2),"
+                    + "weeklyScore REAL(5, 2),"
+                    + "monthlyScore REAL(5,2),"
+                    + "quarterlyScore REAL(5, 2));";
 
             stmt.executeUpdate(sql);
             stmt.close();
