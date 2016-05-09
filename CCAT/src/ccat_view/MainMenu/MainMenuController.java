@@ -8,8 +8,12 @@
 
 package ccat_view.MainMenu;
 
+import ccat_model.Answer;
 import ccat_model.AnswerModel;
+import ccat_model.CCATQA;
+import ccat_model.Header;
 import ccat_model.QuestionLoader;
+import ccat_model.Question;
 import ccat_model.TableRow;
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +47,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+
 
 //import files.*;
 
@@ -82,10 +86,8 @@ public class MainMenuController implements Initializable {
     private AnswerModel answerModel;
     private List<Tab> tabs;
     private List<VBox> tabContentList;
-    private Map<String, Boolean> questionsAnswerCheck;
-    private Map<String, TextArea> notesOnNoOrNa;
     private List<TableRow> rows;
-
+    private List<Answer> answersToBeSaved;
     /**
      *
      */
@@ -150,79 +152,44 @@ public class MainMenuController implements Initializable {
      *
      */
     @FXML
-    private void populateTabs() {
+    private void populateTabs() throws SQLException {
 
-        rows = new ArrayList<>();
-        notesOnNoOrNa = new HashMap<>();
-        questionsAnswerCheck = new HashMap<>();
-        Map<String, Map<String, List<String>>> content = template.getContent();
+        List<Header> headers = template.loadQuestions();
+        template.traverse();
+        
+        int row = 0;
+        int part = 0;
+        for(Header header : headers){
 
-        int i = 0;
-        for (String header : content.keySet()) {
+            if (header.getParentId() != part){
+                row = 0;
+            }
+            part = header.getParentId() - 1;
             
+            if (header.getText().compareTo(" ") == 0) continue;
+            
+            TableRow headerRow = new TableRow(header, tabs.get(part), 800.0, true);
+            headerRow.setColor("#336699");
 
-            int row = 0;
-            for (String subheader : template.getOrderedSubheaders().get(header)) {
-                
-                if (subheader.compareTo(" ") == 0 || subheader.isEmpty()) {
-                    continue;
-                }
-                
-                Label subheaderLabel = new Label(subheader);
-                TableRow subheaderRow = new TableRow(null, subheaderLabel, tabs.get(i), 800.0, true);
-               
-                subheaderRow.setColor("#336699");
+            AnchorPane headerAnchor = new AnchorPane();
+            headerAnchor.getChildren().add(headerRow);
+            this.tabContentList.get(part).getChildren().add(row, headerAnchor);
 
-                AnchorPane headerAnchor = new AnchorPane();
-                headerAnchor.getChildren().add(subheaderRow);
-                this.tabContentList.get(i).getChildren().add(row, headerAnchor);
+            row++;
+            for (Question question : header.getChildren()){
+
+                TableRow questionRow = new TableRow(question, tabs.get(part), 800.0, false);
+                questionRow.setToggles();
+                if (row % 2 == 0) questionRow.setColor("#cce0ff");
+                AnchorPane questionAnchor = new AnchorPane();
+                questionAnchor.getChildren().add(questionRow);
+                this.tabContentList.get(part).getChildren().add(row, questionAnchor);
 
                 row++;
 
-                List<String> list = content.get(header).get(subheader);
-                rows.add(subheaderRow);
-
-                for (String question : list) {
-
-           
-                    Label questionLabel = new Label(question);
-                    TableRow questionRow = new TableRow(row-i, questionLabel, tabs.get(i), 800.0, false);
-                    questionRow.setToggles();
-                    
-                   if (row % 2 == 1) {
-                        questionRow.setColor("#dbe4f0");
-                    }
-
-                    AnchorPane questionAnchor = new AnchorPane();
-                    questionAnchor.getChildren().add(questionRow);
-                    this.tabContentList.get(i).getChildren().add(row, questionAnchor);
-                    
-                    rows.add(questionRow);
-                    
-                    row++;
-                }
             }
-            HBox submitRow = new HBox();
-            Button submit = new Button("Submit");
-          
-            submit.setOnAction((ActionEvent event) ->{
-            try {
-                if (this.saveFile()){
-                    
-                }
-                else{
-                    
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        });
-            submitRow.getChildren().add(submit);
-            this.tabContentList.get(i).getChildren().add(submitRow);
-            i++;
+
         }
-        
     }
 
     /**
@@ -233,7 +200,6 @@ public class MainMenuController implements Initializable {
     @FXML
     public Boolean saveFile() throws SQLException {
 
-        List<String> answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
         
         for (TableRow row : rows) {
@@ -247,17 +213,7 @@ public class MainMenuController implements Initializable {
 
             answerModel.saveAnswers(null, null);
         }
-
-        for (String key : questionsAnswerCheck.keySet()) {
-
-            if (!questionsAnswerCheck.get(key)) {
-
-                System.out.println(key);
-                return false;
-
-            }
-        }
-        return true;
+        return null;
     }
 
     /**
@@ -280,34 +236,23 @@ public class MainMenuController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         tabContentList = new ArrayList<>();
         tabs = new ArrayList<>();
+        
         tabContentList.add(partAContent);
         tabContentList.add(partBContent);
         tabContentList.add(partCContent);
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);
-
+        
         try {
-            template.loadQuestions();
+            populateTabs();
+            
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        populateTabs();
-        
-        
-//        tabPane.getScene().widthProperty().addListener(new ChangeListener<Number>() {
-//            @Override 
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-//                tabPane.setPrefWidth((double) newSceneWidth);
-//                for (TableRow row : rows){
-//                    row.setRowWidth((double) newSceneWidth);
-//                }
-//            }
-//
-//        });
     }
 
 }

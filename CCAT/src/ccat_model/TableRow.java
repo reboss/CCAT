@@ -9,6 +9,7 @@
 package ccat_model;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -34,24 +35,29 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-    private final Label question;
+    private final Label questionLabel;
+    private final CCATQA object;
     private final Tab parentTab;
-    private final Integer id;
 
     /**
      *
-     * @param id
      * @param question
      * @param parentTab
      * @param width
      * @param isHeader
      */
 
-
-    public TableRow(Integer id, Label question, Tab parentTab, double width, Boolean isHeader){
+    /**
+     *
+     * @param object
+     * @param parentTab
+     * @param width
+     * @param isHeader
+     */
+    public TableRow(CCATQA object, Tab parentTab, double width, Boolean isHeader){
         
-        this.question = question;
-        this.id = id;
+        this.object = object;
+        this.questionLabel = new Label(object.getText());
         this.parentTab = parentTab;
         this.answer = new ToggleGroup();
         this.yes = new RadioButton("");
@@ -79,8 +85,9 @@ public class TableRow extends FlowPane {
         this.setPrefWidth(width);
         this.setPrefHeight(20.0);
 
-        this.question.setPrefWidth(width * 0.82);
-        this.getChildren().add(this.question);
+        this.questionLabel.setPrefWidth(width * 0.82);
+        this.questionLabel.setStyle(null);
+        this.getChildren().add(this.questionLabel);
 
         yes.setPrefWidth(width * 0.06);
         no.setPrefWidth(width * 0.06);
@@ -92,14 +99,17 @@ public class TableRow extends FlowPane {
         
         if (isHeader){
 //            this.question.setFont(Font.font("Verdana", 15));
-            this.question.setTextFill(Color.web("#FFFFFF"));
-            this.question.setStyle("-fx-font-weight: bold; -fx-font : 16px \"Verdana\";");
+            this.questionLabel.setTextFill(Color.web("#FFFFFF"));
+            this.questionLabel.setStyle("-fx-font-weight: bold; -fx-font : 16px \"Verdana\";");
             yesLabel.setTextFill(Color.web("#FFFFFF"));
             noLabel.setTextFill(Color.web("#FFFFFF"));
             naLabel.setTextFill(Color.web("#FFFFFF"));
             this.getChildren().addAll(yesLabel, noLabel, naLabel);
         }
-
+        else{
+            this.setPadding(new Insets(5, 0, 5,0));
+        }
+        
     }
 
 
@@ -169,7 +179,7 @@ public class TableRow extends FlowPane {
     public void setRowWidth(double width) {
 
         this.setPrefWidth(width);
-        question.setPrefWidth(width * 0.75);
+        questionLabel.setPrefWidth(width * 0.75);
         yes.setPrefWidth(width * 0.05);
         no.setPrefWidth(width * 0.05);
         na.setPrefWidth(width * 0.05);
@@ -189,13 +199,14 @@ public class TableRow extends FlowPane {
 
     }
 
-    public String getQuestion() {
-        return question.getText();
+    /**
+     *
+     * @return
+     */
+    public CCATQA getObject() {
+        return object;
     }
     
-    public Integer getQuestionId(){
-        return this.id;
-    }
 
     /**
      *
