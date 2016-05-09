@@ -55,7 +55,6 @@ public class CCAT extends Application {
      * @throws InterruptedException
      */
     private void displaySplashScreen(Stage stage) throws IOException, InterruptedException, SQLException {
-        HashMap<String, HashMap<String, List<String>>> template = new HashMap<>();
 //        (new Thread(new QuestionLoader())).start();
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
         Scene scene = new Scene(root);
@@ -91,14 +90,14 @@ public class CCAT extends Application {
         stage.setTitle("Critical Care Audit Tool - CONFIDENTIAL");
         stage.setScene(scene);
         stage.show();
-        
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override 
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                System.out.println("Width: " + newSceneWidth);
-            }
-
-        });
+//        
+//        scene.widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override 
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                System.out.println("Width: " + newSceneWidth);
+//            }
+//
+//        });
     }
 
     /**
