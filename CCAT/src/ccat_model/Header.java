@@ -13,7 +13,7 @@ public class Header extends CCATQA{
     
     private final List<Question> questions;
     
-    Header(String objectText, Integer objectId, Integer parentId) {
+    public Header(String objectText, Integer objectId, Integer parentId) {
         super(objectText, objectId, parentId);
         questions = new ArrayList<>();
     }   
