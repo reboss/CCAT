@@ -23,6 +23,7 @@ public class AnswerModel {
 
     private final Connection connection;
     private final int TOTAL_QUESTIONS = 44;
+    
     /**
      *
      * @throws SQLException

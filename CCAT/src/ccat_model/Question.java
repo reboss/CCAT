@@ -12,20 +12,34 @@ package ccat_model;
  *
  * @author John
  */
-public class Question extends CCATQA{
-    
+public class Question extends CCATQA {
+
     private String answer;
-    
+
+    /**
+     *
+     * @param objectText
+     * @param objectId
+     * @param parentId
+     */
     public Question(String objectText, Integer objectId, Integer parentId) {
         super(objectText, objectId, parentId);
         answer = "";
     }
-    
-    public void setAnswer(String answer){
+
+    /**
+     *
+     * @param answer
+     */
+    public void setAnswer(String answer) {
         this.answer = answer;
     }
-    
-    public String getAnswer(){
+
+    /**
+     *
+     * @return
+     */
+    public String getAnswer() {
         return this.answer;
     }
 }

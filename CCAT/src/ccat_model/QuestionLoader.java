@@ -51,37 +51,37 @@ public class QuestionLoader {
      */
     public List<Header> loadQuestions() throws SQLException {
 
-        Statement stmt1 = dbConnection.createStatement();
-        Statement stmt2 = dbConnection.createStatement();
-        String sql = "SELECT id, part, header FROM headers";
-        ResultSet headerQueryResults = stmt1.executeQuery(sql);
+        Statement stmt2;
+        try (Statement stmt1 = dbConnection.createStatement()) {
+            stmt2 = dbConnection.createStatement();
+            String sql = "SELECT id, part, header FROM headers";
+            ResultSet headerQueryResults = stmt1.executeQuery(sql);
+            while (headerQueryResults.next()) {
 
-        while (headerQueryResults.next()) {
+                Integer part = headerQueryResults.getInt("part");
+                String headerText = headerQueryResults.getString("header");
+                Integer id = headerQueryResults.getInt("id");
 
-            Integer part = headerQueryResults.getInt("part");
-            String headerText = headerQueryResults.getString("header");
-            Integer id = headerQueryResults.getInt("id");
+                Header header = new Header(headerText, id, part);
 
-            Header header = new Header(headerText, id, part);
+                sql = "SELECT id, question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
+                ResultSet questionsQueryResults = stmt2.executeQuery(sql);
 
-            sql = "SELECT id, question, hid FROM questions WHERE hid = " + headerQueryResults.getInt("id");
-            ResultSet questionsQueryResults = stmt2.executeQuery(sql);
+                while (questionsQueryResults.next()) {
 
-            while (questionsQueryResults.next()) {
+                    id = questionsQueryResults.getInt("id");
+                    String questionText = questionsQueryResults.getString("question");
 
-                id = questionsQueryResults.getInt("id");
-                String questionText = questionsQueryResults.getString("question");
+                    Question question = new Question(questionText, id, null);
+                    header.addChild(question);
 
-                Question question = new Question(questionText, id, null);
-                header.addChild(question);
-
+                }
+                headers.add(header);
             }
-            headers.add(header);
         }
-        stmt1.close();
         stmt2.close();
         dbConnection.close();
-        return headers;
+        return Collections.unmodifiableList(headers);
     }
 
     /**
@@ -92,6 +92,10 @@ public class QuestionLoader {
         return Collections.unmodifiableMap(content);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Integer> getIds() {
         return Collections.unmodifiableList(questionIds);
     }

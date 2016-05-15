@@ -12,20 +12,34 @@ package ccat_model;
  *
  * @author John
  */
-public class Answer extends CCATQA{
-    
+public class Answer extends CCATQA {
+
     private String answer;
-    
+
+    /**
+     * 
+     * @param objectText
+     * @param objectId
+     * @param parentId 
+     */
     public Answer(String objectText, Integer objectId, Integer parentId) {
         super(objectText, objectId, parentId);
         answer = "";
     }
-    
-    public void setSelectedToggleValue(String answer){
-        this.answer = answer; 
+
+    /**
+     * 
+     * @param answer 
+     */
+    public void setSelectedToggleValue(String answer) {
+        this.answer = answer;
     }
-    
-    public String getSelectedToggle(){
+
+    /**
+     * 
+     * @return 
+     */
+    public String getSelectedToggle() {
         return answer;
     }
 

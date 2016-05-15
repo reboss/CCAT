@@ -20,6 +20,12 @@ public class Header extends CCATQA {
 
     private final List<Question> questions;
 
+    /**
+     *
+     * @param objectText
+     * @param objectId
+     * @param parentId
+     */
     public Header(String objectText, Integer objectId, Integer parentId) {
         super(objectText, objectId, parentId);
         questions = new ArrayList<>();
