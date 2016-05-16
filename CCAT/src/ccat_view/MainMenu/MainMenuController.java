@@ -138,7 +138,6 @@ public class MainMenuController implements Initializable {
     /**
      *
      */
-    @FXML
     private void populateTabs() throws SQLException {
 
         List<Header> headers = template.loadQuestions();
@@ -188,7 +187,7 @@ public class MainMenuController implements Initializable {
      * @return @throws java.sql.SQLException
      */
     @FXML
-    public Boolean saveFile() throws SQLException {
+    private Boolean onSubmit(ActionEvent event) throws SQLException {
 
         answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
