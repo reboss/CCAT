@@ -79,7 +79,9 @@ public class QuestionLoader {
             }
             headers.add(header);
         }
-        
+        stmt1.close();
+        stmt2.close();
+        dbConnection.close();
         return headers;
     }
 

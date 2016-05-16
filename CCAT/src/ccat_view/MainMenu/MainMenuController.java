@@ -70,6 +70,7 @@ public class MainMenuController implements Initializable {
     private Tab admin;
 
     private final int BRADEN_SCALE_MAX = 24;
+    private final int QUESTION_NUM = 44;
     private QuestionLoader template;
     private AnswerModel answerModel;
     private List<Tab> tabs;
@@ -143,7 +144,7 @@ public class MainMenuController implements Initializable {
     private void populateTabs() throws SQLException {
 
         List<Header> headers = template.loadQuestions();
-        template.traverse();
+        rows = new ArrayList<>();
         
         int row = 0;
         int part = 0;
@@ -170,11 +171,11 @@ public class MainMenuController implements Initializable {
 
                 TableRow questionRow = new TableRow(question, tabs.get(part), 800.0, false);
                 questionRow.setToggles();
-                if (row % 2 == 0) questionRow.setColor("#cce0ff");
+                if ((row-header.getId()) % 2 == 0) questionRow.setColor("#d6e0f5");
                 AnchorPane questionAnchor = new AnchorPane();
                 questionAnchor.getChildren().add(questionRow);
                 this.tabContentList.get(part).getChildren().add(row, questionAnchor);
-
+                rows.add(questionRow);
 
                 row++;
 
@@ -193,32 +194,51 @@ public class MainMenuController implements Initializable {
     @FXML
     public Boolean saveFile() throws SQLException {
 
+        answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
         
-        for (TableRow row : rows) {
-        
-
+        for (int i = 0; i < QUESTION_NUM; i++) {
+            
+            TableRow row = rows.get(i);
+            
             if (!row.isValid()){ 
                 row.setTabError();
                 return false;
-            } else {
-                row.setTabErrorOff();  
-
-	    }
-
-            answerModel.saveAnswers(null, null);
-
+            } else if ( row.isNotYes() && !row.getAnswer().getText().isEmpty() ){
+                answersToBeSaved.add(row.getAnswer());
+            }
+            else{
+                this.setErrorsOff();
+            }
         }
+        answerModel.saveAnswers(answersToBeSaved, null);
+
         return null;
     }
 
+    public void setToggles(){
+        for (TableRow row : rows ){
+            row.testToggleGroup();
+        }
+    }
+    
+    public void setErrorsOff(){
+        
+        for (TableRow row : rows){
+            if (row.isValid()){
+                row.setTabErrorOff();
+            }
+            else {
+                row.setTabError();
+            }
+        }
+    }
     /**
      *
      */
     public final void setAccess() {
         admin.setDisable(false);
     }
-
     /**
      * Initializes the controller class.
      *
@@ -249,6 +269,8 @@ public class MainMenuController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
+    
 
 }

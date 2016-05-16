@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
  */
 public class TableRow extends FlowPane {
 
-    private final ToggleGroup answer;
+    private final ToggleGroup answerToggle;
     private Boolean isChecked;
     private Boolean isNotHeader;
     private final RadioButton yes;
@@ -35,7 +35,7 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-
+    private Answer answer;
     private final Label questionLabel;
     private final CCATQA object;
     private final Tab parentTab;
@@ -58,10 +58,11 @@ public class TableRow extends FlowPane {
      */
     public TableRow(CCATQA object, Tab parentTab, double width, Boolean isHeader){
         
+        this.answer = new Answer(null, null, object.getId());
         this.object = object;
         this.questionLabel = new Label(object.getText());
         this.parentTab = parentTab;
-        this.answer = new ToggleGroup();
+        this.answerToggle = new ToggleGroup();
         this.yes = new RadioButton("");
         this.no = new RadioButton("");
         this.na = new RadioButton("");
@@ -95,12 +96,11 @@ public class TableRow extends FlowPane {
         no.setPrefWidth(width * 0.06);
         na.setPrefWidth(width * 0.06);
 
-        yes.setToggleGroup(answer);
-        no.setToggleGroup(answer);
-        na.setToggleGroup(answer);
+        yes.setToggleGroup(answerToggle);
+        no.setToggleGroup(answerToggle);
+        na.setToggleGroup(answerToggle);
         
         if (isHeader){
-//            this.question.setFont(Font.font("Verdana", 15));
 
             this.questionLabel.setTextFill(Color.web("#FFFFFF"));
             this.questionLabel.setStyle("-fx-font-weight: bold; -fx-font : 16px \"Verdana\";");
@@ -115,21 +115,32 @@ public class TableRow extends FlowPane {
         
     }
 
-
+    
+    public void testToggleGroup(){
+        answerToggle.selectToggle(yes);
+    }
+    
+    public Boolean isNotYes(){
+        return answerToggle.getSelectedToggle() != yes;
+    }
         
-        /**
-         *
-         * @return answer to question as well as notes if applicable
-         */
-    public String getAnswer() {
+    /**
+     *
+     * @return answer to question as well as notes if applicable
+     */
+    public Answer getAnswer() {
 
-        if (answer.getSelectedToggle() == yes) {
-            return "yes";
-        } else if (answer.getSelectedToggle() == no) {
-            return "no - " + notes.getText();
+        if (answerToggle.getSelectedToggle() == yes) {
+            return null;
+        } else if (answerToggle.getSelectedToggle() == no) {
+            answer.setSelectedToggleValue("no");
         } else {
-            return "n/a - " + notes.getText();
+            answer.setSelectedToggleValue("n/a");
         }
+        answer.setText(notes.getText());
+        System.out.println(answer.getText());
+        return answer;
+        
 
     }
 
@@ -232,8 +243,8 @@ public class TableRow extends FlowPane {
      */
     public Boolean isValid() {
 
-        if (answer.getSelectedToggle() == no
-                || answer.getSelectedToggle() == na) {
+        if (answerToggle.getSelectedToggle() == no
+                || answerToggle.getSelectedToggle() == na) {
 
             return (isChecked && !notes.getText().isEmpty()) || !isNotHeader;
         }
