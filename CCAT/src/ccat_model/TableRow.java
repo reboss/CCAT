@@ -251,5 +251,12 @@ public class TableRow extends FlowPane {
     public void setColor(String color) {
         this.setStyle("-fx-background-color: " + color + ";");
     }
+    
+    /**
+     * 
+     */
+    public void reset(){
+        this.answerToggle.getSelectedToggle().setSelected(false);
+    }
 
 }

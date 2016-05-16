@@ -188,12 +188,10 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     private Boolean onSubmit(ActionEvent event) throws SQLException {
-
         answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
 
         for (int i = 0; i < QUESTION_NUM; i++) {
-
             TableRow row = rows.get(i);
 
             if (!row.isValid()) {
@@ -206,6 +204,7 @@ public class MainMenuController implements Initializable {
             }
         }
         answerModel.saveAnswers(answersToBeSaved, null);
+        this.resetRows();
 
         return null;
     }
@@ -233,11 +232,21 @@ public class MainMenuController implements Initializable {
     public final void setAccess() {
         admin.setDisable(false);
     }
+    
+    /**
+     * 
+     */
+    private void resetRows() {
+        for (int i = 0; i < QUESTION_NUM; i++) {
+            TableRow row = rows.get(i);
+            row.reset();
+        }
+    }
 
     /**
      * Initializes the controller class.
      *
-     * @param url
+     * @param url  
      * @param rb
      */
     @Override
