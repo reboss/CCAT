@@ -7,7 +7,7 @@ package ccat_model;
  */
 public abstract class CCATQA {
     
-    private final String objectText;
+    private String objectText;
     private final Integer objectId;
     private final Integer parentId;
     
@@ -29,5 +29,9 @@ public abstract class CCATQA {
     
     public Integer getParentId(){
         return parentId;
+    }
+    
+    public void setText(String text){
+        objectText = text;
     }
 }
