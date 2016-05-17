@@ -246,6 +246,7 @@ public class MainMenuController implements Initializable {
         for (int i = 0; i < QUESTION_NUM; i++) {
             TableRow row = rows.get(i);
             row.reset();
+            row.clearNotes();
         }
     }
 

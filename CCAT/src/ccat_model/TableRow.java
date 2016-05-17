@@ -259,4 +259,11 @@ public class TableRow extends FlowPane {
         this.answerToggle.getSelectedToggle().setSelected(false);
     }
 
+    /**
+     * 
+     */
+    public void clearNotes() {
+        this.notes.setText("");
+    }
+
 }
