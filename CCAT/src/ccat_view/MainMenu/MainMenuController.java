@@ -209,12 +209,18 @@ public class MainMenuController implements Initializable {
         return null;
     }
 
+    /**
+     * 
+     */
     public void setToggles() {
         for (TableRow row : rows) {
             row.testToggleGroup();
         }
     }
 
+    /**
+     * 
+     */
     public void setErrorsOff() {
 
         for (TableRow row : rows) {
