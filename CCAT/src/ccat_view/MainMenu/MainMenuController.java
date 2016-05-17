@@ -29,16 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-
 //import files.*;
-
 //TODO: add onClickListeners to radioButton groups to update score in real time
 //      as well as check for errors in case someone tries to submit an incomplete 
 //      form
@@ -77,6 +74,7 @@ public class MainMenuController implements Initializable {
     private List<VBox> tabContentList;
     private List<TableRow> rows;
     private List<Answer> answersToBeSaved;
+
     /**
      *
      */
@@ -140,38 +138,38 @@ public class MainMenuController implements Initializable {
     /**
      *
      */
-    @FXML
     private void populateTabs() throws SQLException {
 
         List<Header> headers = template.loadQuestions();
         rows = new ArrayList<>();
-        
         int row = 0;
         int part = 0;
-        for(Header header : headers){
+        for (Header header : headers) {
 
-            if (header.getParentId() != part){
+            if (header.getParentId() != part) {
                 row = 0;
             }
             part = header.getParentId() - 1;
-            
-            if (header.getText().compareTo(" ") == 0) continue;
-            
+
+            if (header.getText().compareTo(" ") == 0) {
+                continue;
+            }
+
             TableRow headerRow = new TableRow(header, tabs.get(part), 800.0, true);
             headerRow.setColor("#336699");
-
 
             AnchorPane headerAnchor = new AnchorPane();
             headerAnchor.getChildren().add(headerRow);
             this.tabContentList.get(part).getChildren().add(row, headerAnchor);
 
-
             row++;
-            for (Question question : header.getChildren()){
+            for (Question question : header.getChildren()) {
 
                 TableRow questionRow = new TableRow(question, tabs.get(part), 800.0, false);
                 questionRow.setToggles();
-                if ((row-header.getId()) % 2 == 0) questionRow.setColor("#d6e0f5");
+                if ((row - header.getId()) % 2 == 0) {
+                    questionRow.setColor("#d6e0f5");
+                }
                 AnchorPane questionAnchor = new AnchorPane();
                 questionAnchor.getChildren().add(questionRow);
                 this.tabContentList.get(part).getChildren().add(row, questionAnchor);
@@ -179,70 +177,83 @@ public class MainMenuController implements Initializable {
 
                 row++;
 
-
             }
-
 
         }
     }
 
     /**
      *
-     * @return
-     * @throws java.sql.SQLException
+     * @return @throws java.sql.SQLException
      */
     @FXML
-    public Boolean saveFile() throws SQLException {
-
+    private Boolean onSubmit(ActionEvent event) throws SQLException {
         answersToBeSaved = new ArrayList<>();
         answerModel = new AnswerModel();
-        
+
         for (int i = 0; i < QUESTION_NUM; i++) {
-            
             TableRow row = rows.get(i);
-            
-            if (!row.isValid()){ 
+
+            if (!row.isValid()) {
                 row.setTabError();
                 return false;
-            } else if ( row.isNotYes() && !row.getAnswer().getText().isEmpty() ){
+            } else if (row.isNotYes() && !row.getAnswer().getText().isEmpty()) {
                 answersToBeSaved.add(row.getAnswer());
-            }
-            else{
+            } else {
                 this.setErrorsOff();
             }
         }
         answerModel.saveAnswers(answersToBeSaved, null);
+        this.resetRows();
 
         return null;
     }
 
-    public void setToggles(){
-        for (TableRow row : rows ){
+    /**
+     * 
+     */
+    public void setToggles() {
+        for (TableRow row : rows) {
             row.testToggleGroup();
         }
     }
-    
-    public void setErrorsOff(){
-        
-        for (TableRow row : rows){
-            if (row.isValid()){
+
+    /**
+     * 
+     */
+    public void setErrorsOff() {
+
+        for (TableRow row : rows) {
+            if (row.isValid()) {
                 row.setTabErrorOff();
-            }
-            else {
+            } else {
                 row.setTabError();
             }
         }
     }
+
     /**
      *
      */
     public final void setAccess() {
         admin.setDisable(false);
     }
+    
+    /**
+     * 
+     */
+    private void resetRows() {
+        for (int i = 0; i < QUESTION_NUM; i++) {
+            TableRow row = rows.get(i);
+            row.reset();
+            row.clearNotes();
+        }
+    }
+
     /**
      * Initializes the controller class.
      *
-     * @param url
+     * @param url  
      * @param rb
      */
     @Override
@@ -252,25 +263,23 @@ public class MainMenuController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         tabContentList = new ArrayList<>();
         tabs = new ArrayList<>();
-        
+
         tabContentList.add(partAContent);
         tabContentList.add(partBContent);
         tabContentList.add(partCContent);
         tabs.add(partA);
         tabs.add(partB);
         tabs.add(partC);
-        
+
         try {
             populateTabs();
-            
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
 
 }

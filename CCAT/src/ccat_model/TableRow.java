@@ -35,19 +35,10 @@ public class TableRow extends FlowPane {
     private final Label yesLabel;
     private final Label noLabel;
     private final Label naLabel;
-    private Answer answer;
+    private final Answer answer;
     private final Label questionLabel;
     private final CCATQA object;
     private final Tab parentTab;
-
-    /**
-     *
-     * @param question
-     * @param parentTab
-     * @param width
-     * @param isHeader
-     */
-
 
     /**
      *
@@ -56,8 +47,8 @@ public class TableRow extends FlowPane {
      * @param width
      * @param isHeader
      */
-    public TableRow(CCATQA object, Tab parentTab, double width, Boolean isHeader){
-        
+    public TableRow(CCATQA object, Tab parentTab, double width, Boolean isHeader) {
+
         this.answer = new Answer(null, null, object.getId());
         this.object = object;
         this.questionLabel = new Label(object.getText());
@@ -67,10 +58,9 @@ public class TableRow extends FlowPane {
         this.no = new RadioButton("");
         this.na = new RadioButton("");
 
-        this.notes = new TextArea();        
+        this.notes = new TextArea();
         this.isChecked = false;
         this.isNotHeader = false;
-
 
         this.notesLabel = new Label("Notes:");
         notesLabel.setPrefWidth(width);
@@ -99,8 +89,8 @@ public class TableRow extends FlowPane {
         yes.setToggleGroup(answerToggle);
         no.setToggleGroup(answerToggle);
         na.setToggleGroup(answerToggle);
-        
-        if (isHeader){
+
+        if (isHeader) {
 
             this.questionLabel.setTextFill(Color.web("#FFFFFF"));
             this.questionLabel.setStyle("-fx-font-weight: bold; -fx-font : 16px \"Verdana\";");
@@ -108,22 +98,27 @@ public class TableRow extends FlowPane {
             noLabel.setTextFill(Color.web("#FFFFFF"));
             naLabel.setTextFill(Color.web("#FFFFFF"));
             this.getChildren().addAll(yesLabel, noLabel, naLabel);
+        } else {
+            this.setPadding(new Insets(5, 0, 5, 0));
         }
-        else{
-            this.setPadding(new Insets(5, 0, 5,0));
-        }
-        
+
     }
 
-    
-    public void testToggleGroup(){
+    /**
+     *
+     */
+    public void testToggleGroup() {
         answerToggle.selectToggle(yes);
     }
-    
-    public Boolean isNotYes(){
+
+    /**
+     *
+     * @return
+     */
+    public Boolean isNotYes() {
         return answerToggle.getSelectedToggle() != yes;
     }
-        
+
     /**
      *
      * @return answer to question as well as notes if applicable
@@ -140,7 +135,6 @@ public class TableRow extends FlowPane {
         answer.setText(notes.getText());
         System.out.println(answer.getText());
         return answer;
-        
 
     }
 
@@ -200,17 +194,20 @@ public class TableRow extends FlowPane {
 
     }
 
+    /**
+     *
+     */
     public void setTabError() {
-
         parentTab.setStyle("-fx-border-color:red; -fx-border-width: 1px;");
         this.notes.setStyle("-fx-border-color:red; -fx-border-width: 1px; ");
     }
 
+    /**
+     *
+     */
     public void setTabErrorOff() {
-
         parentTab.setStyle("-fx-border-color:#eeeeee; -fx-border-width: 1px;");
         this.notes.setStyle("-fx-border-color:#DDDDDD; -fx-border-width: 1px;");
-
     }
 
     /**
@@ -220,19 +217,15 @@ public class TableRow extends FlowPane {
     public CCATQA getObject() {
         return object;
     }
-    
-
 
     /**
      *
      * @return tab that question is located in
      */
+    public Tab getParentTab() {
+        return parentTab;
+    }
 
-    public Tab getParentTab(){ return parentTab; }
-    
-
-
-    
     /**
      *
      * Checks if the ToggleGroup has been checked off with yes, no or n/a Checks
@@ -257,6 +250,20 @@ public class TableRow extends FlowPane {
      */
     public void setColor(String color) {
         this.setStyle("-fx-background-color: " + color + ";");
+    }
+    
+    /**
+     * 
+     */
+    public void reset(){
+        this.answerToggle.getSelectedToggle().setSelected(false);
+    }
+
+    /**
+     * 
+     */
+    public void clearNotes() {
+        this.notes.setText("");
     }
 
 }

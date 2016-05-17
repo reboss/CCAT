@@ -9,10 +9,9 @@
 package ccat_view;
 
 import ccat_model.QuestionLoader;
+import ccat_model.UserModel;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -20,8 +19,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -105,8 +102,12 @@ public class CCAT extends Application {
     /**
      *
      * @param args
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        UserModel userModel = new UserModel();
+        userModel.deleteOutOfDateRecords();
         launch(args);
     }
 
