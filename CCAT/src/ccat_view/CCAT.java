@@ -9,6 +9,7 @@
 package ccat_view;
 
 import ccat_model.QuestionLoader;
+import ccat_model.UserModel;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -101,8 +102,12 @@ public class CCAT extends Application {
     /**
      *
      * @param args
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        UserModel userModel = new UserModel();
+        userModel.deleteOutOfDateRecords();
         launch(args);
     }
 

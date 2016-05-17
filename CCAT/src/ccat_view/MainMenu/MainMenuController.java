@@ -275,7 +275,6 @@ public class MainMenuController implements Initializable {
 
         try {
             populateTabs();
-
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }

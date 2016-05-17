@@ -30,6 +30,17 @@ public class UserModel {
     private final Connection con;
     private final String salt;
     private final UserInfo currentUser;
+    
+    /**
+     * 
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     */
+    public UserModel() throws ClassNotFoundException, SQLException {
+        this.con = getConnection();
+        this.salt = "M5@aG9:[2cY0";
+        this.currentUser = null;
+    }
 
     /**
      *
@@ -51,7 +62,7 @@ public class UserModel {
     private Connection getConnection() throws ClassNotFoundException, SQLException {
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:ccat.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:CCAT.db");
             return connection;
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e);
@@ -251,8 +262,8 @@ public class UserModel {
     public void deleteOutOfDateRecords() throws SQLException {
         try {
             PreparedStatement statement
-                    = con.prepareStatement("DELETE FROM answers WHERE "
-                            + "answers.created < NOW() - INTERVAL 14 DAY");
+                    = con.prepareStatement("DELETE FROM audits WHERE "
+                            + "audits.created < date('now', '-60 day')");
             statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e);
