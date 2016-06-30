@@ -38,5 +38,12 @@ You can run CCAT either from your IDE or if you have the .jar file you can run i
 java -jar CCAT.jar
 ```
 
+## Contribution
+
+Anyone can contribute and work on any available issue.
+
+Simply make sure you have an appropriate java doc above any methods you create or modify. The format used is the standard NetBeans formatting. After, simply make a pull request and have patience.
+If you have any questions about an issue feel free and encouraged to ask.
+
 ------------------------------------------
 * See spec documents for more details and visual aid.
