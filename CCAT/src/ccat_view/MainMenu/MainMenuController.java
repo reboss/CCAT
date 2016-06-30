@@ -29,8 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -65,7 +72,18 @@ public class MainMenuController implements Initializable {
     private Tab partC;
     @FXML
     private Tab admin;
-
+    @FXML
+    private AnchorPane chartAnchor;
+    @FXML
+    private RadioButton day;
+    @FXML
+    private RadioButton week;
+    @FXML
+    private RadioButton month;
+    @FXML
+    private RadioButton quarter;
+    
+    private ToggleGroup dateFilterChoice;   
     private final int BRADEN_SCALE_MAX = 24;
     private final int QUESTION_NUM = 44;
     private QuestionLoader template;
@@ -74,12 +92,6 @@ public class MainMenuController implements Initializable {
     private List<VBox> tabContentList;
     private List<TableRow> rows;
     private List<Answer> answersToBeSaved;
-
-    /**
-     *
-     */
-    public MainMenuController() {
-    }
 
     /**
      *
@@ -96,6 +108,8 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     private void onExit(ActionEvent event) {
+        System.out.println("Chart Anchor Width 2: " + this.chartAnchor.getWidth());
+        System.out.println("Chart Anchor Height 2: " + this.chartAnchor.getHeight());
         System.exit(0);
     }
 
@@ -222,7 +236,6 @@ public class MainMenuController implements Initializable {
      * 
      */
     public void setErrorsOff() {
-
         for (TableRow row : rows) {
             if (row.isValid()) {
                 row.setTabErrorOff();
@@ -248,6 +261,58 @@ public class MainMenuController implements Initializable {
             row.reset();
             row.clearNotes();
         }
+    }
+    
+    /**
+     * 
+     */
+    private void initializeAuditChart() {
+        NumberAxis xAxis = new NumberAxis(0.0, 24.0, 1.0);
+        NumberAxis yAxis = new NumberAxis(0.0, 100.0, 5.0);
+        xAxis.setLabel("Hour");
+        yAxis.setLabel("%");
+        LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
+        chart.setTitle("Audit Averages for Current day");
+        chart.setPrefSize(520.0,338.0); // Bug with parent width & height
+//        chart.setPrefSize(this.chartAnchor.getWidth(),this.chartAnchor.getHeight());
+        System.out.println("Chart Anchor Width: " + this.chartAnchor.getWidth());
+        System.out.println("Chart Anchor Height: " + this.chartAnchor.getHeight());
+        this.chartAnchor.getChildren().add(chart);
+        
+        this.dateFilterChoice = new ToggleGroup();
+        this.day.setToggleGroup(dateFilterChoice);
+        this.week.setToggleGroup(dateFilterChoice);
+        this.month.setToggleGroup(dateFilterChoice);
+        this.quarter.setToggleGroup(dateFilterChoice);
+        
+        this.day.setOnAction((ActionEvent e) -> {
+            chart.setTitle("Audit Averages for Current day");
+            xAxis.setLabel("Hour");
+            xAxis.setLowerBound(0.0);
+            xAxis.setUpperBound(24.0);
+            xAxis.setTickUnit(1.0);
+        });
+        this.week.setOnAction((ActionEvent e) -> {
+            chart.setTitle("Audit Averages for Current Week");
+            xAxis.setLabel("Day of Current Week");
+            xAxis.setLowerBound(1.0);
+            xAxis.setUpperBound(7.0);
+            xAxis.setTickUnit(1.0);
+        });
+        this.month.setOnAction((ActionEvent e) -> {
+            chart.setTitle("Audit Averages by Month");
+            xAxis.setLabel("Month of Current Year");
+            xAxis.setLowerBound(1.0);
+            xAxis.setUpperBound(12.0);
+            xAxis.setTickUnit(1.0);
+        });
+        this.quarter.setOnAction((ActionEvent e) -> {
+            chart.setTitle("Audit Averages by Business Quarter");
+            xAxis.setLabel("Quarter of Current Year");
+            xAxis.setLowerBound(1.0);
+            xAxis.setUpperBound(4.0);
+            xAxis.setTickUnit(1.0);
+        });        
     }
 
     /**
@@ -279,6 +344,8 @@ public class MainMenuController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        initializeAuditChart();
 
     }
 
