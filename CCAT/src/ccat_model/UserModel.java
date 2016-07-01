@@ -409,4 +409,36 @@ public class UserModel {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
+    private Series<Number, Number> daySeries() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    private Series<Number, Number> weekSeries() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    private Series<Number, Number> monthSeries() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    private Series<Number, Number> quarterSeries() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
