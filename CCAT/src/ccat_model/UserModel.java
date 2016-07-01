@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.chart.XYChart.Series;
 
 /**
  *
@@ -283,6 +284,27 @@ public class UserModel {
             statement.executeUpdate();
         } catch (Exception e) {
             System.err.println("No such record exsists");
+        }
+    }
+    
+    /**
+     * 
+     * @param option
+     * @return Series<Number, Number> <- xAxis, yAxis. Date/Time, Percentage
+     */
+    public Series<Number, Number> getSeries (String option) {
+        switch (option) {
+            case "day":
+                return daySeries();
+            case "week":
+                return weekSeries();
+            case "month":
+                return monthSeries();
+            case "quarter":
+                return quarterSeries();
+            default:
+                System.err.println("Invalid input");
+                return null;
         }
     }
 

@@ -14,6 +14,7 @@ import ccat_model.Header;
 import ccat_model.QuestionLoader;
 import ccat_model.Question;
 import ccat_model.TableRow;
+import ccat_model.UserModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -266,7 +267,7 @@ public class MainMenuController implements Initializable {
     /**
      * 
      */
-    private void initializeAuditChart() {
+    private void initializeAuditChart() throws ClassNotFoundException, SQLException {
         NumberAxis xAxis = new NumberAxis(0.0, 24.0, 1.0);
         NumberAxis yAxis = new NumberAxis(0.0, 100.0, 5.0);
         xAxis.setLabel("Hour");
@@ -285,12 +286,15 @@ public class MainMenuController implements Initializable {
         this.month.setToggleGroup(dateFilterChoice);
         this.quarter.setToggleGroup(dateFilterChoice);
         
+        UserModel userModel = new UserModel();
+        
         this.day.setOnAction((ActionEvent e) -> {
             chart.setTitle("Audit Averages for Current day");
             xAxis.setLabel("Hour");
             xAxis.setLowerBound(0.0);
             xAxis.setUpperBound(24.0);
             xAxis.setTickUnit(1.0);
+            // chart.getData().add(userModel.getSeries("day"));
         });
         this.week.setOnAction((ActionEvent e) -> {
             chart.setTitle("Audit Averages for Current Week");
@@ -298,6 +302,7 @@ public class MainMenuController implements Initializable {
             xAxis.setLowerBound(1.0);
             xAxis.setUpperBound(7.0);
             xAxis.setTickUnit(1.0);
+            // chart.getData().add(userModel.getSeries("week"));
         });
         this.month.setOnAction((ActionEvent e) -> {
             chart.setTitle("Audit Averages by Month");
@@ -305,6 +310,7 @@ public class MainMenuController implements Initializable {
             xAxis.setLowerBound(1.0);
             xAxis.setUpperBound(12.0);
             xAxis.setTickUnit(1.0);
+            // chart.getData().add(userModel.getSeries("month"));
         });
         this.quarter.setOnAction((ActionEvent e) -> {
             chart.setTitle("Audit Averages by Business Quarter");
@@ -312,6 +318,7 @@ public class MainMenuController implements Initializable {
             xAxis.setLowerBound(1.0);
             xAxis.setUpperBound(4.0);
             xAxis.setTickUnit(1.0);
+            // chart.getData().add(userModel.getSeries("quarter"));
         });        
     }
 
@@ -345,7 +352,11 @@ public class MainMenuController implements Initializable {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        initializeAuditChart();
+        try {
+            initializeAuditChart();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
