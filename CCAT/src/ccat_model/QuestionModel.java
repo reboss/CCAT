@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * @author John
  */
-public class QuestionLoader {
+public class QuestionModel {
 
     private final Map<String, Map<String, List<String>>> content;
     private final Map<String, List<String>> orderedSubheaders;
@@ -35,7 +35,7 @@ public class QuestionLoader {
      *
      * @throws java.sql.SQLException
      */
-    public QuestionLoader() throws SQLException {
+    public QuestionModel() throws SQLException {
         content = new HashMap<>();
         questionIds = new ArrayList<>();
         orderedSubheaders = new HashMap<>();

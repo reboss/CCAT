@@ -13,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -87,8 +89,44 @@ public class AnswerModel {
     
     /**
      *
+     * @return 
+     * @throws java.sql.SQLException
      */
-    public void loadAnswers() {
+
+    public List<Audit> loadAnswers() throws SQLException {
+        
+        List<Audit> audits = new ArrayList<>();
+        Statement stmt = connection.createStatement();
+        Statement stmt2 = connection.createStatement();
+        ResultSet result1;
+        ResultSet result2;
+        String sql = "SELECT * FROM audits ORDER BY created DESC";
+        result1 = stmt.executeQuery(sql);
+        
+        while(result1.next()){
+            
+            int id = result1.getInt("id");
+            Date date = result1.getDate("created");
+            String name = result1.getString("name");
+            double score = result1.getDouble("score");
+            Audit audit = new Audit(name, id, score, 0);
+            
+            
+            sql =   "SELECT * FROM answers, questions WHERE aid = " + 
+                    id + " AND questions.id = answers.qid";
+            result2 = stmt2.executeQuery(sql);
+            
+            // add selection and braden score to database
+            while (result2.next()){
+                
+                String question = result2.getString("question");
+                String answer = result2.getString("answer");
+                audit.addChild(new Answer(answer, question, id));
+                
+            }
+        }
+        
+        return audits;
 
     }
 }

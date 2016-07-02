@@ -16,14 +16,12 @@ public class Answer extends CCATQA {
 
     private String answer;
 
-    /**
-     * 
-     * @param objectText
-     * @param objectId
-     * @param parentId 
-     */
-    public Answer(String objectText, Integer objectId, Integer parentId) {
-        super(objectText, objectId, parentId);
+    private String selection;
+    private final String question;
+    
+    public Answer(String objectText, String question, Integer parentId) {
+        super(objectText, null, parentId);
+        this.question = question;
         answer = "";
     }
 

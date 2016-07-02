@@ -62,12 +62,14 @@ public class SQLiteCreate {
                     + "created TIMESTAMP,"
                     + "name TEXT,"
                     + "score REAL(5, 2),"
+                    + "braden SMALLINT"
                     + "hidden BINARY);";
 
             stmt.executeUpdate(sql);
             sql = "CREATE TABLE answers ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                     + "answer TEXT NOT NULL,"
+                    + "selection TEXT,"
                     + "created DATE,"
                     + "aid INTEGER NOT NULL,"
                     + "qid INTEGER NOT NULL,"

@@ -11,7 +11,7 @@ package ccat_view.MainMenu;
 import ccat_model.Answer;
 import ccat_model.AnswerModel;
 import ccat_model.Header;
-import ccat_model.QuestionLoader;
+import ccat_model.QuestionModel;
 import ccat_model.Question;
 import ccat_model.TableRow;
 import ccat_model.UserModel;
@@ -84,7 +84,7 @@ public class MainMenuController implements Initializable {
     private ToggleGroup dateFilterChoice;   
     private final int BRADEN_SCALE_MAX = 24;
     private final int QUESTION_NUM = 44;
-    private QuestionLoader template;
+    private QuestionModel template;
     private AnswerModel answerModel;
     private List<Tab> tabs;
     private List<VBox> tabContentList;
@@ -328,7 +328,7 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            this.template = new QuestionLoader();
+            this.template = new QuestionModel();
         } catch (SQLException ex) {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
