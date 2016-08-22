@@ -70,7 +70,7 @@ public class SQLiteCreate {
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                     + "answer TEXT NOT NULL,"
                     + "selection TEXT,"
-                    + "created DATE,"
+                    + "created TIMESTAMP,"
                     + "aid INTEGER NOT NULL,"
                     + "qid INTEGER NOT NULL,"
                     + "FOREIGN KEY (qid) REFERENCES questions(id) "

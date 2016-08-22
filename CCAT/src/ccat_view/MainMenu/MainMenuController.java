@@ -117,7 +117,9 @@ public class MainMenuController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void onAdminTasks(ActionEvent event) throws IOException {
+    private void onAdminTasks(ActionEvent event) throws IOException, SQLException {
+        
+        answerModel = new AnswerModel();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("VerifyAdmin.fxml"));
         Parent parent = loader.load();
@@ -129,6 +131,8 @@ public class MainMenuController implements Initializable {
         VerifyAdminController verifyAdminController = loader.getController();
         verifyAdminController.setMMC(this);
         stage.show();
+        answerModel.loadAnswers();
+        
     }
 
     /**

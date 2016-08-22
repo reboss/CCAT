@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +75,7 @@ public class AnswerModel {
                 for (int i = 1; i < answers.size(); i++){
                     
                     sql +=
-                            ", ('" + answers.get(i).getText() + "', " + auditId + ", "
+                            ", ('" + answers.get(i).getText() + "', DATE('now'), " + auditId + ", "
                             + answers.get(i).getParentId() + ")";
                 }
                 
@@ -95,6 +96,7 @@ public class AnswerModel {
 
     public List<Audit> loadAnswers() throws SQLException {
         
+        System.out.println("done");
         List<Audit> audits = new ArrayList<>();
         Statement stmt = connection.createStatement();
         Statement stmt2 = connection.createStatement();
@@ -106,7 +108,7 @@ public class AnswerModel {
         while(result1.next()){
             
             int id = result1.getInt("id");
-            Date date = result1.getDate("created");
+            //Timestamp date = result1.getTimestamp("created");
             String name = result1.getString("name");
             double score = result1.getDouble("score");
             Audit audit = new Audit(name, id, score, 0);
@@ -124,8 +126,15 @@ public class AnswerModel {
                 audit.addChild(new Answer(answer, question, id));
                 
             }
+            audits.add(audit);
         }
         
+        for (int i = 0; i < audits.size(); i++){
+            List<Answer> answers = audits.get(i).getChildren();
+            for (int j = 0; j < answers.size(); j++){
+                System.out.println(answers.get(i).getText());
+            }
+        }
         return audits;
 
     }
