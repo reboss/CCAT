@@ -96,7 +96,6 @@ public class AnswerModel {
 
     public List<Audit> loadAnswers() throws SQLException {
         
-        System.out.println("done");
         List<Audit> audits = new ArrayList<>();
         Statement stmt = connection.createStatement();
         Statement stmt2 = connection.createStatement();
@@ -113,7 +112,7 @@ public class AnswerModel {
             double score = result1.getDouble("score");
             Audit audit = new Audit(name, id, score, 0);
             
-            
+            System.out.println(id);
             sql =   "SELECT * FROM answers, questions WHERE aid = " + 
                     id + " AND questions.id = answers.qid";
             result2 = stmt2.executeQuery(sql);
@@ -124,15 +123,20 @@ public class AnswerModel {
                 String question = result2.getString("question");
                 String answer = result2.getString("answer");
                 audit.addChild(new Answer(answer, question, id));
+                System.out.println("="+answer);
                 
             }
             audits.add(audit);
         }
         
+        
+        
         for (int i = 0; i < audits.size(); i++){
+            
             List<Answer> answers = audits.get(i).getChildren();
             for (int j = 0; j < answers.size(); j++){
-                System.out.println(answers.get(i).getText());
+                
+                System.out.println("==" + answers.get(i).getText());
             }
         }
         return audits;
