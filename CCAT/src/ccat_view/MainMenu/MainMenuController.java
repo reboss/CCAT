@@ -10,6 +10,7 @@ package ccat_view.MainMenu;
 
 import ccat_model.Answer;
 import ccat_model.AnswerModel;
+import ccat_model.Audit;
 import ccat_model.Header;
 import ccat_model.QuestionModel;
 import ccat_model.Question;
@@ -130,8 +131,12 @@ public class MainMenuController implements Initializable {
         stage.getIcons().add(new Image("/medicalIcon.png"));
         VerifyAdminController verifyAdminController = loader.getController();
         verifyAdminController.setMMC(this);
+        List<Audit> audits = answerModel.loadAnswers();
+        for (int i = 0; i < audits.size(); i++){
+            auditBrowserContent.getChildren().add(audits.get(i).getRowLayout());
+        }
         stage.show();
-        answerModel.loadAnswers();
+        
         
     }
 

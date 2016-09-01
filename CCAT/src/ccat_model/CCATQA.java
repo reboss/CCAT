@@ -63,4 +63,8 @@ public abstract class CCATQA {
     public void setText(String text) {
         objectText = text;
     }
+    
+    public String getType(){
+        return null;
+    }
 }

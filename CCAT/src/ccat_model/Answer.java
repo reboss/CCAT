@@ -8,29 +8,37 @@
 
 package ccat_model;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.FlowPane;
+
 /**
  *
  * @author John
  */
 public class Answer extends CCATQA {
 
-    private String answer;
-
+    private final String answer;
     private String selection;
     private final String question;
+    private FlowPane rowLayout;
     
-    public Answer(String objectText, String question, Integer parentId) {
-        super(objectText, null, parentId);
+    public Answer(String answer, String question, Integer parentId) {
+        super(answer, null, parentId);
         this.question = question;
-        answer = "";
+        this.answer = answer;
+        rowLayout = new FlowPane();
+        Label questionLabel = new Label(this.question + ":");
+        Label answerLabel = new Label(this.answer);
+        rowLayout.getChildren().addAll(questionLabel, answerLabel);
     }
 
     /**
      * 
      * @param answer 
      */
-    public void setSelectedToggleValue(String answer) {
-        this.answer = answer;
+    public void setSelectedToggleValue(String selection) {
+        this.selection = selection;
     }
 
     /**
@@ -41,4 +49,18 @@ public class Answer extends CCATQA {
         return answer;
     }
 
+    public String getQuestion(){
+        return this.question;
+    }
+    
+    @Override
+    public String getType(){
+        return "answer";
+    }
+    
+    public FlowPane getRowLayout(){
+        return rowLayout;
+    }
+    
+    
 }

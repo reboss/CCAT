@@ -14,7 +14,7 @@ import javafx.scene.layout.FlowPane;
 public class AuditRow extends FlowPane{
     
     
-    public AuditRow(Answer answer){
+    public AuditRow(CCATQA auditOrAnswer, boolean isAudit){
         
     }
 }

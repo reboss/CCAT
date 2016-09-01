@@ -49,7 +49,7 @@ public class AnswerModel {
             String sql =
                     "INSERT INTO audits "
                     + "(created, name, score) "
-                    + "VALUES (DATE('now'), " + username + ", " + score + ")";
+                    + "VALUES (DATETIME('now'), " + username + ", " + score + ")";
             
             System.out.println("The audits table query was : \n\t" + sql);
             System.out.println("The insertion into audits table returned, " + stmt.executeUpdate(sql));
@@ -107,10 +107,10 @@ public class AnswerModel {
         while(result1.next()){
             
             int id = result1.getInt("id");
-            //Timestamp date = result1.getTimestamp("created");
+            String date = result1.getString("created");
             String name = result1.getString("name");
             double score = result1.getDouble("score");
-            Audit audit = new Audit(name, id, score, 0);
+            Audit audit = new Audit(name, id, score, 0, date);
             
             System.out.println(id);
             sql =   "SELECT * FROM answers, questions WHERE aid = " + 
@@ -134,9 +134,10 @@ public class AnswerModel {
         for (int i = 0; i < audits.size(); i++){
             
             List<Answer> answers = audits.get(i).getChildren();
+            System.out.println(audits.get(i).getText() + " ]]" + audits.get(i).getDateCreated());
             for (int j = 0; j < answers.size(); j++){
                 
-                System.out.println("==" + answers.get(i).getText());
+                System.out.println(answers.get(j).getQuestion() +" => "+ answers.get(j).getText());
             }
         }
         return audits;

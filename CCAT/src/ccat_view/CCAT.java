@@ -64,7 +64,7 @@ public class CCAT extends Application {
         DoubleProperty opacity = root.opacityProperty();
         Timeline ft = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                new KeyFrame(new Duration(400), new KeyValue(opacity, 1.0))
+                new KeyFrame(new Duration(300), new KeyValue(opacity, 1.0))
         );
         ft.play();
         ft.setOnFinished((ActionEvent event) -> {
