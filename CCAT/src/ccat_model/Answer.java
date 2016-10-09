@@ -22,13 +22,17 @@ public class Answer extends CCATQA {
     private String selection;
     private final String question;
     private FlowPane rowLayout;
+    private static final double WIDTH = 800;
     
     public Answer(String answer, String question, Integer parentId) {
         super(answer, null, parentId);
         this.question = question;
         this.answer = answer;
         rowLayout = new FlowPane();
+        rowLayout.setStyle("-fx-background-color : #FFFFFF");
+        rowLayout.setPrefWidth(WIDTH);
         Label questionLabel = new Label(this.question + ":");
+        questionLabel.setPrefWidth(WIDTH * 0.5);
         Label answerLabel = new Label(this.answer);
         rowLayout.getChildren().addAll(questionLabel, answerLabel);
     }
